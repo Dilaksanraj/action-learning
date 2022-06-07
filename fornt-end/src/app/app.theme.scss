@@ -123,6 +123,10 @@ $typography: mat-typography-config(
 
 @import "src/app/main/angular-material-elements/example-viewer/example-viewer.theme";
 
+@import "src/app/main/common/auth/client-login/client-login.theme";
+
+
+
 // Define a mixin for easier access
 @mixin components-theme($theme) {
 
@@ -143,6 +147,9 @@ $typography: mat-typography-config(
     @include mail-ngrx-theme($theme);
     @include scrumboard-theme($theme);
     @include todo-theme($theme);
+
+    // common
+    @include client-login-theme($theme);
 
     // Pages
     @include login-theme($theme);

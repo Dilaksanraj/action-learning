@@ -9,48 +9,27 @@ import { MatIconModule } from '@angular/material/icon';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
-
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
-
 import { fuseConfig } from 'app/fuse-config';
-
 import { FakeDbService } from 'app/fake-db/fake-db.service';
 import { AppComponent } from 'app/app.component';
 import { AppStoreModule } from 'app/store/store.module';
 import { LayoutModule } from 'app/layout/layout.module';
+// import { LoggerModule, NgxLoggerLevel, NGXLogger } from 'ngx-logger';
+import { environment } from 'environments/environment';
+import { UserComponent } from './main/module/user/user.component';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import { FormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { APP_ROUTES } from './app.routes';
+import { ClientLoginComponent } from './main/common/auth/client-login/client-login.component';
+import { DashboardComponent } from './main/module/dashboard/dashboard.component';
+import { CustomPreloading } from './shared/CustomPreloading';
 
-const appRoutes: Routes = [
-    {
-        path        : 'apps',
-        loadChildren: './main/apps/apps.module#AppsModule'
-    },
-    {
-        path        : 'pages',
-        loadChildren: './main/pages/pages.module#PagesModule'
-    },
-    {
-        path        : 'ui',
-        loadChildren: './main/ui/ui.module#UIModule'
-    },
-    {
-        path        : 'documentation',
-        loadChildren: './main/documentation/documentation.module#DocumentationModule'
-    },
-    {
-        path      : 'home',
-        loadChildren: './main/module/home/home.module#HomeModule'
-    },
-    {
-        path        : 'angular-material-elements',
-        loadChildren: './main/angular-material-elements/angular-material-elements.module#AngularMaterialElementsModule'
-    },
-    {
-        path      : '**',
-        redirectTo: 'apps/dashboards/analytics'
-    }
-];
+registerLocaleData(en);
 
 @NgModule({
     declarations: [
@@ -60,7 +39,7 @@ const appRoutes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(APP_ROUTES,{preloadingStrategy: CustomPreloading}),
 
         TranslateModule.forRoot(),
         InMemoryWebApiModule.forRoot(FakeDbService, {
@@ -84,11 +63,27 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        AppStoreModule
+        AppStoreModule,
+        NgZorroAntdModule,
+        FormsModule,
+        // LoggerModule.forRoot({
+        //     serverLoggingUrl: '/api/logs',
+        //     level: NgxLoggerLevel.DEBUG,
+        //     serverLogLevel: NgxLoggerLevel.ERROR
+        //   }),
+        //   NgxWebstorageModule.forRoot(),
+        // NgProgressModule.withConfig({
+        //     debounceTime: 100,
+        //     speed: 300,
+        //     color: '#377FEA',
+        //     thick: false,
+        //     spinner: false
+        // }),
     ],
     bootstrap   : [
         AppComponent
-    ]
+    ],
+    providers: [{ provide: NZ_I18N, useValue: en_US },CustomPreloading,]
 })
 export class AppModule
 {

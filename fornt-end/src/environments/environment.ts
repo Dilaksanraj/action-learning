@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     hmr       : false,
-    apiBaseUrl: '//127.0.0.1/nextgenv2/server-api/public/v1/kinderm8-services'
+    apiBaseUrl: 'http://127.0.0.1:8000'
+    // apiBaseUrl: '//127.0.0.1/nextgenv2/server-api/public/v1/kinderm8-services'
 };
 
 /*

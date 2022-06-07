@@ -5,16 +5,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-
 import { FuseSharedModule } from '@fuse/shared.module';
+import { ClientLoginComponent } from './client-login.component';
 
-import { LoginComponent } from 'app/main/pages/authentication/login/login.component';
-import { LoginService } from './service/login.service';
 
 const routes = [
     {
-        path     : 'auth/login',
-        component: LoginComponent,
+        path     : 'login',
+        component: ClientLoginComponent,
         // resolve:
         // {
         //     branch: LoginService
@@ -25,7 +23,7 @@ const routes = [
 
 @NgModule({
     declarations: [
-        LoginComponent
+        ClientLoginComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -35,13 +33,12 @@ const routes = [
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-
         FuseSharedModule
     ],
     // providers: [
     //     LoginService
     // ]
 })
-export class LoginModule
+export class ClientLoginModule
 {
 }

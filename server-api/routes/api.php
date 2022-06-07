@@ -19,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/','App\Http\Controllers\UserController@index');
+Route::get('/user','App\Http\Controllers\UserController@get')->middleware('auth:api');
+
