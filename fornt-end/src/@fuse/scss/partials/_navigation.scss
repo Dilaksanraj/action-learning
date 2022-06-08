@@ -45,6 +45,17 @@
                 flex: 1 1 auto;
                 white-space: nowrap;
             }
+            > .nav-link-image {
+                flex: 1 1 auto;
+                white-space: nowrap;
+                max-width: 48px;
+
+                img {
+                    height: 30px;
+                    width: 30px;
+                    opacity: 0.95;
+                }
+            }
 
             .nav-link-badge {
                 display: flex;
@@ -198,7 +209,16 @@
 
             > .nav-link {
                 height: 56px;
+
+                .nav-link-image {
+                    padding-right: 18px;
+                }
+
+                .nav-link-title {
+                    font-weight: 600;
+                }
             }
+            
 
             &.nav-collapsable {
                 position: relative;

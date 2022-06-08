@@ -9,7 +9,6 @@ import { AuthUser } from 'app/shared/model/authUser';
 import { AuthService } from 'app/shared/service/auth.service';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { replace } from 'lodash';
 
 @Component({
   selector: 'login-2',
@@ -37,6 +36,7 @@ export class ClientLoginComponent implements OnInit {
     private _authenticationService: AuthService,
     private _httpClient: HttpClient,
     private _router: Router,
+    private _route: ActivatedRoute
   )
   {
       // Configure the layout
@@ -89,13 +89,20 @@ export class ClientLoginComponent implements OnInit {
     .subscribe((result:any)=> {
         localStorage.setItem('access_token', result.access_token);
         localStorage.setItem('refresh_token', result.refresh_token);
+        
+        // this._router.navigateByUrl('/dashboard');
+        this._router.navigate(['dashboard'], {replaceUrl:true});
+        // this._router.navigate(['dashboard'], {relativeTo: this._route})
+
+        console.log(this._router.url);
+        
         // get user using access token
         this._authenticationService.getAuthUser()
         .subscribe(data => {
             console.log(data);
         });
 
-        this._router.navigate(['/dashboard'],{replaceUrl:true});
+        
         // this.resolveDefaultPath();
 
     },
