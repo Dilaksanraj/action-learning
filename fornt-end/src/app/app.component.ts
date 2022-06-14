@@ -25,6 +25,9 @@ export class AppComponent implements OnInit, OnDestroy
     fuseConfig: any;
     navigation: any;
 
+    viewPageLoader: boolean;
+    routeLinks = [];
+    hasNetworkConnection: boolean;
     // Private
     private _unsubscribeAll: Subject<any>;
 
@@ -48,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        // private _serviceWorker: SwUpdate,
     )
     {
         // Get default navigation
@@ -111,6 +115,10 @@ export class AppComponent implements OnInit, OnDestroy
             this.document.body.classList.add('is-mobile');
         }
 
+        this.viewPageLoader = false;
+
+        this.hasNetworkConnection = true;
+
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -124,6 +132,22 @@ export class AppComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+
+                // check service worker updates
+                // if (this._serviceWorker.isEnabled)
+                // {
+                //     this._serviceWorker
+                //         .available
+                //         .pipe(takeUntil(this._unsubscribeAll))
+                //         .subscribe(event =>
+                //         {
+                //             if (confirm('New version available. Load New Version?'))
+                //             {
+                //                 this._serviceWorker.activateUpdate().then(() => location.reload());
+                //             }
+                //         });
+                // }
+
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

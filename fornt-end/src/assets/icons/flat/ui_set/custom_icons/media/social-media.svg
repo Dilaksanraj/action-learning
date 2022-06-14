@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve" width="512px" height="512px" class=""><g><g>
+	<g>
+		<rect x="224" y="448" width="48" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<polygon points="294.152,301.128 281.848,290.872 248,331.496 214.152,290.872 201.848,301.128 237.584,344 201.848,386.872     214.152,397.128 248,356.504 281.848,397.128 294.152,386.872 258.416,344   " data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M472,176h-80V0H104v128H24c-13.232,0-24,10.768-24,24v112c0,13.232,10.768,24,24,24h128v168c0,22.056,17.944,40,40,40h112    c22.056,0,40-17.944,40-40V336h128c13.232,0,24-10.768,24-24V200C496,186.768,485.232,176,472,176z M120,16h256v48H120V16z     M120,80h256v96h-48c-13.232,0-24,10.768-24,24v8H192v-56c0-13.232-10.768-24-24-24h-48V80z M152,248v24H24c-4.416,0-8-3.584-8-8    V152c0-4.408,3.584-8,8-8h144c4.416,0,8,3.592,8,8v59.392C161.896,217.584,152,231.64,152,248z M328,456c0,13.232-10.768,24-24,24    H192c-13.232,0-24-10.768-24-24v-24h160V456z M328,416H168V272h160V416z M328,256H168v-8c0-13.232,10.768-24,24-24h112    c13.232,0,24,10.768,24,24V256z M480,312c0,4.416-3.584,8-8,8H344v-72c0-16.36-9.896-30.416-24-36.608V200c0-4.408,3.584-8,8-8    h144c4.416,0,8,3.592,8,8V312z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M360,203.056v105.888L465.888,256L360,203.056z M376,228.944L430.112,256L376,283.056V228.944z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M88,160v49.472c-2.512-0.896-5.184-1.472-8-1.472c-13.232,0-24,10.768-24,24s10.768,24,24,24s24-10.768,24-24v-56h32v-16    H88z M80,240c-4.416,0-8-3.592-8-8s3.584-8,8-8s8,3.592,8,8S84.416,240,80,240z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="136" y="96" width="224" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="208" y="128" width="152" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="208" y="160" width="88" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M448,352c-13.232,0-24,10.768-24,24c0,10.416,6.712,19.216,16,22.528V432h16v-33.472c9.288-3.312,16-12.112,16-22.528    C472,362.768,461.232,352,448,352z M448,384c-4.416,0-8-3.584-8-8c0-4.416,3.584-8,8-8c4.416,0,8,3.584,8,8    C456,380.416,452.416,384,448,384z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M384,384c-13.232,0-24,10.768-24,24c0,10.416,6.712,19.216,16,22.528V464h16v-33.472c9.288-3.312,16-12.112,16-22.528    C408,394.768,397.232,384,384,384z M384,416c-4.416,0-8-3.584-8-8c0-4.416,3.584-8,8-8c4.416,0,8,3.584,8,8    C392,412.416,388.416,416,384,416z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M48,304c-13.232,0-24,10.768-24,24c0,10.416,6.712,19.216,16,22.528V384h16v-33.472c9.288-3.312,16-12.112,16-22.528    C72,314.768,61.232,304,48,304z M48,336c-4.416,0-8-3.584-8-8c0-4.416,3.584-8,8-8s8,3.584,8,8C56,332.416,52.416,336,48,336z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<path d="M112,336c-13.232,0-24,10.768-24,24c0,10.416,6.712,19.216,16,22.528V416h16v-33.472c9.288-3.312,16-12.112,16-22.528    C136,346.768,125.232,336,112,336z M112,368c-4.416,0-8-3.584-8-8c0-4.416,3.584-8,8-8s8,3.584,8,8    C120,364.416,116.416,368,112,368z" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="40" y="400" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="104" y="432" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="376" y="480" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="440" y="448" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="136" y="32" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="168" y="32" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g><g>
+	<g>
+		<rect x="200" y="32" width="16" height="16" data-original="#000000" class="active-path" data-old_color="#FCFCFC" fill="#FFFFFF"/>
+	</g>
+</g></g> </svg>

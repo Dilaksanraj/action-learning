@@ -3,3 +3,13 @@
 
 // Import app.theme.scss
 @import "app/app.theme";
+
+// custom files
+@import "custom-files/css/_c-icons.css";
+@import "custom-files/css/ng-zorro-antd-v2.min.css";
+@import "custom-files/css/ck-editor5.css";
+
+// style overwrite
+@import "custom-files/scss/ng-zorro-antd-overwrite";
+@import "custom-files/scss/metrial-overwrite";
+@import "custom-files/scss/custom";

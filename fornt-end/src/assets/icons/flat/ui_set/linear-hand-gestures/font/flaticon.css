@@ -1,0 +1,61 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/06/2016 15:32
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-clap:before { content: "\f100"; }
+.flaticon-dislike:before { content: "\f101"; }
+.flaticon-drawing:before { content: "\f102"; }
+.flaticon-fist:before { content: "\f103"; }
+.flaticon-frame:before { content: "\f104"; }
+.flaticon-handshake:before { content: "\f105"; }
+.flaticon-holding:before { content: "\f106"; }
+.flaticon-like:before { content: "\f107"; }
+.flaticon-point:before { content: "\f108"; }
+.flaticon-rock:before { content: "\f109"; }
+.flaticon-rotate:before { content: "\f10a"; }
+.flaticon-rotate-1:before { content: "\f10b"; }
+.flaticon-rotate-2:before { content: "\f10c"; }
+.flaticon-rotate-3:before { content: "\f10d"; }
+.flaticon-swipe:before { content: "\f10e"; }
+.flaticon-swipe-down:before { content: "\f10f"; }
+.flaticon-swipe-right:before { content: "\f110"; }
+.flaticon-swipe-right-1:before { content: "\f111"; }
+.flaticon-swipe-right-2:before { content: "\f112"; }
+.flaticon-swipe-up:before { content: "\f113"; }
+.flaticon-tap:before { content: "\f114"; }
+.flaticon-tap-1:before { content: "\f115"; }
+.flaticon-tap-2:before { content: "\f116"; }
+.flaticon-tap-3:before { content: "\f117"; }
+.flaticon-tap-4:before { content: "\f118"; }
+.flaticon-victory:before { content: "\f119"; }
+.flaticon-waving-hand:before { content: "\f11a"; }
+.flaticon-zoom:before { content: "\f11b"; }
+.flaticon-zoom-in:before { content: "\f11c"; }
+.flaticon-zoom-out:before { content: "\f11d"; }

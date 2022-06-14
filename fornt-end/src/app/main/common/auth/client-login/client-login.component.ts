@@ -91,8 +91,8 @@ export class ClientLoginComponent implements OnInit {
         localStorage.setItem('refresh_token', result.refresh_token);
         
         // this._router.navigateByUrl('/dashboard');
-        this._router.navigate(['dashboard'], {replaceUrl:true});
-        // this._router.navigate(['dashboard'], {relativeTo: this._route})
+        // this._router.navigate(['dashboard'], {replaceUrl:true});
+        this._router.navigate(['dashboard'], {relativeTo: this._route})
 
         console.log(this._router.url);
         

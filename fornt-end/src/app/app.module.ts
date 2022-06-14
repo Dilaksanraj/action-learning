@@ -72,13 +72,6 @@ registerLocaleData(en);
         //     serverLogLevel: NgxLoggerLevel.ERROR
         //   }),
         //   NgxWebstorageModule.forRoot(),
-        // NgProgressModule.withConfig({
-        //     debounceTime: 100,
-        //     speed: 300,
-        //     color: '#377FEA',
-        //     thick: false,
-        //     spinner: false
-        // }),
     ],
     bootstrap   : [
         AppComponent

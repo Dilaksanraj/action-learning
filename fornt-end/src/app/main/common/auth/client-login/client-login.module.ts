@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { ClientLoginComponent } from './client-login.component';
-
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 const routes = [
     {
@@ -33,7 +33,8 @@ const routes = [
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
-        FuseSharedModule
+        FuseSharedModule,
+        NzButtonModule
     ],
     // providers: [
     //     LoginService

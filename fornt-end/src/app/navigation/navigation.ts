@@ -27,7 +27,7 @@ export const navigation: FuseNavigation[] = [
                         id   : 'staff',
                         title: 'staff',
                         type : 'item',
-                        url  : '/apps/dashboards/user'
+                        url  : '/user'
                     },
                     {
                         id   : 'students',

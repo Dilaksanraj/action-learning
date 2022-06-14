@@ -36,6 +36,19 @@ export const APP_ROUTES: Routes = [
         loadChildren: ()=>import('./main/module/dashboard/dashboard.module').then(m=> m.DashboardModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
     },
     {
+        path: 'user',
+        loadChildren: ()=>import('./main/module/user/user.module').then(m=> m.UserModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
+    {
+        path: 'maintenance',
+        loadChildren: ()=>import('./main/common/public/maintenance/maintenance').then(m=> m.MaintenanceModulee) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
+    {
+        path: 'coming-soon',
+        loadChildren: ()=>import('./main/common/public/coming-soon/coming-soon.module').then(m=> m.ComingSoonModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
+    
+    {
         path      : '**',
         redirectTo: 'apps/dashboards/analytics'
     }
