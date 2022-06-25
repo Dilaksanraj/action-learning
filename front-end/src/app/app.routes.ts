@@ -47,6 +47,10 @@ export const APP_ROUTES: Routes = [
         path: 'coming-soon',
         loadChildren: ()=>import('./main/common/public/coming-soon/coming-soon.module').then(m=> m.ComingSoonModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
     },
+    {
+        path: 'invitation',
+        loadChildren: ()=>import('./main/module/invitation/invitation.module').then(m=> m.InvitationModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
     
     {
         path      : '**',

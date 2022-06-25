@@ -13,7 +13,7 @@ export const navigation: FuseNavigation[] = [
                 title    : 'Home',
                 translate: 'NAV.DASHBOARDS',
                 type     : 'item',
-                icon     : 'assets/icons/flat/png/group.png',
+                icon     : 'assets/icons/flat/web-hosting/svg/021-speedometer.svg',
                 url  : '/dashboard'
             },
             {
@@ -21,7 +21,7 @@ export const navigation: FuseNavigation[] = [
                 title    : 'User',
                 translate: 'NAV.DASHBOARDS',
                 type     : 'collapsable',
-                icon     : 'assets/icons/flat/png/group.png',
+                icon     : 'assets/icons/flat/ui_set/custom_icons/employees.svg',
                 children : [
                     {
                         id   : 'staff',
@@ -38,13 +38,21 @@ export const navigation: FuseNavigation[] = [
                 ]
             },
             {
+                id       : 'invitation',
+                title    : 'Invitation',
+                type     : 'item',
+                icon     : 'assets/icons/flat/ui_set/custom_icons/invitation2.svg',
+                url  : '/invitation',
+            },
+            {
                 id       : 'project',
                 title    : 'Project',
-                translate: 'NAV.DASHBOARDS',
                 type     : 'item',
-                icon     : 'assets/icons/flat/png/group.png',
-                url  : '/apps/dashboards/project',
+                icon     : 'assets/icons/flat/ui_set/custom_icons/invitation2.svg',
+                url  : '/user',
             },
+            
+            
             // {
             //     id       : 'dashboards',
             //     title    : 'Dashboards',
@@ -893,241 +901,4 @@ export const navigation: FuseNavigation[] = [
     //         }
     //     ]
     // },
-    {
-        id      : 'documentation',
-        title   : 'Documentation',
-        icon    : 'import_contacts',
-        type    : 'group',
-        children: [
-            {
-                id   : 'changelog',
-                title: 'Changelog',
-                type : 'item',
-                icon : 'update',
-                url  : '/documentation/changelog',
-                badge: {
-                    title: '8.0.0',
-                    bg   : '#EC0C8E',
-                    fg   : '#FFFFFF'
-                }
-            },
-            // {
-            //     id      : 'getting-started',
-            //     title   : 'Getting Started',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id   : 'introduction',
-            //             title: 'Introduction',
-            //             type : 'item',
-            //             url  : '/documentation/getting-started/introduction'
-            //         },
-            //         {
-            //             id   : 'installation',
-            //             title: 'Installation',
-            //             type : 'item',
-            //             url  : '/documentation/getting-started/installation'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id      : 'working-with-fuse',
-            //     title   : 'Working with Fuse',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id   : 'server',
-            //             title: 'Server',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/server'
-            //         },
-            //         {
-            //             id   : 'production',
-            //             title: 'Production',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/production'
-            //         },
-            //         {
-            //             id   : 'directory-structure',
-            //             title: 'Directory Structure',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/directory-structure'
-            //         },
-            //         {
-            //             id   : 'updating-fuse',
-            //             title: 'Updating Fuse',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/updating-fuse'
-            //         },
-            //         {
-            //             id   : 'multi-language',
-            //             title: 'Multi Language',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/multi-language'
-            //         },
-            //         {
-            //             id   : 'material-theming',
-            //             title: 'Material Theming',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/material-theming'
-            //         },
-            //         {
-            //             id   : 'theme-layouts',
-            //             title: 'Theme Layouts',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/theme-layouts'
-            //         },
-            //         {
-            //             id   : 'page-layouts',
-            //             title: 'Page Layouts',
-            //             type : 'item',
-            //             url  : '/documentation/working-with-fuse/page-layouts'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id      : 'components',
-            //     title   : 'Components',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id   : 'countdown',
-            //             title: 'Countdown',
-            //             type : 'item',
-            //             url  : '/documentation/components/countdown'
-            //         },
-            //         {
-            //             id   : 'highlight',
-            //             title: 'Highlight',
-            //             type : 'item',
-            //             url  : '/documentation/components/highlight'
-            //         },
-            //         {
-            //             id   : 'material-color-picker',
-            //             title: 'Material Color Picker',
-            //             type : 'item',
-            //             url  : '/documentation/components/material-color-picker'
-            //         },
-            //         {
-            //             id   : 'navigation',
-            //             title: 'Navigation',
-            //             type : 'item',
-            //             url  : '/documentation/components/navigation'
-            //         },
-            //         {
-            //             id   : 'progress-bar',
-            //             title: 'Progress Bar',
-            //             type : 'item',
-            //             url  : '/documentation/components/progress-bar'
-            //         },
-            //         {
-            //             id   : 'search-bar',
-            //             title: 'Search Bar',
-            //             type : 'item',
-            //             url  : '/documentation/components/search-bar'
-            //         },
-            //         {
-            //             id   : 'sidebar',
-            //             title: 'Sidebar',
-            //             type : 'item',
-            //             url  : '/documentation/components/sidebar'
-            //         },
-            //         {
-            //             id   : 'shortcuts',
-            //             title: 'Shortcuts',
-            //             type : 'item',
-            //             url  : '/documentation/components/shortcuts'
-            //         },
-            //         {
-            //             id   : 'widget',
-            //             title: 'Widget',
-            //             type : 'item',
-            //             url  : '/documentation/components/widget'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id      : '3rd-party-components',
-            //     title   : '3rd Party Components',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id      : 'datatables',
-            //             title   : 'Datatables',
-            //             type    : 'collapsable',
-            //             children: [
-            //                 {
-            //                     id   : 'ngxdatatable',
-            //                     title: 'ngx-datatable',
-            //                     type : 'item',
-            //                     url  : '/documentation/components-third-party/datatables/ngx-datatable'
-            //                 }
-            //             ]
-            //         },
-            //         {
-            //             id   : 'google-maps',
-            //             title: 'Google Maps',
-            //             type : 'item',
-            //             url  : '/documentation/components-third-party/google-maps'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id      : 'directives',
-            //     title   : 'Directives',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id   : 'fuse-if-on-dom',
-            //             title: 'fuseIfOnDom',
-            //             type : 'item',
-            //             url  : '/documentation/directives/fuse-if-on-dom'
-            //         },
-            //         {
-            //             id   : 'fuse-inner-scroll',
-            //             title: 'fuseInnerScroll',
-            //             type : 'item',
-            //             url  : '/documentation/directives/fuse-inner-scroll'
-            //         },
-            //         {
-            //             id   : 'fuse-mat-sidenav',
-            //             title: 'fuseMatSidenav',
-            //             type : 'item',
-            //             url  : '/documentation/directives/fuse-mat-sidenav'
-            //         },
-            //         {
-            //             id   : 'fuse-perfect-scrollbar',
-            //             title: 'fusePerfectScrollbar',
-            //             type : 'item',
-            //             url  : '/documentation/directives/fuse-perfect-scrollbar'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id      : 'services',
-            //     title   : 'Services',
-            //     type    : 'collapsable',
-            //     icon    : 'import_contacts',
-            //     children: [
-            //         {
-            //             id   : 'fuse-config',
-            //             title: 'Fuse Config',
-            //             type : 'item',
-            //             url  : '/documentation/services/fuse-config'
-            //         },
-            //         {
-            //             id   : 'fuse-splash-screen',
-            //             title: 'Fuse Splash Screen',
-            //             type : 'item',
-            //             url  : '/documentation/services/fuse-splash-screen'
-            //         }
-            //     ]
-            // }
-        ]
-    }
 ];

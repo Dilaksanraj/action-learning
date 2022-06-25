@@ -27,12 +27,13 @@ import { APP_ROUTES } from './app.routes';
 import { ClientLoginComponent } from './main/common/auth/client-login/client-login.component';
 import { DashboardComponent } from './main/module/dashboard/dashboard.component';
 import { CustomPreloading } from './shared/CustomPreloading';
+import { InvitationComponent } from './main/module/invitation/invitation.component';
 
 registerLocaleData(en);
 
 @NgModule({
     declarations: [
-        AppComponent,
+        AppComponent
     ],
     imports     : [
         BrowserModule,

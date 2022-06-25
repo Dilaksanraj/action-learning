@@ -1,0 +1,115 @@
+<div class="page-layout carded fullwidth inner-scroll">
+
+  <!-- TOP BACKGROUND -->
+  <!-- <div class="top-bg accent"></div> -->
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header p-24" fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 [@animate]="{value:'*',params:{delay:'100ms', x:'-25px'}}">Manage Invitation</h2>
+
+      <button class="text-uppercase" nz-button nzType="primary" (click)="addDialog($event)">
+        <i class="plus icon mr-8"></i> Create New
+      </button>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <!-- CONTENT TOOLBAR -->
+      <!-- <div class="toolbar px-24 py-8">
+              <span>Content toolbar</span>
+          </div> -->
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24 pt-0" fusePerfectScrollbar>
+
+        <nz-list [nzNoResult]="emptyBlock" [nzDataSource]="roomList" [nzRenderItem]="item"
+          [nzGrid]="{ gutter: 16, xs: 24, sm: 12, md: 8, lg: 8, xl: 6, xxl: 5 }">
+
+          <ng-template #item let-item let-index="index">
+
+            <nz-list-item [nzContent]="nzContent">
+
+              <ng-template #nzContent>
+
+                <nz-spin [nzSpinning]="item.isLoading" [nzIndicator]="indicatorTemplate">
+
+                  <nz-card [nzBordered]="false" [nzActions]="[actionEdit, actionDelete]"
+                    [@animate]="{ value:'*', params:{ delay: (item.isNew ? 100 : ((index + 1) * 100)) + 'ms', x: '-25px' } }">
+
+                    <div class="color-bar {{ item.color }}"></div>
+
+                    <p class="text-truncate"><span class="font-weight-600">Name</span> <br> {{ item.display }}</p>
+                    <p class="text-truncate"><span class="font-weight-600">Description</span> <br> {{ item.desc ||
+                      'none' }}</p>
+                    <p class="mb-0 text-truncate "><span class="font-weight-600">Created</span> <br> {{ item.created }}
+                    </p>
+
+                  </nz-card>
+
+                  <ng-template #actionEdit>
+                    <span class="pr-8 pl-8">
+                      <i class="edit outline icon primary-color"></i>
+                    </span>
+                  </ng-template>
+
+                  <ng-template #actionDelete>
+                    <span class="pr-8 pl-8">
+                      <i class="trash alternate outline icon danger-color"></i>
+                    </span>
+                  </ng-template>
+
+                </nz-spin>
+
+                <ng-template #indicatorTemplate>
+                  <div class="is-loading">
+                    <span class="btn-spinner card-loader"></span>
+                  </div>
+                </ng-template>
+
+              </ng-template>
+
+            </nz-list-item>
+
+          </ng-template>
+
+        </nz-list>
+
+        <ng-template #emptyBlock>
+
+          <nz-empty class="mb-16" [nzNotFoundImage]="'assets/icons/flat/ui_set/custom_icons/blank.svg'"
+            [nzNotFoundContent]="contentTpl" [nzNotFoundFooter]="footerTpl" [@fadeInOnEnter] [@fadeOutOnLeave]>
+
+            <ng-template #contentTpl>
+              <h4 class="mt-24">No Data Found</h4>
+              <span>Please click on add button to create new role for your user accounts</span>
+            </ng-template>
+
+            <ng-template #footerTpl>
+              <button class="text-uppercase" nz-button nzType="primary"
+              (click)="addDialog($event)">
+                <i class="plus icon mr-8"></i> Create Now
+              </button>
+            </ng-template>
+
+          </nz-empty>
+
+        </ng-template>
+        <!-- <fuse-demo-content></fuse-demo-content> -->
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

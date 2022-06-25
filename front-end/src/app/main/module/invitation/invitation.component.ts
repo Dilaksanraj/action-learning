@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 import { AppConst } from 'app/shared/AppConst';
@@ -8,20 +8,22 @@ import { NotificationService } from 'app/shared/service/notification.service';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { UserAddDialogComponent } from './dialog/new/new.component';
-@Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-    animations: [
-        fuseAnimations,
-        fadeInOnEnterAnimation({ duration: 300 }),
-        fadeOutOnLeaveAnimation({ duration: 300 })
-    ]
-})
-export class UserComponent implements OnInit, OnDestroy {
+import { UserAddDialogComponent } from '../user/dialog/new/new.component';
+import { NewOrEditComponentInvitation } from './dialog/new-or-edit/new-or-edit.component';
 
+@Component({
+  selector: 'manage-invitation',
+  templateUrl: './invitation.component.html',
+  styleUrls: ['./invitation.component.scss'],
+  animations: [
+    fuseAnimations,
+    fadeInOnEnterAnimation({ duration: 300 }),
+    fadeOutOnLeaveAnimation({ duration: 300 })
+]
+})
+export class InvitationComponent implements OnInit {
+
+  
   private _unsubscribeAll: Subject<any>;
   total: number;
   roomList: any;
@@ -65,7 +67,7 @@ export class UserComponent implements OnInit, OnDestroy {
           sortTzList = _.sortBy(sortTzList, ['value'])*/
 
           this.dialogRef = this._matDialog
-              .open(UserAddDialogComponent,
+              .open(NewOrEditComponentInvitation,
               {
                   panelClass: 'user-new-dialog',
                   closeOnNavigation: true,

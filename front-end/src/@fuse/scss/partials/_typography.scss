@@ -1,3 +1,107 @@
+@font-face {
+    font-family: 'spartan_mbbold';
+    src: url('assets/fonts/SpartanMB/spartanmb-bold-webfont.woff2') format('woff2'), 
+    url('assets/fonts/SpartanMB/spartanmb-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'spartan_mblight';
+    src: url('assets/fonts/SpartanMB/spartanmb-light-webfont.woff2') format('woff2'), 
+    url('assets/fonts/SpartanMB/spartanmb-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'spartan_mbregular';
+    src: url('assets/fonts/SpartanMB/spartanmb-regular-webfont.woff2') format('woff2'), 
+    url('assets/fonts/SpartanMB/spartanmb-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'spartan_mbthin';
+    src: url('assets/fonts/SpartanMB/spartanmb-thin-webfont.woff2') format('woff2'),
+    url('assets/fonts/SpartanMB/spartanmb-thin-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Icons';
+    src: url('assets/fonts/SemanticFonts/icons.eot');
+    src: url('assets/fonts/SemanticFonts/icons.eot?#iefix') format('embedded-opentype'), 
+    url('assets/fonts/SemanticFonts/icons.woff2') format('woff2'), 
+    url('assets/fonts/SemanticFonts/icons.woff') format('woff'), 
+    url('assets/fonts/SemanticFonts/icons.ttf') format('truetype'), 
+    url('assets/fonts/SemanticFonts/icons.svg#icons') format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-decoration: inherit;
+    text-transform: none;
+}
+
+@font-face {
+    font-family: 'outline-icons';
+    src: url('assets/fonts/SemanticFonts/outline-icons.eot');
+    src: url('assets/fonts/SemanticFonts/outline-icons.eot?#iefix') format('embedded-opentype'), 
+    url('assets/fonts/SemanticFonts/outline-icons.woff2') format('woff2'), 
+    url('assets/fonts/SemanticFonts/outline-icons.woff') format('woff'), 
+    url('assets/fonts/SemanticFonts/outline-icons.ttf') format('truetype'), 
+    url('assets/fonts/SemanticFonts/outline-icons.svg#icons') format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-decoration: inherit;
+    text-transform: none;
+}
+
+@font-face {
+    font-family: 'brand-icons';
+    src: url('assets/fonts/SemanticFonts/brand-icons.eot');
+    src: url('assets/fonts/SemanticFonts/brand-icons.eot?#iefix') format('embedded-opentype'), 
+    url('assets/fonts/SemanticFonts/brand-icons.woff2') format('woff2'), 
+    url('assets/fonts/SemanticFonts/brand-icons.woff') format('woff'), 
+    url('assets/fonts/SemanticFonts/brand-icons.ttf') format('truetype'), 
+    url('assets/fonts/SemanticFonts/brand-icons.svg#icons') format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-decoration: inherit;
+    text-transform: none;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('assets/fonts/Quicksand/Quicksand-Light.woff2') format('woff2'),
+        url('assets/fonts/Quicksand/Quicksand-Light.woff') format('woff'),
+        url('assets/fonts/Quicksand/Quicksand-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('assets/fonts/Quicksand/Quicksand-Regular.woff2') format('woff2'),
+        url('assets/fonts/Quicksand/Quicksand-Regular.woff') format('woff'),
+        url('assets/fonts/Quicksand/Quicksand-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('assets/fonts/Quicksand/Quicksand-Bold.woff2') format('woff2'),
+        url('assets/fonts/Quicksand/Quicksand-Bold.woff') format('woff'),
+        url('assets/fonts/Quicksand/Quicksand-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
 // -----------------------------------------------------------------------------------------------------
 // @ Theming
 // -----------------------------------------------------------------------------------------------------
