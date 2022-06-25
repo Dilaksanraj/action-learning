@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
+<path style="fill:#EBE5DD;" d="M40,8v56h80V8H40z"/>
+<g>
+	<path style="fill:#FFDA44;" d="M56,240h24h24v-32H56V240z"/>
+	<path style="fill:#FFDA44;" d="M16,64v112c0,17.673,14.327,32,32,32h64c17.673,0,32-14.327,32-32V64H16z"/>
+</g>
+<path style="fill:#EBE5DD;" d="M360,472h80v-56h-80V472z"/>
+<g>
+	<path style="fill:#FFDA44;" d="M376,272h48v-32h-24h-24V272z"/>
+	<path style="fill:#FFDA44;" d="M368,272c-17.673,0-32,14.327-32,32v112h128V304c0-17.673-14.327-32-32-32H368z"/>
+</g>
+<g>
+	<path style="fill:#231F20;" d="M120,392h-16c0,30.928,25.072,56,56,56s56-25.072,56-56h-16c0,22.091-17.909,40-40,40
+		S120,414.091,120,392z"/>
+	<path style="fill:#231F20;" d="M360,88h16c0-30.928-25.072-56-56-56s-56,25.072-56,56h16c0-22.091,17.909-40,40-40
+		S360,65.909,360,88z"/>
+	<path style="fill:#231F20;" d="M56,24h16v16H56V24z"/>
+	<path style="fill:#231F20;" d="M88,24h16v16H88V24z"/>
+	<path style="fill:#231F20;" d="M48,104h64c4.418,0,8-3.582,8-8s-3.582-8-8-8H48c-4.418,0-8,3.582-8,8S43.582,104,48,104z"/>
+	<path style="fill:#231F20;" d="M120,128c0-4.418-3.582-8-8-8H48c-4.418,0-8,3.582-8,8s3.582,8,8,8h64
+		C116.418,136,120,132.418,120,128z"/>
+	<path style="fill:#231F20;" d="M432,264v-32h-24V88c0-48.601-39.399-88-88-88s-88,39.399-88,88v304c0,39.764-32.236,72-72,72
+		s-72-32.236-72-72V248h24v-32c22.08-0.026,39.974-17.92,40-40V64c0-4.418-3.582-8-8-8h-16V0H32v56H16c-4.418,0-8,3.582-8,8v112
+		c0.026,22.08,17.92,39.974,40,40v32h24v144c0,48.601,39.399,88,88,88s88-39.399,88-88V88c0-39.765,32.236-72,72-72s72,32.235,72,72
+		v144h-24v32c-22.08,0.026-39.974,17.92-40,40v112c0,4.418,3.582,8,8,8h16v56h96v-56h16c4.418,0,8-3.582,8-8V304
+		C471.974,281.92,454.08,264.026,432,264z M48,16h64v40H48V16z M24,176V72h112v104c0,13.255-10.745,24-24,24H48
+		C34.745,200,24,189.255,24,176z M64,216h32v16H64V216z M384,248h32v16h-32V248z M432,464h-64v-40h64V464z M456,408H344V304
+		c0-13.255,10.745-24,24-24h64c13.255,0,24,10.745,24,24V408z"/>
+	<path style="fill:#231F20;" d="M376,440h16v16h-16V440z"/>
+	<path style="fill:#231F20;" d="M408,440h16v16h-16V440z"/>
+	<path style="fill:#231F20;" d="M432,376h-64c-4.418,0-8,3.582-8,8s3.582,8,8,8h64c4.418,0,8-3.582,8-8S436.418,376,432,376z"/>
+	<path style="fill:#231F20;" d="M432,344h-64c-4.418,0-8,3.582-8,8s3.582,8,8,8h64c4.418,0,8-3.582,8-8S436.418,344,432,344z"/>
+	<path style="fill:#231F20;" d="M360,104h16v16h-16V104z"/>
+	<path style="fill:#231F20;" d="M360,136h16v16h-16V136z"/>
+	<path style="fill:#231F20;" d="M360,168h16v16h-16V168z"/>
+	<path style="fill:#231F20;" d="M360,200h16v16h-16V200z"/>
+	<path style="fill:#231F20;" d="M264,104h16v16h-16V104z"/>
+	<path style="fill:#231F20;" d="M264,136h16v16h-16V136z"/>
+	<path style="fill:#231F20;" d="M264,168h16v16h-16V168z"/>
+	<path style="fill:#231F20;" d="M264,200h16v16h-16V200z"/>
+	<path style="fill:#231F20;" d="M264,232h16v16h-16V232z"/>
+	<path style="fill:#231F20;" d="M264,264h16v16h-16V264z"/>
+	<path style="fill:#231F20;" d="M264,296h16v16h-16V296z"/>
+	<path style="fill:#231F20;" d="M264,328h16v16h-16V328z"/>
+	<path style="fill:#231F20;" d="M264,360h16v16h-16V360z"/>
+	<path style="fill:#231F20;" d="M200,104h16v16h-16V104z"/>
+	<path style="fill:#231F20;" d="M200,136h16v16h-16V136z"/>
+	<path style="fill:#231F20;" d="M200,168h16v16h-16V168z"/>
+	<path style="fill:#231F20;" d="M200,200h16v16h-16V200z"/>
+	<path style="fill:#231F20;" d="M200,232h16v16h-16V232z"/>
+	<path style="fill:#231F20;" d="M200,264h16v16h-16V264z"/>
+	<path style="fill:#231F20;" d="M200,296h16v16h-16V296z"/>
+	<path style="fill:#231F20;" d="M200,328h16v16h-16V328z"/>
+	<path style="fill:#231F20;" d="M200,360h16v16h-16V360z"/>
+	<path style="fill:#231F20;" d="M104,264h16v16h-16V264z"/>
+	<path style="fill:#231F20;" d="M104,296h16v16h-16V296z"/>
+	<path style="fill:#231F20;" d="M104,328h16v16h-16V328z"/>
+	<path style="fill:#231F20;" d="M104,360h16v16h-16V360z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>
