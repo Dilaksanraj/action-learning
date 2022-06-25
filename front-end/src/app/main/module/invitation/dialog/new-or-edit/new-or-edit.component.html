@@ -15,11 +15,11 @@
 
   </mat-toolbar>
 
-  <form name="branchForm" class="compose-form" 
+  <form name="invitationForm" class="compose-form" 
       fxLayout="column" fxFlex 
       nz-form 
       [nzLayout]="'vertical'"
-      [formGroup]="branchForm" 
+      [formGroup]="invitationForm" 
       (ngSubmit)="onFormSubmit($event)">
 
       <div class="p-24 pt-16 m-0" 
@@ -115,7 +115,7 @@
           <span class="text-right">
 
               <button class="text-uppercase mr-8" nz-button nzType="primary"
-              [disabled]="!branchForm.valid">
+              [disabled]="!invitationForm.valid">
                   <i class="plus icon mr-8"></i> Save
               </button>
 

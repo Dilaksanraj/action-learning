@@ -39,6 +39,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { FuseDemoModule } from '@fuse/components';
 import { InvitationComponent } from './invitation.component';
 import { NewOrEditComponentInvitation } from './dialog/new-or-edit/new-or-edit.component';
+import { InvitationService } from './invitation.service';
 
 
 const routes = [
@@ -102,9 +103,9 @@ const routes = [
         NzTableModule,
         NzDividerModule,
     ],
-    // providers: [
-    //     LoginService
-    // ]
+    providers: [
+        InvitationService
+    ]
 })
 export class InvitationModule
 {
