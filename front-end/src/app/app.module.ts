@@ -28,6 +28,8 @@ import { ClientLoginComponent } from './main/common/auth/client-login/client-log
 import { DashboardComponent } from './main/module/dashboard/dashboard.component';
 import { CustomPreloading } from './shared/CustomPreloading';
 import { InvitationComponent } from './main/module/invitation/invitation.component';
+import { DepartmentComponent } from './main/module/department/department.component';
+import { IntakeComponent } from './main/module/intake/intake.component';
 
 registerLocaleData(en);
 

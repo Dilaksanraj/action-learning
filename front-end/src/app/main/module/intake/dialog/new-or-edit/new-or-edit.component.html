@@ -1,0 +1,121 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mat-accent m-0">
+
+      <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+
+          <span class="title dialog-title">{{dialogTitle}}</span>
+
+          <button mat-icon-button disableRipple="true" type="button" (click)="matDialogRef.close()"
+              aria-label="Close dialog">
+              <mat-icon>close</mat-icon>
+          </button>
+
+      </mat-toolbar-row>
+
+  </mat-toolbar>
+
+  <form name="intakeForm" class="compose-form" fxLayout="column" fxFlex nz-form [nzLayout]="'vertical'"
+      [formGroup]="intakeForm" (ngSubmit)="onFormSubmit($event)">
+
+      <div class="p-24 pt-16 m-0" mat-dialog-content fusePerfectScrollbar
+          [fusePerfectScrollbarOptions]="{ suppressScrollX: true }">
+
+          <div nz-row [nzGutter]="24">
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                  <nz-form-item>
+
+                      <nz-form-label nzRequired>Name</nz-form-label>
+
+                      <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
+
+                          <input nz-input formControlName="name" placeholder="name" type="text" />
+
+                          <ng-template #nameErrorTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">Please input your name</ng-container>
+                              <ng-container *ngIf="control.hasError('pattern')">Invalid input name</ng-container>
+                          </ng-template>
+
+                      </nz-form-control>
+
+                  </nz-form-item>
+
+              </div>
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                  <nz-form-item>
+
+                      <nz-form-label nzRequired>Code</nz-form-label>
+
+                      <nz-form-control nzHasFeedback [nzErrorTip]="dobErrorTpl">
+
+                        <input nz-input formControlName="code" placeholder="code" type="text" />
+
+                          <ng-template #dobErrorTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">Please input expiry date
+                              </ng-container>
+                          </ng-template>
+
+                      </nz-form-control>
+
+                  </nz-form-item>
+
+              </div>
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                  <nz-form-item>
+
+                    <nz-form-label nzRequired>Graduation date</nz-form-label>
+
+                    <nz-form-control nzHasFeedback [nzErrorTip]="dobErrorTpl">
+
+                        <nz-date-picker formControlName="graduation_year" nzPlaceHolder="graduation date" class="block">
+                        </nz-date-picker>
+
+                        <ng-template #dobErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Please input expiry date
+                            </ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+
+                  </nz-form-item>
+
+              </div>
+
+          </div>
+
+      </div>
+
+      <div mat-dialog-actions class="m-0 py-16 px-24 fm-border-top" fxLayout="row"
+          fxLayoutAlign="space-between center">
+
+          <span></span>
+
+          <span class="text-right">
+
+              <button class="text-uppercase mr-8" nz-button nzType="primary" [disabled]="!intakeForm.valid">
+                  <i class="plus icon mr-8"></i> Save
+              </button>
+
+              <button class="text-uppercase mr-8" type="button" nz-button nzType="default"
+                  (click)="resetForm($event)">
+                  Reset
+              </button>
+
+              <button class="text-uppercase mat-close-btn" type="button" nz-button nzType="danger"
+                  (click)="matDialogRef.close()">
+                  Close
+              </button>
+
+          </span>
+
+      </div>
+
+  </form>
+
+</div>

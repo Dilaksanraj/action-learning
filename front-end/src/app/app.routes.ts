@@ -51,6 +51,14 @@ export const APP_ROUTES: Routes = [
         path: 'invitation',
         loadChildren: ()=>import('./main/module/invitation/invitation.module').then(m=> m.InvitationModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
     },
+    {
+        path: 'department',
+        loadChildren: ()=>import('./main/module/department/department.module').then(m=> m.DepartmentModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
+    {
+        path: 'intake',
+        loadChildren: ()=>import('./main/module/intake/intake.module').then(m=> m.IntakeModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
     
     {
         path      : '**',

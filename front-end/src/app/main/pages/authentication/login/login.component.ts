@@ -76,11 +76,11 @@ export class LoginComponent implements OnInit
         const formData = this.loginForm.getRawValue();
 
         const data = {
-            username: formData.email,
-            password: formData.password,
+            username: 'chase.cummerata@example.net',//formData.email,
+            password: 'password',//formData.password,
             grant_type: 'password',
             client_id: 2,
-            client_secret: AppConst.client_secret,
+            client_secret: 'JfqP2ck0gZiAo16lsXfYY9PZo6avq1EX8lxekS08',//AppConst.client_secret,
             scope: '*'
         }
 
@@ -91,6 +91,7 @@ export class LoginComponent implements OnInit
 
             // get user using access token
             this._authenticationService.getAuthUser()
+            
             .subscribe(data => {
                 console.log(data);
             });

@@ -45,11 +45,18 @@ export const navigation: FuseNavigation[] = [
                 url  : '/invitation',
             },
             {
-                id       : 'project',
-                title    : 'Project',
+                id       : 'department',
+                title    : 'Department',
                 type     : 'item',
-                icon     : 'assets/icons/flat/ui_set/custom_icons/invitation2.svg',
-                url  : '/user',
+                icon     : 'assets/icons/flat/ui_set/e-learning/png/browser-1.png',
+                url  : '/department',
+            },
+            {
+                id       : 'intake',
+                title    : 'Intake',
+                type     : 'item',
+                icon     : 'assets/icons/flat/ui_set/e-learning/png/certificate.png',
+                url  : '/intake',
             },
             
             

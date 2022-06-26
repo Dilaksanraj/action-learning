@@ -21,3 +21,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','App\Http\Controllers\UserController@index');
 Route::get('/user','App\Http\Controllers\UserController@get')->middleware('auth:api');
 
+
+/* post routes */
+
+
+// Invitation routes
+Route::get('/get-invitation-list', 'UserInvitationController@get')
+->name('get-invitation-list');
+
+
+// create-intake
+Route::post('/create-intake', 'App\Http\Controllers\IntakeController@create')
+->name('create-intake');
+
+Route::group(['prefix' => 'portal', 'middleware' => ['auth.user']], function ()
+{
+    
+});
