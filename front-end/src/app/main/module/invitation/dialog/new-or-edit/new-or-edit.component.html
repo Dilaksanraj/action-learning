@@ -1,138 +1,138 @@
 <div class="dialog-content-wrapper">
 
-  <mat-toolbar class="mat-accent m-0">
+    <mat-toolbar class="mat-accent m-0">
 
-      <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+        <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
 
-          <span class="title dialog-title">user</span>
+            <span class="title dialog-title">{{dialogTitle}}</span>
 
-          <button mat-icon-button disableRipple="true" type="button" (click)="matDialogRef.close()"
-              aria-label="Close dialog">
-              <mat-icon>close</mat-icon>
-          </button>
+            <button mat-icon-button disableRipple="true" type="button" (click)="matDialogRef.close()"
+                aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
 
-      </mat-toolbar-row>
+        </mat-toolbar-row>
 
-  </mat-toolbar>
+    </mat-toolbar>
 
-  <form name="invitationForm" class="compose-form" 
-      fxLayout="column" fxFlex 
-      nz-form 
-      [nzLayout]="'vertical'"
-      [formGroup]="invitationForm" 
-      (ngSubmit)="onFormSubmit($event)">
+    <form name="invitationForm" class="compose-form" fxLayout="column" fxFlex nz-form [nzLayout]="'vertical'"
+        [formGroup]="invitationForm" (ngSubmit)="onFormSubmit($event)">
 
-      <div class="p-24 pt-16 m-0" 
-          mat-dialog-content  
-          fusePerfectScrollbar
-          [fusePerfectScrollbarOptions]="{ suppressScrollX: true }">
+        <div class="p-24 pt-16 m-0" mat-dialog-content fusePerfectScrollbar
+            [fusePerfectScrollbarOptions]="{ suppressScrollX: true }">
 
-          <div nz-row [nzGutter]="24">
+            <div nz-row [nzGutter]="24">
 
-              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
 
-                  <nz-form-item>
-  
-                      <nz-form-label nzRequired>Email</nz-form-label>
-  
-                      <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
-  
-                          <input nz-input formControlName="email" placeholder="name" type="text" />
-  
-                          <ng-template #nameErrorTpl let-control>
-                              <ng-container *ngIf="control.hasError('required')">Please input your name</ng-container>
-                              <ng-container *ngIf="control.hasError('pattern')">Invalid input name</ng-container>
-                              <ng-container *ngIf="control.hasError('exists')">Name already exists</ng-container>
-                          </ng-template>
-  
-                      </nz-form-control>
-  
-                  </nz-form-item>
+                    <nz-form-item>
 
-              </div>
+                        <nz-form-label nzRequired>Email</nz-form-label>
 
-              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+                        <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
 
-                <nz-form-item>
+                            <input nz-input formControlName="email" placeholder="name" type="text" />
 
-                  <nz-form-label nzRequired>Type</nz-form-label>
+                            <ng-template #nameErrorTpl let-control>
+                                <ng-container *ngIf="control.hasError('required')">Please input your name</ng-container>
+                                <ng-container *ngIf="control.hasError('pattern')">Invalid input name</ng-container>
+                                <ng-container *ngIf="control.hasError('exists')">Name already exists</ng-container>
+                            </ng-template>
 
-                  <nz-form-control [nzErrorTip]="identyErrorTpl">
-                      <nz-radio-group formControlName="type" nzButtonStyle="solid" class="has-img">
+                        </nz-form-control>
 
-                          <label nz-radio-button nzValue="0">
-                              <img class="mr-8" src="assets/icons/flat/ui_set/custom_icons/user-profiles.svg"
-                                  alt="identy icon">
-                              <span>STAFF</span>
-                          </label>
+                    </nz-form-item>
 
-                          <span
-                              tooltip="If the educator has already used PRODA RA number by applying it to another service, then use Person ID number."
-                              display-mobile="false" hide-delay="50" style="margin-left: 15px;">
-                              <label nz-radio-button nzValue="1">
+                </div>
 
-                                  <img class="mr-8" src="assets/icons/flat/ui_set/custom_icons/admin.svg"
-                                      alt="identy icon">
-                                  <span>STUDENT</span>
-                              </label>
-                          </span>
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
 
-                      </nz-radio-group>
-                      <ng-template #identyErrorTpl let-control>
-                          <ng-container *ngIf="control.hasError('required')">Please select the identy</ng-container>
-                      </ng-template>
+                    <nz-form-item>
 
-                  </nz-form-control>
-              </nz-form-item>
-                  <!-- <nz-form-item>
-  
-                      <nz-form-label nzRequired>Email</nz-form-label>
-  
-                      <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTpl">
-  
-                          <input nz-input formControlName="email" placeholder="email" type="email" />
-  
-                          <ng-template #emailErrorTpl let-control>
-                              <ng-container *ngIf="control.hasError('required')">Please input your email</ng-container>
-                              <ng-container *ngIf="control.hasError('email')">Please enter a valid email address
-                              </ng-container>
-                          </ng-template>
-  
-                      </nz-form-control>
-  
-                  </nz-form-item> -->
+                        <nz-form-label nzRequired>Date expiry</nz-form-label>
 
-              </div>
+                        <nz-form-control nzHasFeedback [nzErrorTip]="dobErrorTpl">
 
-          </div>
+                            <nz-date-picker formControlName="expiry_date" nzPlaceHolder="expiry date" class="block">
+                            </nz-date-picker>
 
-      </div>
+                            <ng-template #dobErrorTpl let-control>
+                                <ng-container *ngIf="control.hasError('required')">Please input expiry date
+                                </ng-container>
+                            </ng-template>
 
-      <div mat-dialog-actions class="m-0 py-16 px-24 fm-border-top" fxLayout="row" fxLayoutAlign="space-between center">
+                        </nz-form-control>
 
-          <span></span>
+                    </nz-form-item>
 
-          <span class="text-right">
+                </div>
 
-              <button class="text-uppercase mr-8" nz-button nzType="primary"
-              [disabled]="!invitationForm.valid">
-                  <i class="plus icon mr-8"></i> Save
-              </button>
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
 
-              <button class="text-uppercase mr-8" type="button" nz-button nzType="default"
-                  >
-                  Reset
-              </button>
+                    <nz-form-item>
 
-              <button class="text-uppercase mat-close-btn" type="button" nz-button nzType="danger"
-                  (click)="matDialogRef.close()">
-                  Close
-              </button>
+                        <nz-form-label nzRequired>Type</nz-form-label>
 
-          </span>
+                        <nz-form-control [nzErrorTip]="identyErrorTpl">
+                            <nz-radio-group formControlName="type" nzButtonStyle="solid" class="has-img">
 
-      </div>
+                                <label nz-radio-button nzValue="0">
+                                    <img class="mr-8" src="assets/icons/flat/ui_set/custom_icons/user-profiles.svg"
+                                        alt="identy icon">
+                                    <span>STAFF</span>
+                                </label>
 
-  </form>
+                                <span
+                                    tooltip="If the educator has already used PRODA RA number by applying it to another service, then use Person ID number."
+                                    display-mobile="false" hide-delay="50" style="margin-left: 15px;">
+                                    <label nz-radio-button nzValue="1">
+
+                                        <img class="mr-8" src="assets/icons/flat/ui_set/custom_icons/admin.svg"
+                                            alt="identy icon">
+                                        <span>STUDENT</span>
+                                    </label>
+                                </span>
+
+                            </nz-radio-group>
+                            <ng-template #identyErrorTpl let-control>
+                                <ng-container *ngIf="control.hasError('required')">Please select the identy
+                                </ng-container>
+                            </ng-template>
+
+                        </nz-form-control>
+                    </nz-form-item>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div mat-dialog-actions class="m-0 py-16 px-24 fm-border-top" fxLayout="row"
+            fxLayoutAlign="space-between center">
+
+            <span></span>
+
+            <span class="text-right">
+
+                <button class="text-uppercase mr-8" nz-button nzType="primary" [disabled]="!invitationForm.valid">
+                    <i class="plus icon mr-8"></i> Save
+                </button>
+
+                <button class="text-uppercase mr-8" type="button" nz-button nzType="default"
+                    (click)="resetForm($event)">
+                    Reset
+                </button>
+
+                <button class="text-uppercase mat-close-btn" type="button" nz-button nzType="danger"
+                    (click)="matDialogRef.close()">
+                    Close
+                </button>
+
+            </span>
+
+        </div>
+
+    </form>
 
 </div>

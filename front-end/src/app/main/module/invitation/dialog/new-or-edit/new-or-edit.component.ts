@@ -2,8 +2,9 @@ import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
+import { DateTimeHelper } from 'app/utils/date-time.helper';
 import { of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError, first, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, catchError, first, map, takeUntil, finalize } from 'rxjs/operators';
 import { InvitationService } from '../../invitation.service';
 
 @Component({
@@ -17,6 +18,8 @@ export class NewOrEditComponentInvitation implements OnInit {
   private _unsubscribeAll: Subject<any>;
   invitationForm: FormGroup;
   editMode: boolean;
+  dialogTitle: string
+  buttonLoader:boolean;
 
   constructor(
     private _invitationService: InvitationService,
@@ -24,8 +27,7 @@ export class NewOrEditComponentInvitation implements OnInit {
     public matDialogRef: MatDialogRef<UserAddDialogComponent>,
   ) 
   {
-    console.log('opened');
-    
+    this.dialogTitle = "New Invitation"
     this.invitationForm = this.createinvitationForm();
     this.editMode = false;
   }
@@ -37,8 +39,14 @@ export class NewOrEditComponentInvitation implements OnInit {
       return new FormGroup({
           email: new FormControl(this.editMode ? '' : '', [
               Validators.required, Validators.email], []),
+              expiry_date:new FormControl(this.editMode ? '' : '', [Validators.required]),
           type: new FormControl(this.editMode ? '' : '', [Validators.required]),
           });
+  }
+
+  get fc(): any 
+  { 
+      return this.invitationForm.controls; 
   }
 
   onFormSubmit(e: MouseEvent): void
@@ -50,45 +58,42 @@ export class NewOrEditComponentInvitation implements OnInit {
           return;
       }
 
-      // const sendObj = {
-      //     name: this.fc.name.value,
-      //     email: this.fc.email.value,
-      //     domain: this.fc.domain.value,
-      //     desc: this.fc.desc.value,
-      //     status: this.fc.status.value,
-      //     country: this.fc.country.value,
-      //     timezone: this.fc.timezone.value,
-      //     service: this.fc.service.value,
-      //     open_days: this.openHourMap,
-      //     pincode: this.fc.pincode.value
-      // };
+      const sendObj = {
+          email: this.fc.email.value,
+          expiry_date: DateTimeHelper.getUtcDate(this.fc.expiry_date.value),
+          type: this.fc.type.value,
+      };
 
-      // this._logger.debug('[branch object]', sendObj);
+      console.log('[branch object]', sendObj);
 
-      // this.buttonLoader = true;
+      this.buttonLoader = true;
 
-      // this._branchService
-      //     .storeBranch(sendObj)
-      //     .pipe(
-      //         takeUntil(this._unsubscribeAll),
-      //         finalize(() => setTimeout(() => this.buttonLoader = false, 200))
-      //     )
-      //     .subscribe(
-      //         res =>
-      //         {
-      //             this.resetForm(null);
+      setTimeout(() => {
+        this.buttonLoader = false;
+      }, 1000);
 
-      //             setTimeout(() => this.matDialogRef.close(res), 250);
-      //         },
-      //         error =>
-      //         {
-      //             throw error;
-      //         },
-      //         () =>
-      //         {
-      //             this._logger.debug('😀 all good. 🍺');
-      //         }
-      //     );
+      this._invitationService
+          .storeInvitation(sendObj)
+          .pipe(
+              takeUntil(this._unsubscribeAll),
+              finalize(() => setTimeout(() => this.buttonLoader = false, 200))
+          )
+          .subscribe(
+              res =>
+              {
+                  this.resetForm(null);
+
+                  setTimeout(() => this.matDialogRef.close(res), 250);
+              },
+              error =>
+              {
+                  throw error;
+              },
+              () =>
+              {
+                  console.log('😀 all good. 🍺');
+              }
+          );
   }
 
   // setAsyncValidators(): void
@@ -112,6 +117,14 @@ export class NewOrEditComponentInvitation implements OnInit {
     //             first()
     //         );
     // }
+
+
+    resetForm(e: MouseEvent): void
+    {
+        if (e) { e.preventDefault(); }
+
+        this.invitationForm.reset();
+    }
   
 
 }

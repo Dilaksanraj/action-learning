@@ -9,8 +9,9 @@ import {
     NzLayoutModule,
     NzAvatarModule,
     NzGridModule,
-    NzTimePickerModule, NzInputNumberModule, NzDatePickerModule, NzTableModule, NzDividerModule
+    NzTimePickerModule, NzInputNumberModule, NzTableModule, NzDividerModule
 } from 'ng-zorro-antd';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { TranslateModule } from '@ngx-translate/core';

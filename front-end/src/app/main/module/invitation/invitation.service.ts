@@ -10,13 +10,14 @@ import { AuthService } from 'app/shared/service/auth.service';
 import { AppConst } from 'app/shared/AppConst';
 import { PaginationProp } from 'app/shared/interface/pagination';
 import { SortProp } from 'app/shared/interface/sort';
+import { Invitation } from './model/invitation.model';
 
 @Injectable()
 export class InvitationService implements Resolve<any>
 {
     private _unsubscribeAll: Subject<any>;
 
-    // private invitations: Invitation[];
+    private invitations: Invitation[];
 
     onInvitationChanged: BehaviorSubject<any>;
     onFilterBranchesChanged: BehaviorSubject<any>;
@@ -336,6 +337,8 @@ export class InvitationService implements Resolve<any>
      */
     storeInvitation(data: object): Observable<any>
     {
+        console.log(data);
+        
         return this._httpClient
             .post<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/create-invitation`, data)
             .pipe(
