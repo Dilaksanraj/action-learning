@@ -95,7 +95,7 @@ export class AppConst {
             NAME: 'waitlist',
             EMAIL_NOTIFICATION: '1'
         },
-        SUPPORT_LINK: 'https://kinderm8.com.au/support/',
+        SUPPORT_LINK: 'https://epita.com.fr/support/',
         MAINTENANCE: {
             URL: '/under-maintenance'
         },

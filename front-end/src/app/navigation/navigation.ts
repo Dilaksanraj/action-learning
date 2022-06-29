@@ -4,14 +4,12 @@ export const navigation: FuseNavigation[] = [
     {
         id       : 'applications',
         title    : 'EPI-PROJECT',
-        translate: 'NAV.APPLICATIONS',
         type     : 'group',
         icon     : 'assets/icons/flat/png/group.png',
         children : [
             {
                 id       : 'Home',
-                title    : 'Home',
-                translate: 'NAV.DASHBOARDS',
+                title    : 'Dashboard',
                 type     : 'item',
                 icon     : 'assets/icons/flat/web-hosting/svg/021-speedometer.svg',
                 url  : '/dashboard'
@@ -19,7 +17,6 @@ export const navigation: FuseNavigation[] = [
             {
                 id       : 'user',
                 title    : 'User',
-                translate: 'NAV.DASHBOARDS',
                 type     : 'collapsable',
                 icon     : 'assets/icons/flat/ui_set/custom_icons/employees.svg',
                 children : [

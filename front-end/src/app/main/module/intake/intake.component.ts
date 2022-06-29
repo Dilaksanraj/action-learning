@@ -7,8 +7,10 @@ import { NotifyType } from 'app/shared/enum/notify-type.enum';
 import { NotificationService } from 'app/shared/service/notification.service';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { IntakeNewOrEditComponent } from './dialog/new-or-edit/new-or-edit.component';
+import { Intake } from './model/intake.model';
+import { IntakeService } from './service/intake.service';
 
 @Component({
   selector: 'app-intake',
@@ -22,10 +24,11 @@ import { IntakeNewOrEditComponent } from './dialog/new-or-edit/new-or-edit.compo
     ]
 })
 export class IntakeComponent implements OnInit {
+
   private _unsubscribeAll: Subject<any>;
   total: number;
-  roomList: any;
   isLoadingData: boolean;
+  intakes: Intake[];
 
   pageIndex: any;
     pageSize: any = 1;
@@ -42,27 +45,33 @@ export class IntakeComponent implements OnInit {
     private _modalService: NzModalService,
     public _matDialog: MatDialog,
     private _notification: NotificationService,
+    private _intakeService: IntakeService,
   ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
-    this.roomList = [];
+    this.intakes = [];
     this.total = 0;
     this.isLoadingData = true;
    }
 
   ngOnInit() {
+
+            // Subscribe to branch changes
+            this._intakeService
+            .onIntakeChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((intake: Intake[]) =>
+            {
+                console.log('[intake]', intake);
+
+                this.intakes = intake;
+            });
+
   }
 
   addDialog(e: MouseEvent): void
   {
       e.preventDefault();
-
-      console.log("clicked")
-      // this.buttonLoader = true;
-
-          /*let sortTzList = []
-          _.forEach(timezones, (tz, i) => _.merge(sortTzList, tz.zones));
-          sortTzList = _.sortBy(sortTzList, ['value'])*/
 
           this.dialogRef = this._matDialog
               .open(IntakeNewOrEditComponent,
@@ -95,7 +104,40 @@ export class IntakeComponent implements OnInit {
               });
   }
 
-  delete(e: MouseEvent): void
+  editDialog(item:Intake, e: MouseEvent): void
+  {
+      e.preventDefault();
+
+          this.dialogRef = this._matDialog
+              .open(IntakeNewOrEditComponent,
+              {
+                  panelClass: 'user-new-dialog',
+                  closeOnNavigation: true,
+                  disableClose: true,
+                  autoFocus: false,
+                  data: {
+                      action: AppConst.modalActionTypes.EDIT,
+                      intake: item
+                  }
+              });
+
+          this.dialogRef
+              .afterClosed()
+              .pipe(takeUntil(this._unsubscribeAll))
+              .subscribe(message =>
+              {
+                  if ( !message )
+                  {
+                      return;
+                  }
+
+                  this._notification.clearSnackBar();
+
+                  setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200);
+              });
+  }
+
+  delete(item:Intake, e: MouseEvent): void
   {
       e.preventDefault();
 
@@ -109,22 +151,22 @@ export class IntakeComponent implements OnInit {
                   nzOkType: 'danger',
                   nzOnOk: () =>
                   {
-                      // return new Promise((resolve, reject) =>
-                      // {
-                      //     this._branchService
-                      //         .deleteBranch(item.id)
-                      //         .pipe(
-                      //             takeUntil(this._unsubscribeAll),
-                      //             finalize(() => resolve())
-                      //         )
-                      //         .subscribe(
-                      //             message => setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200),
-                      //             error =>
-                      //             {
-                      //                 throw error;
-                      //             }
-                      //         );
-                      // });
+                      return new Promise((resolve, reject) =>
+                      {
+                          this._intakeService
+                              .deleteIntake(item.id)
+                              .pipe(
+                                  takeUntil(this._unsubscribeAll),
+                                  finalize(() => resolve())
+                              )
+                              .subscribe(
+                                  message => setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200),
+                                  error =>
+                                  {
+                                      throw error;
+                                  }
+                              );
+                      });
                   }
               }
           );

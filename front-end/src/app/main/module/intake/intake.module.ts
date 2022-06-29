@@ -47,10 +47,10 @@ const routes = [
     {
         path     : '',
         component: IntakeComponent,
-        // resolve:
-        // {
-        //     branch: LoginService
-        // }
+        resolve:
+        {
+            intake: IntakeService
+        }
     },
     
 ];

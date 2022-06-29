@@ -30,7 +30,7 @@ import { CustomPreloading } from './shared/CustomPreloading';
 import { InvitationComponent } from './main/module/invitation/invitation.component';
 import { DepartmentComponent } from './main/module/department/department.component';
 import { IntakeComponent } from './main/module/intake/intake.component';
-
+import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
 
 @NgModule({
@@ -74,11 +74,17 @@ registerLocaleData(en);
         //     serverLogLevel: NgxLoggerLevel.ERROR
         //   }),
         //   NgxWebstorageModule.forRoot(),
+
+        NgxWebstorageModule.forRoot({ prefix: 'prefix name here', separator: '-' })
     ],
     bootstrap   : [
         AppComponent
     ],
-    providers: [{ provide: NZ_I18N, useValue: en_US },CustomPreloading,]
+    providers: [{ provide: NZ_I18N, useValue: en_US },
+        CustomPreloading,
+        StrategyIndex,
+        StrategyCacheService,
+    ]
 })
 export class AppModule
 {

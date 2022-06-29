@@ -5,8 +5,9 @@ import * as _ from 'lodash';
 export class Intake 
 {
     id: string;
-    email: string;
-    expiryDate: string;
+    name: string;
+    code: string;
+    graduationYear: string;
     
     isNew?: boolean;
     isLoading?: boolean;
@@ -17,8 +18,9 @@ export class Intake
     constructor(intake?: any, index?: number)
     {
         this.id = intake.id || '';
-        this.expiryDate = intake.expiry_date || '';
-        this.email = intake.email || '';
+        this.graduationYear = intake.graduation_year || '';
+        this.name = intake.name || '';
+        this.code = intake.code || '';
 
         this.isNew = false;
         this.isLoading = false;

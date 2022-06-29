@@ -3,9 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { InvitationService } from 'app/main/module/invitation/invitation.service';
 import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
+import { AppConst } from 'app/shared/AppConst';
 import { DateTimeHelper } from 'app/utils/date-time.helper';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
+import { Intake } from '../../model/intake.model';
 import { IntakeService } from '../../service/intake.service';
 
 @Component({
@@ -21,25 +23,33 @@ export class IntakeNewOrEditComponent implements OnInit {
   editMode: boolean;
   dialogTitle: string
   buttonLoader: boolean;
+  intake:Intake;
+  action: string;
 
   constructor(
     private _invitationService: IntakeService,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     public matDialogRef: MatDialogRef<UserAddDialogComponent>,
   ) {
-    this.dialogTitle = "New Intake"
+
+    this.action = _data.action;
+    this.editMode = this.action === AppConst.modalActionTypes.EDIT? true: false;
+    this.dialogTitle =  this.editMode? "Edit Intake" : "New Intake"
+    this.intake = this.editMode? this._data.intake : '';
+
     this.intakeForm = this.createintakeForm();
-    this.editMode = false;
+    this._unsubscribeAll = new Subject();
+    
   }
   ngOnInit() {
   }
 
   createintakeForm(): FormGroup {
     return new FormGroup({
-      name: new FormControl(this.editMode ? '' : '', [
+      name: new FormControl(this.editMode ? this.intake.name : '', [
         Validators.required], []),
-      code: new FormControl(this.editMode ? '' : '', [Validators.required]),
-      graduation_year: new FormControl(this.editMode ? '' : '', [Validators.required]),
+      code: new FormControl(this.editMode ? this.intake.code : '', [Validators.required]),
+      graduation_year: new FormControl(this.editMode ? DateTimeHelper.parseMomentDate(this.intake.graduationYear) : '', [Validators.required]),
     });
   }
 
@@ -58,7 +68,10 @@ export class IntakeNewOrEditComponent implements OnInit {
       name: this.fc.name.value,
       graduation_year: DateTimeHelper.getUtcDate(this.fc.graduation_year.value),
       code: this.fc.code.value,
+      id: this.editMode? this.intake.id : ''
     };
+
+    if (this.editMode) { sendObj['id'] = this.intake.id; }
 
     console.log('[intake object]', sendObj);
 
@@ -68,8 +81,7 @@ export class IntakeNewOrEditComponent implements OnInit {
       this.buttonLoader = false;
     }, 1000);
 
-    this._invitationService
-      .storeIntake(sendObj)
+    this._invitationService[this.editMode ? 'updateIntake' : 'storeIntake'](sendObj)
       .pipe(
         takeUntil(this._unsubscribeAll),
         finalize(() => setTimeout(() => this.buttonLoader = false, 200))

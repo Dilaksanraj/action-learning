@@ -19,6 +19,7 @@ import { UrlHelper } from 'app/utils/url.helper';
 import { CommonHelper } from 'app/utils/common.helper';
 import { NotifyType } from '../enum/notify-type.enum';
 import { User } from 'app/main/module/user/user.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Injectable({
     providedIn: 'root'
@@ -70,15 +71,15 @@ export class AuthService {
         private _httpClient: HttpClient,
         private _router: Router,
         private _notify: NotificationService,
-        // private _logger: NGXLogger,
         private _cookieService: CookieService,
         private _navService: NavigationService,
+        private _localStorage: LocalStorageService,
     ) 
     { 		
         // Set defaults
-        // this.currentUserSubject = new BehaviorSubject<AuthUser>(this._localStorage.retrieve(AppConst.auth.userObj) ? new AuthUser(JSON.parse(this._localStorage.retrieve(AppConst.auth.userObj))) : null);
+        this.currentUserSubject = new BehaviorSubject<AuthUser>(this._localStorage.retrieve(AppConst.auth.userObj) ? new AuthUser(JSON.parse(this._localStorage.retrieve(AppConst.auth.userObj))) : null);
 
-        // this.currentUser = this.currentUserSubject.asObservable();
+        this.currentUser = this.currentUserSubject.asObservable();
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -92,38 +93,19 @@ export class AuthService {
      * @param {string} _password
      * @returns {Observable<boolean>}
      */
-    login(data: object): Observable<any>
-    {
-        console.log('auth service working');
-        
-        return this._httpClient.post(`${AppConst.apiBaseUrl}/oauth/token`, data)
-        .pipe(
-                    map(response => response),
-                    tap(response => this.updateTokens(response)),
-                    shareReplay()
-                );
-        
-        // .subscribe((result:any)=> {
-        //     localStorage.setItem('token', result.access_token);
-        //     console.log('success');
-        //     console.log(result);
-
-        // },
-        // error => {
-        //     console.log('error');
-        // }
-        // )
-        
-        
-        // return this._httpClient
-        //     .post<any>(`${AppConst.apiBaseUrl}/login`, { data})
-        //     .pipe(
-        //         map(response => response.data),
-        //         tap(response => this.updateTokens(response)),
-        //         tap(response => this.resolveDefaultPath(response.__iED)),
-        //         shareReplay()
-        //     );
-    }
+     login(_email: string, _password: string): Observable<boolean>
+     {
+         console.log(_email);
+         
+         return this._httpClient
+             .post<any>(`${AppConst.apiBaseUrl}/login`, { email: _email, password: _password })
+             .pipe(
+                 map(response => response.data),
+                 tap(response => this.updateTokens(response)),
+                 tap(response => this.resolveDefaultPath()),
+                 shareReplay()
+             );
+     }
 
 
 
@@ -328,32 +310,32 @@ export class AuthService {
     setUser(response: any): void
     {
 
-        // try
-        // {
-        //     if (response) 
-        //     {
-        //         response = new AuthUser(response);
+        try
+        {
+            if (response) 
+            {
+                response = new AuthUser(response);
 
-        //         // this._localStorage.store(AppConst.auth.userObj, JSON.stringify(response));
-        //     }
-        //     else
-        //     {
-        //         response = null;	
-        //     }
-        // }
-        // catch (err)
-        // {
-        //     CommonHelper.errorLog(err);
+                this._localStorage.store(AppConst.auth.userObj, JSON.stringify(response));
+            }
+            else
+            {
+                response = null;	
+            }
+        }
+        catch (err)
+        {
+            CommonHelper.errorLog(err);
 
-        //     response = null;
-        // }
+            response = null;
+        }
 
-        // this.currentUserSubject.next(response);
+        this.currentUserSubject.next(response);
     }
 
     clearUser(): void
     {
-        // this._localStorage.clear(AppConst.auth.userObj);
+        this._localStorage.clear(AppConst.auth.userObj);
     }
 
     clearAuthUser(): void
@@ -375,7 +357,7 @@ export class AuthService {
 
         try
         {
-            // this._localStorage.store(AppConst.auth.kinderConnectPath, response.path);
+            this._localStorage.store(AppConst.auth.kinderConnectPath, response.path);
         }
         catch(error)
         {
@@ -482,18 +464,22 @@ export class AuthService {
 
     resolveDefaultPath(isEndUserOnBoot: boolean = false): void
     {
-        if (this._domain === AppConst.appStart.PORTAL.NAME || this._domain === AppConst.appStart.SITE_MANAGER.NAME)
-        {
-            this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
-                replaceUrl: true
-            });
-        }
-        else
-        {
-            this._router.navigate([isEndUserOnBoot ? AppConst.appStart.CLIENT.DEFAULT_AUTH_PARENT_URL : AppConst.appStart.CLIENT.DEFAULT_AUTH_URL], {
-                replaceUrl: true
-            });
-        }
+
+        this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
+                    replaceUrl: true
+                });
+        // if (this._domain === AppConst.appStart.PORTAL.NAME || this._domain === AppConst.appStart.SITE_MANAGER.NAME)
+        // {
+        //     this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
+        //         replaceUrl: true
+        //     });
+        // }
+        // else
+        // {
+        //     this._router.navigate([isEndUserOnBoot ? AppConst.appStart.CLIENT.DEFAULT_AUTH_PARENT_URL : AppConst.appStart.CLIENT.DEFAULT_AUTH_URL], {
+        //         replaceUrl: true
+        //     });
+        // }
     }
 
     resolveUnauthorizedPath(): void
@@ -650,7 +636,7 @@ export class AuthService {
     {
         try
         {
-            // return JSON.parse(this._localStorage.retrieve(AppConst.auth.userPerms));
+            return JSON.parse(this._localStorage.retrieve(AppConst.auth.userPerms));
         }
         catch (err)
         {
@@ -669,7 +655,7 @@ export class AuthService {
         {
             console.log('[permission object size]', CommonHelper.getSizeOf(perms, true));
             
-            // this._localStorage.store(AppConst.auth.userPerms, JSON.stringify(perms));
+            this._localStorage.store(AppConst.auth.userPerms, JSON.stringify(perms));
         }
         catch (err)
         {
@@ -679,13 +665,13 @@ export class AuthService {
 
     clearPermission(): void
     {
-        // this._localStorage.clear(AppConst.auth.userPerms);
+        this._localStorage.clear(AppConst.auth.userPerms);
     }
 
     hasPermission(perms: any, belongsTo: string): Promise<boolean>
     {
-        // console.log('[permission belongs to]', belongsTo);
-        // console.log('[permission list]', perms);
+        console.log('[permission belongs to]', belongsTo);
+        console.log('[permission list]', perms);
 
         return new Promise((resolve, reject) => 
         {
@@ -747,7 +733,7 @@ export class AuthService {
     {
         try
         {
-            // this._localStorage.store(AppConst.auth.currentRole, response.role[0].index);
+            this._localStorage.store(AppConst.auth.currentRole, response.role[0].index);
         }
         catch (err)
         {
@@ -757,7 +743,7 @@ export class AuthService {
 
     clearUserRole(): void
     {
-        // this._localStorage.clear(AppConst.auth.currentRole);
+        this._localStorage.clear(AppConst.auth.currentRole);
     }
 
     /*--------------------------------------------------------------*/
@@ -853,7 +839,7 @@ export class AuthService {
         {
             this.clearClient();
 
-            // this._localStorage.store(AppConst.auth.orgObj, JSON.stringify(response));
+            this._localStorage.store(AppConst.auth.orgObj, JSON.stringify(response));
         }
         catch (err)
         {
@@ -870,7 +856,7 @@ export class AuthService {
     {
         try
         {
-            // return new AuthClient(JSON.parse(this._localStorage.retrieve(AppConst.auth.orgObj)));
+            return new AuthClient(JSON.parse(this._localStorage.retrieve(AppConst.auth.orgObj)));
         }
         catch (error)
         {
@@ -883,7 +869,7 @@ export class AuthService {
      */
     clearClient(): void
     {
-        // this._localStorage.clear(AppConst.auth.orgObj);
+        this._localStorage.clear(AppConst.auth.orgObj);
     }
 
     /**

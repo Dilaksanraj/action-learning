@@ -65,6 +65,7 @@
     "ngx-progressbar": "8.0.0",
     "ngx-webstorage": "7.0.1",
     "object-sizeof": "1.6.3",
+    "observable-webworker": "4.0.1",
     "perfect-scrollbar": "1.4.0",
     "prismjs": "1.16.0",
     "rxjs": "6.5.2",

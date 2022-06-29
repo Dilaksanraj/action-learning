@@ -7,6 +7,9 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { AppConst } from 'app/shared/AppConst';
+import { AuthUser } from 'app/shared/model/authUser';
+import { AuthService } from 'app/shared/service/auth.service';
 
 @Component({
     selector     : 'navbar-vertical-style-1',
@@ -18,6 +21,8 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
 {
     fuseConfig: any;
     navigation: any;
+    logo: string;
+    userObj: AuthUser;
 
     // Private
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
@@ -35,9 +40,11 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
-        private _router: Router
+        private _router: Router,
+        private _authService: AuthService,
     )
     {
+        this.logo = AppConst.image.DEFAULT_LOGO;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -119,6 +126,16 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
             .subscribe(() => {
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
             });
+
+            // Subscribe to the user changes
+        this._authService.currentUser
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((user: any) => 
+        {
+            
+            this.userObj = user;
+            console.log(this.userObj);
+        });
     }
 
     /**
