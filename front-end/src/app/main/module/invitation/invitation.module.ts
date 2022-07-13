@@ -41,6 +41,9 @@ import { FuseDemoModule } from '@fuse/components';
 import { InvitationComponent } from './invitation.component';
 import { NewOrEditComponentInvitation } from './dialog/new-or-edit/new-or-edit.component';
 import { InvitationService } from './invitation.service';
+import { IntakeService } from '../intake/service/intake.service';
+import { Departmentservice } from '../department/service/department.service';
+import { CommonService } from 'app/shared/service/common.service';
 
 
 const routes = [
@@ -105,7 +108,10 @@ const routes = [
         NzDividerModule,
     ],
     providers: [
-        InvitationService
+        InvitationService,
+        IntakeService,
+        Departmentservice,
+        CommonService,
     ]
 })
 export class InvitationModule

@@ -19,7 +19,7 @@ import { UrlHelper } from 'app/utils/url.helper';
 import { CommonHelper } from 'app/utils/common.helper';
 import { NotifyType } from '../enum/notify-type.enum';
 import { User } from 'app/main/module/user/user.model';
-import { LocalStorageService } from 'ngx-webstorage';
+// import { LocalStorageService } from 'ngx-webstorage';
 
 @Injectable({
     providedIn: 'root'
@@ -73,13 +73,13 @@ export class AuthService {
         private _notify: NotificationService,
         private _cookieService: CookieService,
         private _navService: NavigationService,
-        private _localStorage: LocalStorageService,
+        // private _localStorage: LocalStorageService,
     ) 
     { 		
         // Set defaults
-        this.currentUserSubject = new BehaviorSubject<AuthUser>(this._localStorage.retrieve(AppConst.auth.userObj) ? new AuthUser(JSON.parse(this._localStorage.retrieve(AppConst.auth.userObj))) : null);
+        // this.currentUserSubject = new BehaviorSubject<AuthUser>(this._localStorage.retrieve(AppConst.auth.userObj) ? new AuthUser(JSON.parse(this._localStorage.retrieve(AppConst.auth.userObj))) : null);
 
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.currentUser = this.currentUserSubject;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -143,61 +143,7 @@ export class AuthService {
                 shareReplay()
             );
     }
-    
-    /**
-     * get user object
-     *
-     * @returns {Observable<any>}
-     */
-    getOwnerBranchAccess(): Observable<any>
-    {
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/get-subscriber-branch-access`, {})
-            .pipe(
-                map(response => response.data.map((u: any, idx: number) => new User(u, idx))),
-                shareReplay()
-            );
-    }
 
-    /**
-     * login to kinder pay application
-     *
-     * @returns {Observable<any>}
-     */
-    loginToKinderPay(branch: string, user: string): Observable<any>
-    {
-        const params = new HttpParams()
-            .set('branch', branch)
-            .set('user', user);
-
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/get-kinder-pay-access`, { params })
-            .pipe(
-                map(response => response.data),
-                shareReplay()
-            );
-    }
-
-    /**
-     * sync kinder pay profiles to kinder connect
-     *
-     * @param {string} type
-     * @param {string} id
-     * @returns {Observable<any>}
-     */
-    syncKinderConnectProfile(type: string, id: string): Observable<any>
-    {
-        const params = new HttpParams()
-            .set('type', type)
-            .set('id', id);
-
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/sync-kc-profile`, { params })
-            .pipe(
-                map(response => response.message),
-                shareReplay()
-            );
-    }
 
     /**
      * get current user object
@@ -316,7 +262,7 @@ export class AuthService {
             {
                 response = new AuthUser(response);
 
-                this._localStorage.store(AppConst.auth.userObj, JSON.stringify(response));
+                // this._localStorage.store(AppConst.auth.userObj, JSON.stringify(response));
             }
             else
             {
@@ -335,7 +281,7 @@ export class AuthService {
 
     clearUser(): void
     {
-        this._localStorage.clear(AppConst.auth.userObj);
+        // this._localStorage.clear(AppConst.auth.userObj);
     }
 
     clearAuthUser(): void
@@ -346,23 +292,6 @@ export class AuthService {
         this.clearUser();
 
         setTimeout(() => this.currentUserSubject.next(null), 50);
-    }
-
-    setKinderConnectPath(response: any): void
-    {
-        if (!response.__iED)
-        {
-            return;
-        }
-
-        try
-        {
-            this._localStorage.store(AppConst.auth.kinderConnectPath, response.path);
-        }
-        catch(error)
-        {
-            CommonHelper.errorLog(error);
-        }
     }
 
     isAuthenticated(): boolean
@@ -636,7 +565,7 @@ export class AuthService {
     {
         try
         {
-            return JSON.parse(this._localStorage.retrieve(AppConst.auth.userPerms));
+            // return JSON.parse(this._localStorage.retrieve(AppConst.auth.userPerms));
         }
         catch (err)
         {
@@ -655,7 +584,7 @@ export class AuthService {
         {
             console.log('[permission object size]', CommonHelper.getSizeOf(perms, true));
             
-            this._localStorage.store(AppConst.auth.userPerms, JSON.stringify(perms));
+            // this._localStorage.store(AppConst.auth.userPerms, JSON.stringify(perms));
         }
         catch (err)
         {
@@ -665,7 +594,7 @@ export class AuthService {
 
     clearPermission(): void
     {
-        this._localStorage.clear(AppConst.auth.userPerms);
+        // this._localStorage.clear(AppConst.auth.userPerms);
     }
 
     hasPermission(perms: any, belongsTo: string): Promise<boolean>
@@ -733,7 +662,7 @@ export class AuthService {
     {
         try
         {
-            this._localStorage.store(AppConst.auth.currentRole, response.role[0].index);
+            // this._localStorage.store(AppConst.auth.currentRole, response.role[0].index);
         }
         catch (err)
         {
@@ -743,7 +672,7 @@ export class AuthService {
 
     clearUserRole(): void
     {
-        this._localStorage.clear(AppConst.auth.currentRole);
+        // this._localStorage.clear(AppConst.auth.currentRole);
     }
 
     /*--------------------------------------------------------------*/
@@ -839,7 +768,7 @@ export class AuthService {
         {
             this.clearClient();
 
-            this._localStorage.store(AppConst.auth.orgObj, JSON.stringify(response));
+            // this._localStorage.store(AppConst.auth.orgObj, JSON.stringify(response));
         }
         catch (err)
         {
@@ -856,7 +785,7 @@ export class AuthService {
     {
         try
         {
-            return new AuthClient(JSON.parse(this._localStorage.retrieve(AppConst.auth.orgObj)));
+            // return new AuthClient(JSON.parse(this._localStorage.retrieve(AppConst.auth.orgObj)));
         }
         catch (error)
         {
@@ -869,7 +798,7 @@ export class AuthService {
      */
     clearClient(): void
     {
-        this._localStorage.clear(AppConst.auth.orgObj);
+        // this._localStorage.clear(AppConst.auth.orgObj);
     }
 
     /**

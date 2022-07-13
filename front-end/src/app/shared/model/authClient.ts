@@ -5,8 +5,6 @@ export class AuthClient {
     name: string;
     email: string;
     desc: string;
-    organization: string;
-    organizationId: string;
     phoneNumber: string;
     faxNumber: string;
     addressLine1: string;
@@ -19,9 +17,6 @@ export class AuthClient {
     timeZone: string;
     logo?: string;
     cover?: string;
-    centerSettings?: any;
-    hasKinderConnect?: boolean;
-    branchLogo?: string;
     newAdvancedPayment?: boolean;
 
     /**
@@ -31,8 +26,6 @@ export class AuthClient {
      */
     constructor(client?: any) {
         this.id = client.id;
-        this.organization = client.org_name;
-        this.organizationId = client.org;
         this.email = client.email;
         this.name = client.name;
         this.desc = client.desc;
@@ -48,9 +41,6 @@ export class AuthClient {
         this.timeZone = client.tz;
         this.logo = client.media ? client.media.logo : AppConst.image.DEFAULT_LOGO || AppConst.image.DEFAULT_LOGO;
         this.cover = client.media ? client.media.cover : '' || '';
-        this.centerSettings = client.center_settings ? client.center_settings : null
-        this.hasKinderConnect = client.has_kinder_connect || false;
-        this.branchLogo = client.branch_logo ? client.branch_logo : '';
         this.newAdvancedPayment = client.new_advanced_payment || false;
     }
 

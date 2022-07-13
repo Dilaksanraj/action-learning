@@ -9,7 +9,7 @@ import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scr
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { AppConst } from 'app/shared/AppConst';
 import { AuthUser } from 'app/shared/model/authUser';
-import { AuthService } from 'app/shared/service/auth.service';
+// import { AuthService } from 'app/shared/service/auth.service';
 
 @Component({
     selector     : 'navbar-vertical-style-1',
@@ -41,7 +41,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        private _authService: AuthService,
+        // private _authService: AuthService,
     )
     {
         this.logo = AppConst.image.DEFAULT_LOGO;
@@ -128,14 +128,14 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
             });
 
             // Subscribe to the user changes
-        this._authService.currentUser
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((user: any) => 
-        {
+        // this._authService.currentUser
+        // .pipe(takeUntil(this._unsubscribeAll))
+        // .subscribe((user: any) => 
+        // {
             
-            this.userObj = user;
-            console.log(this.userObj);
-        });
+        //     this.userObj = user;
+        //     console.log(this.userObj);
+        // });
     }
 
     /**

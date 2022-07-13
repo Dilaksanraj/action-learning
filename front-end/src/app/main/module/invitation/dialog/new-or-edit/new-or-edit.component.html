@@ -31,12 +31,12 @@
 
                         <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
 
-                            <input nz-input formControlName="email" placeholder="name" type="text" />
+                            <input nz-input formControlName="email" placeholder="email" type="text" />
 
                             <ng-template #nameErrorTpl let-control>
                                 <ng-container *ngIf="control.hasError('required')">Please input your name</ng-container>
                                 <ng-container *ngIf="control.hasError('pattern')">Invalid input name</ng-container>
-                                <ng-container *ngIf="control.hasError('exists')">Name already exists</ng-container>
+                                <ng-container *ngIf="control.hasError('exists')">Email already exists</ng-container>
                             </ng-template>
 
                         </nz-form-control>
@@ -66,6 +66,59 @@
                     </nz-form-item>
 
                 </div>
+
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+                    <nz-form-item>
+
+                        <nz-form-label nzRequired>Intake</nz-form-label>
+
+                        <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl">
+
+
+                            <nz-select  
+                                formControlName="intake"
+                                nzShowSearch
+                                nzAllowClear
+                                nzPlaceHolder="select a intake">
+                                <nz-option *ngFor="let item of intakes " nzValue="{{ item.id }}" nzLabel="{{ item.name}}"></nz-option>
+                                
+                            </nz-select>
+
+                            <ng-template #typeErrorTpl let-control>
+                                <ng-container *ngIf="control.hasError('required')">Please select intake</ng-container>
+                            </ng-template>
+
+                        </nz-form-control>
+
+                    </nz-form-item>
+                </div>
+
+                <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+                    <nz-form-item>
+
+                        <nz-form-label nzRequired>Department</nz-form-label>
+
+                        <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl">
+
+                            <nz-select  
+                                formControlName="department"
+                                nzShowSearch
+                                nzAllowClear
+                                nzPlaceHolder="select a department">
+
+                                <nz-option *ngFor="let item of departments" nzValue="{{ item.id }}" nzLabel="{{ item.name}}"></nz-option>
+                                
+                            </nz-select>
+
+                            <ng-template #typeErrorTpl let-control>
+                                <ng-container *ngIf="control.hasError('required')">Please select departments</ng-container>
+                            </ng-template>
+
+                        </nz-form-control>
+
+                    </nz-form-item>
+                </div>
+                
 
                 <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
 

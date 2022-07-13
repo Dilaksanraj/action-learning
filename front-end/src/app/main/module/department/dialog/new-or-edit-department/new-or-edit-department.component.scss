@@ -1,6 +1,6 @@
 @import "src/@fuse/scss/fuse";
 
-.invitation-new-dialog {
+.department-new-dialog {
 
     @include media-breakpoint('xs') {
         width: 100%;
@@ -35,6 +35,9 @@
             }
         }
 
+        // .compose-form {
+
+        // }
     }
 
     .dialog-content-wrapper {

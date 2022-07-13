@@ -24,6 +24,8 @@ Route::prefix('v1')->group(function(){
     Route::post('register', 'App\Http\Controllers\ApiAuthController@register');
     Route::get('logout', 'App\Http\Controllers\ApiAuthController@logout');
 
+
+    // Intake routes
     Route::post('create-intake', 'App\Http\Controllers\IntakeController@create')
     ->name('create-intake');
 
@@ -35,7 +37,26 @@ Route::prefix('v1')->group(function(){
 
     Route::post('update-intake', 'App\Http\Controllers\IntakeController@update')
     ->name('update-intake');
+
+
+    // department routes
+    Route::post('create-department', 'App\Http\Controllers\DepartmentController@create')
+    ->name('create-department');
+
+    Route::get('get-department-list', 'App\Http\Controllers\DepartmentController@list')
+    ->name('get-department-list');
+
+    Route::delete('delete-department', 'App\Http\Controllers\DepartmentController@delete')
+    ->name('delete-department');
+
+    Route::post('update-department', 'App\Http\Controllers\DepartmentController@update')
+    ->name('update-department');
+
     
+    // common routes
+
+    //Check if value exists
+    Route::get('/value-exists', 'CommonController@checkValueExists')->name('check-value-exists');
 
     
     

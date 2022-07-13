@@ -38,25 +38,29 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { FuseDemoModule } from '@fuse/components';
 import { DepartmentComponent } from './department.component';
+import { Departmentservice } from './service/department.service';
+import { NewOrEditDepartmentComponent } from './dialog/new-or-edit-department/new-or-edit-department.component';
 
 
 const routes = [
     {
         path     : '',
         component: DepartmentComponent,
-        // resolve:
-        // {
-        //     branch: LoginService
-        // }
+        resolve:
+        {
+            department: Departmentservice
+        }
     },
     
 ];
 
 @NgModule({
     declarations: [
-        DepartmentComponent
+        DepartmentComponent,
+        NewOrEditDepartmentComponent
     ],
     entryComponents: [
+        NewOrEditDepartmentComponent
       ],
     imports     : [
         RouterModule.forChild(routes),
@@ -98,9 +102,9 @@ const routes = [
         NzTableModule,
         NzDividerModule,
     ],
-    // providers: [
-    //     LoginService
-    // ]
+    providers: [
+        Departmentservice
+    ]
 })
 export class DepartmentModule
 {

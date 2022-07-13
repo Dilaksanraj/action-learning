@@ -1,79 +1,78 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { InvitationService } from 'app/main/module/invitation/invitation.service';
-import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
+import { Department } from 'app/main/module/department/model/department.model';
+import { Departmentservice } from 'app/main/module/department/service/department.service';
 import { AppConst } from 'app/shared/AppConst';
 import { DateTimeHelper } from 'app/utils/date-time.helper';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-import { Intake } from '../../model/intake.model';
-import { IntakeService } from '../../service/intake.service';
 
 @Component({
-  selector: 'app-new-or-edit',
-  templateUrl: './new-or-edit.component.html',
-  styleUrls: ['./new-or-edit.component.scss'],
+  selector: 'app-new-or-edit-department',
+  templateUrl: './new-or-edit-department.component.html',
+  styleUrls: ['./new-or-edit-department.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class IntakeNewOrEditComponent implements OnInit {
+export class NewOrEditDepartmentComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
-  intakeForm: FormGroup;
+  departmentForm: FormGroup;
   editMode: boolean;
-  dialogTitle: string
+  dialogTitle: string;
   buttonLoader: boolean;
-  intake:Intake;
+  department: Department;
   action: string;
 
   constructor(
-    private _invitationService: IntakeService,
+    private departmentService: Departmentservice,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    public matDialogRef: MatDialogRef<IntakeNewOrEditComponent>,
+    public matDialogRef: MatDialogRef<NewOrEditDepartmentComponent>,
   ) {
 
     this.action = _data.action;
-    this.editMode = this.action === AppConst.modalActionTypes.EDIT? true: false;
-    this.dialogTitle =  this.editMode? "Edit Intake" : "New Intake"
-    this.intake = this.editMode? this._data.intake : '';
+    this.editMode = this.action === AppConst.modalActionTypes.EDIT ? true : false;
+    this.dialogTitle =  this.editMode ? 'Edit department' : 'New department';
+    this.department = this.editMode ? this._data.item : '';
 
-    this.intakeForm = this.createintakeForm();
+    this.departmentForm = this.createDepartmentForm();
     this._unsubscribeAll = new Subject();
+
+    console.log(_data);
+    
     
   }
   ngOnInit() {
   }
 
-  createintakeForm(): FormGroup {
+  createDepartmentForm(): FormGroup {
     return new FormGroup({
-      name: new FormControl(this.editMode ? this.intake.name : '', [
+      name: new FormControl(this.editMode ? this.department.name : '', [
         Validators.required], []),
-      code: new FormControl(this.editMode ? this.intake.code : '', [Validators.required]),
-      graduation_year: new FormControl(this.editMode ? DateTimeHelper.parseMomentDate(this.intake.graduationYear) : '', [Validators.required]),
+      code: new FormControl(this.editMode ? this.department.code : '', [Validators.required]),
     });
   }
 
   get fc(): any {
-    return this.intakeForm.controls;
+    return this.departmentForm.controls;
   }
 
   onFormSubmit(e: MouseEvent): void {
     e.preventDefault();
 
-    if (this.intakeForm.invalid) {
+    if (this.departmentForm.invalid) {
       return;
     }
 
     const sendObj = {
       name: this.fc.name.value,
-      graduation_year: DateTimeHelper.getUtcDate(this.fc.graduation_year.value),
       code: this.fc.code.value,
-      id: this.editMode? this.intake.id : ''
+      id: this.editMode ? this.department.id : ''
     };
 
-    if (this.editMode) { sendObj['id'] = this.intake.id; }
+    if (this.editMode) { sendObj['id'] = this.department.id; }
 
-    console.log('[intake object]', sendObj);
+    console.log('[department object]', sendObj);
 
     this.buttonLoader = true;
 
@@ -81,7 +80,7 @@ export class IntakeNewOrEditComponent implements OnInit {
       this.buttonLoader = false;
     }, 1000);
 
-    this._invitationService[this.editMode ? 'updateIntake' : 'storeIntake'](sendObj)
+    this.departmentService[this.editMode ? 'updateDepartment' : 'storeDepartment'](sendObj)
       .pipe(
         takeUntil(this._unsubscribeAll),
         finalize(() => setTimeout(() => this.buttonLoader = false, 200))
@@ -105,7 +104,7 @@ export class IntakeNewOrEditComponent implements OnInit {
   //   {
   //       setTimeout(() =>
   //       {
-  //           this.intakeForm.get('email').setAsyncValidators([this.emailExistsValidator(this.editMode ? this._data.response.invitation.id : '')]);
+  //           this.departmentForm.get('email').setAsyncValidators([this.emailExistsValidator(this.editMode ? this._data.response.invitation.id : '')]);
   //       }, 500);
   //   }
 
@@ -116,7 +115,7 @@ export class IntakeNewOrEditComponent implements OnInit {
   //         .pipe(
   //             debounceTime(800),
   //             distinctUntilChanged(),
-  //             switchMap(() => this._invitationService.emailExists(control.value, id)),
+  //             switchMap(() => this.departmentService.emailExists(control.value, id)),
   //             map((unique: boolean) => (!unique ? null : { 'exists': true })),
   //             catchError(() => of({ 'exists': true })),
   //             first()
@@ -127,7 +126,7 @@ export class IntakeNewOrEditComponent implements OnInit {
   resetForm(e: MouseEvent): void {
     if (e) { e.preventDefault(); }
 
-    this.intakeForm.reset();
+    this.departmentForm.reset();
   }
 
 

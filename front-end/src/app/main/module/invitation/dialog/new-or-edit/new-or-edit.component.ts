@@ -1,7 +1,12 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Department } from 'app/main/module/department/model/department.model';
+import { Intake } from 'app/main/module/intake/model/intake.model';
 import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
+import { AppConst } from 'app/shared/AppConst';
+import { CommonService } from 'app/shared/service/common.service';
+import { valueExists } from 'app/shared/validators/asynValidator';
 import { DateTimeHelper } from 'app/utils/date-time.helper';
 import { of, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, catchError, first, map, takeUntil, finalize } from 'rxjs/operators';
@@ -18,18 +23,26 @@ export class NewOrEditComponentInvitation implements OnInit {
   private _unsubscribeAll: Subject<any>;
   invitationForm: FormGroup;
   editMode: boolean;
-  dialogTitle: string
-  buttonLoader:boolean;
+  dialogTitle: string;
+  buttonLoader: boolean;
+  intakes: Intake[];
+  departments: Department[];
 
   constructor(
     private _invitationService: InvitationService,
     @Inject(MAT_DIALOG_DATA) private _data: any,
-    public matDialogRef: MatDialogRef<UserAddDialogComponent>,
+    public matDialogRef: MatDialogRef<NewOrEditComponentInvitation>,
+    private _commonService: CommonService,
   ) 
   {
-    this.dialogTitle = "New Invitation"
+    
     this.invitationForm = this.createinvitationForm();
-    this.editMode = false;
+    this.editMode = _data.action === AppConst.modalActionTypes.NEW ? false : true;
+    this.intakes = _data.intakes;
+    this.departments =  _data.departments;
+    this.dialogTitle = this.editMode ? 'Update Invitation' : 'New Invitation';
+    console.log(_data);
+    
   }
   ngOnInit() {
   }
@@ -38,9 +51,11 @@ export class NewOrEditComponentInvitation implements OnInit {
   {
       return new FormGroup({
           email: new FormControl(this.editMode ? '' : '', [
-              Validators.required, Validators.email], []),
-              expiry_date:new FormControl(this.editMode ? '' : '', [Validators.required]),
+              Validators.required, Validators.email], [valueExists(this._commonService, 'invitation.email')]),
+              expiry_date: new FormControl(this.editMode ? '' : '', [Validators.required]),
           type: new FormControl(this.editMode ? '' : '', [Validators.required]),
+          intake: new FormControl(this.editMode ? '' : '', [Validators.required]),
+          department: new FormControl(this.editMode ? '' : '', [Validators.required]),
           });
   }
 
@@ -94,6 +109,11 @@ export class NewOrEditComponentInvitation implements OnInit {
                   console.log('😀 all good. 🍺');
               }
           );
+  }
+
+  trackByFn(index: number, item: any): number
+  {
+      return index;
   }
 
   // setAsyncValidators(): void
