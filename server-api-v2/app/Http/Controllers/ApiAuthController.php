@@ -5,6 +5,11 @@ use Validator;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use RequestHelper;
+use Helpers;
+use App\Enums\ErrorType;
+use App\Enums\RequestType;
+use LocalizationHelper;
 use Illuminate\Support\Facades\Auth; 
 use Laravel\Passport\Client as OClient;
 use Laravel\Passport\RefreshToken;
@@ -16,23 +21,19 @@ class ApiAuthController extends Controller
     public function login(Request $request) { 
 
         Log::info(trim($request->input('email')));
-        Log::info(trim($request->input('email')));
 
-        if (Auth::attempt(['email' => 'dilaksan510@gmail.com', 'password' => '123456'])) { 
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) { 
             $oClient = OClient::where('password_client', 1)->first();
 
-            Log::info("working post man");
-            return $this->getTokenAndRefreshToken($oClient, 'dilaksan510@gmail.com', '123456');
+            // Log::info("working post man");
 
-            // return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'));
+            return $this->getTokenAndRefreshToken($oClient, request('email'), request('password'));
         } 
         else { 
             return response()->json(['error'=>'Unauthorised'], 401); 
         } 
     }
     public function register(Request $request) {
-
-        Log::info($request->all());
 
         $validator = Validator::make($request->all(), [ 
             'name' => 'required', 
@@ -48,9 +49,9 @@ class ApiAuthController extends Controller
         $input['password'] = bcrypt($input['password']); 
         $user = User::create($input); 
         $oClient = OClient::where('password_client', 1)->first();
-        return $this->getTokenAndRefreshToken($oClient, $user->email, $password);
+        return $this->getTokenAndRefreshToken($oClient, $user->id, $password);
     }
-    public function getTokenAndRefreshToken(OClient $oClient, $email, $password) { 
+    public function getTokenAndRefreshToken(OClient $oClient, $id, $password) { 
         $oClient = OClient::where('password_client', 1)->first();
         $http = new Client;
 
@@ -58,7 +59,7 @@ class ApiAuthController extends Controller
             'grant_type' => 'password',
             'client_id' => $oClient->id,
             'client_secret' => $oClient->secret,
-            'username' => $email,
+            'username' => $id,
             'password' => $password,
             'scope' => '*',
         ]);
@@ -67,7 +68,28 @@ class ApiAuthController extends Controller
         Log::info($response);
         Log::info(Auth()->user()->email);
 
-        return ($response->status() === 200) ? json_decode($response->getContent(), true) : null;
+        $data = ($response->status() === 200) ? json_decode($response->getContent(), true) : null;
+
+        if (is_null($data))
+                {
+                    return response()->json(
+                        RequestHelper::sendResponse(
+                            RequestType::CODE_400,
+                            LocalizationHelper::getTranslatedText('system.request_forbidden')
+                    ), RequestType::CODE_400);
+                }
+        $send_response = [
+            'access_token' => $data['access_token'],
+            'refresh_token' => $data['refresh_token'],
+        ];
+
+        // login successful
+        return response()->json(
+            RequestHelper::sendResponse(
+                RequestType::CODE_200,
+                LocalizationHelper::getTranslatedText('response.success_request'),
+                $send_response
+            ), RequestType::CODE_200);
     }
 
     public function logout()
@@ -87,12 +109,11 @@ class ApiAuthController extends Controller
 
             unset($user);
 
-            return true;
-            // return response()->json(
-            //     RequestHelper::sendResponse(
-            //         RequestType::CODE_200,
-            //         LocalizationHelper::getTranslatedText('auth.logout_success')
-            // ), RequestType::CODE_200);
+            return response()->json(
+                RequestHelper::sendResponse(
+                    RequestType::CODE_200,
+                    LocalizationHelper::getTranslatedText('auth.logout_success')
+            ), RequestType::CODE_200);
         }
         catch (Exception $e)
         {

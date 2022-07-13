@@ -56,7 +56,11 @@ Route::prefix('v1')->group(function(){
     // common routes
 
     //Check if value exists
-    Route::get('/value-exists', 'CommonController@checkValueExists')->name('check-value-exists');
+    Route::group(['middleware' =>['auth']], function () {
+
+        Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
+    });
+    
 
     
     
