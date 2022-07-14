@@ -24,12 +24,7 @@ import { FormsModule } from '@angular/forms';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { APP_ROUTES } from './app.routes';
-import { ClientLoginComponent } from './main/common/auth/client-login/client-login.component';
-import { DashboardComponent } from './main/module/dashboard/dashboard.component';
 import { CustomPreloading } from './shared/CustomPreloading';
-import { InvitationComponent } from './main/module/invitation/invitation.component';
-import { DepartmentComponent } from './main/module/department/department.component';
-import { IntakeComponent } from './main/module/intake/intake.component';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
 
