@@ -142,21 +142,6 @@ export class AppComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
 
-        // check service worker updates
-        // if (this._serviceWorker.isEnabled)
-        // {
-        //     this._serviceWorker
-        //         .available
-        //         .pipe(takeUntil(this._unsubscribeAll))
-        //         .subscribe(event =>
-        //         {
-        //             if (confirm('New version available. Load New Version?'))
-        //             {
-        //                 this._serviceWorker.activateUpdate().then(() => location.reload());
-        //             }
-        //         });
-        // }
-
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -193,6 +178,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
+
+            
     }
 
     /**

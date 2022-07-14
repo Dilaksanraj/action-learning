@@ -91,7 +91,7 @@ export class ClientLoginComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
         this.loginForm = this._formBuilder.group({
-            email: [environment.production ? '' : 'dilaksanraj510@gmail.com', [Validators.required, Validators.email]],
+            email: [environment.production ? '' : 'dilaksan510@gmail.com', [Validators.required, Validators.email]],
             password: [environment.production ? '' : '123456', Validators.required]
         });
     }

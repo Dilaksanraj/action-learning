@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\User; 
 use Validator;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use RequestHelper;
@@ -10,10 +11,11 @@ use Helpers;
 use App\Enums\ErrorType;
 use App\Enums\RequestType;
 use LocalizationHelper;
-use Illuminate\Support\Facades\Auth; 
+use App\Exceptions\System\ServerErrorException;
 use Laravel\Passport\Client as OClient;
 use Laravel\Passport\RefreshToken;
 use Log;
+use App\Http\Resources\UserResource;
 
 class ApiAuthController extends Controller
 {
@@ -114,6 +116,44 @@ class ApiAuthController extends Controller
                     RequestType::CODE_200,
                     LocalizationHelper::getTranslatedText('auth.logout_success')
             ), RequestType::CODE_200);
+        }
+        catch (Exception $e)
+        {
+            throw new ServerErrorException($e);
+        }
+    }
+
+    public function getUser()
+    {
+        Log::info('get user started');
+
+        Log::info(auth('api')->user());
+
+        
+        try
+        {
+            if (!auth('api')->check())
+            {
+                return response()->json(
+                    RequestHelper::sendResponse(
+                        RequestType::CODE_401,
+                        LocalizationHelper::getTranslatedText('auth.invalid_user')
+                    ), RequestType::CODE_401);
+            }
+
+
+            $response = new UserResource(auth('api')->user(), [ 'isAuth' => true ]);
+
+
+            return $response
+                ->response()
+                ->setStatusCode(RequestType::CODE_200);
+        }
+        catch (AuthException $e)
+        {
+            return response()->json(
+                RequestHelper::sendResponse($e->getCode(), $e->getMessage()
+            ), $e->getCode());
         }
         catch (Exception $e)
         {

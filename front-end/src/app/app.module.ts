@@ -25,8 +25,11 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { APP_ROUTES } from './app.routes';
 import { CustomPreloading } from './shared/CustomPreloading';
+// import { NgxWebstorageModule, StrategyCacheService, StrategyIndex } from 'ngx-webstorage';
+import { CookieService } from 'ngx-cookie-service';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
+
 
 @NgModule({
     declarations: [
@@ -63,6 +66,7 @@ registerLocaleData(en);
         AppStoreModule,
         NgZorroAntdModule,
         FormsModule,
+        
         // LoggerModule.forRoot({
         //     serverLoggingUrl: '/api/logs',
         //     level: NgxLoggerLevel.DEBUG,
@@ -79,6 +83,7 @@ registerLocaleData(en);
         CustomPreloading,
         // StrategyIndex,
         // StrategyCacheService,
+        CookieService
     ]
 })
 export class AppModule

@@ -18,8 +18,8 @@ import { AppConst } from '../AppConst';
 import { UrlHelper } from 'app/utils/url.helper';
 import { CommonHelper } from 'app/utils/common.helper';
 import { NotifyType } from '../enum/notify-type.enum';
-import { User } from 'app/main/module/user/user.model';
-// import { LocalStorageService } from 'ngx-webstorage';
+// import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+// import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 @Injectable({
     providedIn: 'root'
@@ -74,12 +74,15 @@ export class AuthService {
         private _cookieService: CookieService,
         private _navService: NavigationService,
         // private _localStorage: LocalStorageService,
+        // private _sessionStorage: SessionStorageService,
     ) 
     { 		
         // Set defaults
-        // this.currentUserSubject = new BehaviorSubject<AuthUser>(this._localStorage.retrieve(AppConst.auth.userObj) ? new AuthUser(JSON.parse(this._localStorage.retrieve(AppConst.auth.userObj))) : null);
+        this.currentUserSubject = new BehaviorSubject<AuthUser>(null);
 
         this.currentUser = this.currentUserSubject;
+
+        this._cookieService.set('test', 'cookis working');
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -96,6 +99,8 @@ export class AuthService {
      login(_email: string, _password: string): Observable<boolean>
      {
          console.log(_email);
+         console.log(this._cookieService.get('test'));
+         
          
          return this._httpClient
              .post<any>(`${AppConst.apiBaseUrl}/login`, { email: _email, password: _password })
@@ -103,7 +108,7 @@ export class AuthService {
                  map(response => response.data),
                  tap(response => this.updateTokens(response)),
                  tap(response => this.resolveDefaultPath()),
-                 shareReplay()
+                 shareReplay(),
              );
      }
 
@@ -131,17 +136,40 @@ export class AuthService {
      *
      * @returns {Observable<any>}
      */
-    getAuthUser(): Observable<any>
+    // getAuthUser(): Observable<any>
+    // {
+    //     console.log('auth service call auth user');
+        
+    //     const header = new HttpHeaders({
+    //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+    //     });
+    //     return this._httpClient
+    //         .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
+    //         .pipe(
+    //             map(response => response),
+    //             shareReplay()
+    //         );
+    // }
+
+    getAuthUser(): Promise<any>
     {
         const header = new HttpHeaders({
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            Authorization: `Bearer ${this.getAccessToken()}`
         });
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/api/user`, {headers:header})
-            .pipe(
-                map(response => response),
-                shareReplay()
-            );
+        return new Promise((resolve, reject) => 
+        {
+            this._httpClient
+                .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
+                .pipe(
+                    map((response: any) => response.data.map((i, idx) => new AuthUser(i))),
+                    shareReplay()
+                )
+                .subscribe(
+                    (response: any) => resolve(response),
+                    reject
+                );
+            
+        });
     }
 
 
@@ -160,6 +188,8 @@ export class AuthService {
     {
         try
         {
+            console.log(token);
+            
             this._cookieService.set(AppConst.auth.accessToken, token, undefined, '/');
         }
         catch (err)
@@ -198,6 +228,8 @@ export class AuthService {
     updateTokens(response: any): boolean
     {
         let successState = false;
+        console.log(response.access_token);
+        
 
         try
         {
@@ -215,6 +247,7 @@ export class AuthService {
             CommonHelper.errorLog(error);
         }
 
+        
         return successState;
     }
 
@@ -733,7 +766,7 @@ export class AuthService {
                             if (!clientStatus)
                             {
                                 // clear user data on client inactive
-                                if(this.isAuthenticated())
+                                if (this.isAuthenticated())
                                 {
                                     this.clearAuthUser();
                                 }

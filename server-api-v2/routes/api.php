@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function(){
     Route::get('logout', 'App\Http\Controllers\ApiAuthController@logout');
 
 
+
     // Intake routes
     Route::post('create-intake', 'App\Http\Controllers\IntakeController@create')
     ->name('create-intake');
@@ -59,7 +60,10 @@ Route::prefix('v1')->group(function(){
     Route::group(['middleware' =>['auth']], function () {
 
         Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
+        
     });
+
+    Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
     
 
     

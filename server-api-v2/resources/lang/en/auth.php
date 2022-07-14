@@ -37,7 +37,7 @@ return [
     'logout_success' => 'You\'ve been logged out successfully!',
     'email_exists' => 'This email already exist.',
     'user_email_not_verified' => 'You have not yet verified your email address. please check your inbox.',
-    'verify_email_error' => 'Subscription code not found. please contact support team : <br> <a href="' . StaticUrls::kinderm8_support_link['url'] . '" target="_blank">' . StaticUrls::kinderm8_support_link['name'] . '</a>.',
+    'verify_email_error' => 'Subscription code not found. please contact support team : <br> <a href="" target="_blank"></a>.',
 
     'forgot_password_success' => 'An email has been sent to the address you have provided. Please follow the link in the email to complete your password reset request.',
     'forgot_password_error' => 'The email address you entered is incorrect or the account does not exist.',

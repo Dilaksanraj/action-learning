@@ -4,8 +4,10 @@ import { fuseAnimations } from '@fuse/animations';
 import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 import { AppConst } from 'app/shared/AppConst';
 import { NotifyType } from 'app/shared/enum/notify-type.enum';
+import { AuthService } from 'app/shared/service/auth.service';
 import { NotificationService } from 'app/shared/service/notification.service';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { promise } from 'protractor';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Department } from '../department/model/department.model';
@@ -50,6 +52,7 @@ export class InvitationComponent implements OnInit {
         private _notification: NotificationService,
         private _intakeService: IntakeService,
         private _departmentservice: Departmentservice,
+        private _authService: AuthService,
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -59,6 +62,7 @@ export class InvitationComponent implements OnInit {
     }
 
     ngOnInit() {
+        
     }
 
     addDialog(e: MouseEvent): void {
@@ -69,11 +73,12 @@ export class InvitationComponent implements OnInit {
 
         Promise.all([
             this._intakeService.getAllIntakes(),
-            this._departmentservice.getAllDepartments()
+            this._departmentservice.getAllDepartments(),
+            this._authService.getAuthUser(),
         ])
-        .then(([intakes, departments]: [Intake, Department]) => 
+        .then(([intakes, departments,user]: [Intake, Department,any]) => 
         {
-            console.log(intakes);
+            console.log(user);
             
             this.dialogRef = this._matDialog
                     .open(NewOrEditComponentInvitation,
