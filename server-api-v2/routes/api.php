@@ -57,13 +57,17 @@ Route::prefix('v1')->group(function(){
     // common routes
 
     //Check if value exists
-    Route::group(['middleware' =>['auth']], function () {
+    Route::group(['middleware' =>['auth:api']], function () {
 
         Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
         
     });
 
-    Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
+    Route::group(['middleware' => ['auth:api', 'api_auth_user']], function () {
+        Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
+    });
+
+    
     
 
     

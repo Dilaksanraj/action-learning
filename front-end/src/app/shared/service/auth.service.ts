@@ -78,11 +78,9 @@ export class AuthService {
     ) 
     { 		
         // Set defaults
-        this.currentUserSubject = new BehaviorSubject<AuthUser>(null);
+        this.currentUserSubject = new BehaviorSubject<any>(this._cookieService.get('user'));
 
         this.currentUser = this.currentUserSubject;
-
-        this._cookieService.set('test', 'cookis working');
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -98,10 +96,7 @@ export class AuthService {
      */
      login(_email: string, _password: string): Observable<boolean>
      {
-         console.log(_email);
-         console.log(this._cookieService.get('test'));
-         
-         
+
          return this._httpClient
              .post<any>(`${AppConst.apiBaseUrl}/login`, { email: _email, password: _password })
              .pipe(
@@ -136,20 +131,18 @@ export class AuthService {
      *
      * @returns {Observable<any>}
      */
-    // getAuthUser(): Observable<any>
-    // {
-    //     console.log('auth service call auth user');
-        
-    //     const header = new HttpHeaders({
-    //         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-    //     });
-    //     return this._httpClient
-    //         .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
-    //         .pipe(
-    //             map(response => response),
-    //             shareReplay()
-    //         );
-    // }
+    getAuthUserData(): Observable<any>
+    {
+        const header = new HttpHeaders({
+            Authorization: `Bearer ${this.getAccessToken()}`
+        });
+        return this._httpClient
+            .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
+            .pipe(
+                map(response => response),
+                shareReplay()
+            );
+    }
 
     getAuthUser(): Promise<any>
     {
@@ -161,7 +154,7 @@ export class AuthService {
             this._httpClient
                 .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
                 .pipe(
-                    map((response: any) => response.data.map((i, idx) => new AuthUser(i))),
+                    map((response: any) => new AuthUser(response.data)),
                     shareReplay()
                 )
                 .subscribe(
