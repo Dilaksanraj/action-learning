@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
@@ -30,6 +30,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from './shared/service/auth.service';
 import { catchError, finalize, take } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+// import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
 
@@ -104,6 +108,7 @@ export function appInitFactory(injector: Injector): any
         // Material
         MatButtonModule,
         MatIconModule,
+        MatDialogModule,
 
         // Fuse modules
         FuseModule.forRoot(fuseConfig),
@@ -135,10 +140,21 @@ export function appInitFactory(injector: Injector): any
         // StrategyIndex,
         // StrategyCacheService,
         CookieService,
+        // {
+        //     provide: APP_INITIALIZER,
+        //     useFactory: appInitFactory,
+        //     deps: [Injector],
+        //     multi: true
+        // },
         {
-            provide: APP_INITIALIZER,
-            useFactory: appInitFactory,
-            deps: [Injector],
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpErrorInterceptor,
+            multi: true
+        },
+
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
             multi: true
         },
     ]
