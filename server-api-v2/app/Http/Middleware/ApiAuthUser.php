@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
+use RequestHelper;
+use App\Enums\RequestType;
+use LocalizationHelper;
 
 class ApiAuthUser
 {
@@ -17,10 +20,14 @@ class ApiAuthUser
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
+        $user = Auth('api')->user();
 
             if(!$user->accesible){
-                // redirect page or error.
+                return response()->json(
+                    RequestHelper::sendResponse(
+                        RequestType::CODE_401,
+                        LocalizationHelper::getTranslatedText('auth.token_expired')
+                ), RequestType::CODE_401);
             }
 
         return $next($request);

@@ -22,9 +22,17 @@ Route::prefix('v1')->group(function(){
 
     Route::post('login', 'App\Http\Controllers\ApiAuthController@login');
     Route::post('register', 'App\Http\Controllers\ApiAuthController@register');
+    
+
+    //this is only for auth user
+    Route::group(['middleware' => ['auth:api']], function () {
+
+    //auth_user_routes
+    Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
     Route::get('logout', 'App\Http\Controllers\ApiAuthController@logout');
 
-
+    // common routes
+    Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
 
     // Intake routes
     Route::post('create-intake', 'App\Http\Controllers\IntakeController@create')
@@ -53,22 +61,8 @@ Route::prefix('v1')->group(function(){
     Route::post('update-department', 'App\Http\Controllers\DepartmentController@update')
     ->name('update-department');
 
-    
-    // common routes
-
-    //Check if value exists
-    Route::group(['middleware' =>['auth:api']], function () {
-
-        Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
-        
-    });
-
-    Route::group(['middleware' => ['auth:api', 'api_auth_user']], function () {
-        Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
-        /* post routes */
-
-
-        Route::post('/create-invitation', 'App\Http\Controllers\InvitationController@create')
+    // invitation routes
+    Route::post('/create-invitation', 'App\Http\Controllers\InvitationController@create')
     ->name('create-invitation');
 
     Route::get('get-invitation-list', 'App\Http\Controllers\InvitationController@list')
