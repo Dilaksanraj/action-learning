@@ -27,9 +27,9 @@
       <!-- / CONTENT TOOLBAR -->
 
       <!-- CONTENT -->
-      <div class="content p-24 pt-0" fusePerfectScrollbar>
+      <div class="content p-24 pt-12" fusePerfectScrollbar>
 
-        <nz-list [nzNoResult]="emptyBlock" [nzDataSource]="roomList" [nzRenderItem]="item"
+        <nz-list [nzNoResult]="emptyBlock" [nzDataSource]="invitations" [nzRenderItem]="item"
           [nzGrid]="{ gutter: 16, xs: 24, sm: 12, md: 8, lg: 8, xl: 6, xxl: 5 }">
 
           <ng-template #item let-item let-index="index">
@@ -45,10 +45,10 @@
 
                     <div class="color-bar {{ item.color }}"></div>
 
-                    <p class="text-truncate"><span class="font-weight-600">Name</span> <br> {{ item.display }}</p>
-                    <p class="text-truncate"><span class="font-weight-600">Description</span> <br> {{ item.desc ||
+                    <p class="text-truncate"><span class="font-weight-600">Email</span> <br> {{ item.email }}</p>
+                    <p class="text-truncate"><span class="font-weight-600">Expiry at</span> <br> {{ item.expiry_date ||
                       'none' }}</p>
-                    <p class="mb-0 text-truncate "><span class="font-weight-600">Created</span> <br> {{ item.created }}
+                    <p class="mb-0 text-truncate "><span class="font-weight-600">Created </span> <br> {{ item.email }}
                     </p>
 
                   </nz-card>

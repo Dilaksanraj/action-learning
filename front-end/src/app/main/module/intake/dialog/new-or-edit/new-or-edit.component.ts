@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { InvitationService } from 'app/main/module/invitation/invitation.service';
-import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
 import { AppConst } from 'app/shared/AppConst';
 import { DateTimeHelper } from 'app/utils/date-time.helper';
 import { Subject } from 'rxjs';
@@ -21,13 +19,13 @@ export class IntakeNewOrEditComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   intakeForm: FormGroup;
   editMode: boolean;
-  dialogTitle: string
+  dialogTitle: string;
   buttonLoader: boolean;
-  intake:Intake;
+  intake: Intake;
   action: string;
 
   constructor(
-    private _invitationService: IntakeService,
+    private intakeService: IntakeService,
     @Inject(MAT_DIALOG_DATA) private _data: any,
     public matDialogRef: MatDialogRef<IntakeNewOrEditComponent>,
   ) {
@@ -68,7 +66,6 @@ export class IntakeNewOrEditComponent implements OnInit {
       name: this.fc.name.value,
       graduation_year: DateTimeHelper.getUtcDate(this.fc.graduation_year.value),
       code: this.fc.code.value,
-      id: this.editMode? this.intake.id : ''
     };
 
     if (this.editMode) { sendObj['id'] = this.intake.id; }
@@ -81,7 +78,7 @@ export class IntakeNewOrEditComponent implements OnInit {
       this.buttonLoader = false;
     }, 1000);
 
-    this._invitationService[this.editMode ? 'updateIntake' : 'storeIntake'](sendObj)
+    this.intakeService[this.editMode ? 'updateIntake' : 'storeIntake'](sendObj)
       .pipe(
         takeUntil(this._unsubscribeAll),
         finalize(() => setTimeout(() => this.buttonLoader = false, 200))
@@ -116,7 +113,7 @@ export class IntakeNewOrEditComponent implements OnInit {
   //         .pipe(
   //             debounceTime(800),
   //             distinctUntilChanged(),
-  //             switchMap(() => this._invitationService.emailExists(control.value, id)),
+  //             switchMap(() => this.intakeService.emailExists(control.value, id)),
   //             map((unique: boolean) => (!unique ? null : { 'exists': true })),
   //             catchError(() => of({ 'exists': true })),
   //             first()

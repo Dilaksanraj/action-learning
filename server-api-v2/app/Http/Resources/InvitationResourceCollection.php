@@ -3,9 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\DepartmentResource;
 
-class DepartmentResourceCollection extends ResourceCollection
+use App\Http\Resources\InvitationResource;
+
+class InvitationResourceCollection extends ResourceCollection
 {
     private $params;
 
@@ -28,7 +29,7 @@ class DepartmentResourceCollection extends ResourceCollection
 
         $this->collection->transform(function ($data)
         {
-            return (new DepartmentResource($data, $this->params));
+            return (new InvitationResource($data, $this->params));
         });
 
         return parent::toArray($request);

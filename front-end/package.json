@@ -61,7 +61,6 @@
     "ngrx-store-freeze": "0.2.4",
     "ngx-color-picker": "7.5.0",
     "ngx-cookie-service": "2.2.0",
-    "ngx-logger": "5.0.11",
     "ngx-pipes": "3.0.0",
     "ngx-progressbar": "8.0.0",
     "object-sizeof": "1.6.3",

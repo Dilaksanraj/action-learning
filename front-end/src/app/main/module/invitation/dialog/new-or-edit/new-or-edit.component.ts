@@ -3,126 +3,119 @@ import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, Validators }
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Department } from 'app/main/module/department/model/department.model';
 import { Intake } from 'app/main/module/intake/model/intake.model';
-import { UserAddDialogComponent } from 'app/main/module/user/dialog/new/new.component';
 import { AppConst } from 'app/shared/AppConst';
 import { CommonService } from 'app/shared/service/common.service';
 import { valueExists } from 'app/shared/validators/asynValidator';
 import { DateTimeHelper } from 'app/utils/date-time.helper';
-import { of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError, first, map, takeUntil, finalize } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil, finalize } from 'rxjs/operators';
 import { InvitationService } from '../../invitation.service';
 
 @Component({
-  selector: 'app-new-or-edit',
-  templateUrl: './new-or-edit.component.html',
-  styleUrls: ['./new-or-edit.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-new-or-edit',
+    templateUrl: './new-or-edit.component.html',
+    styleUrls: ['./new-or-edit.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class NewOrEditComponentInvitation implements OnInit {
 
-  private _unsubscribeAll: Subject<any>;
-  invitationForm: FormGroup;
-  editMode: boolean;
-  dialogTitle: string;
-  buttonLoader: boolean;
-  intakes: Intake[];
-  departments: Department[];
+    private _unsubscribeAll: Subject<any>;
+    invitationForm: FormGroup;
+    editMode: boolean;
+    dialogTitle: string;
+    buttonLoader: boolean;
+    intakes: Intake[];
+    departments: Department[];
 
-  constructor(
-    private _invitationService: InvitationService,
-    @Inject(MAT_DIALOG_DATA) private _data: any,
-    public matDialogRef: MatDialogRef<NewOrEditComponentInvitation>,
-    private _commonService: CommonService,
-  ) 
-  {
-    
-    this.invitationForm = this.createinvitationForm();
-    this.editMode = _data.action === AppConst.modalActionTypes.NEW ? false : true;
-    this.intakes = _data.intakes;
-    this.departments =  _data.departments;
-    this.dialogTitle = this.editMode ? 'Update Invitation' : 'New Invitation';
-    console.log(_data);
-    
-  }
-  ngOnInit() {
-  }
+    constructor(
+        private _invitationService: InvitationService,
+        @Inject(MAT_DIALOG_DATA) private _data: any,
+        public matDialogRef: MatDialogRef<NewOrEditComponentInvitation>,
+        private _commonService: CommonService,
+    ) {
 
-  createinvitationForm(): FormGroup
-  {
-      return new FormGroup({
-          email: new FormControl(this.editMode ? '' : '', [
-              Validators.required, Validators.email], [valueExists(this._commonService, 'invitation.email')]),
-              expiry_date: new FormControl(this.editMode ? '' : '', [Validators.required]),
-          type: new FormControl(this.editMode ? '' : '', [Validators.required]),
-          intake: new FormControl(this.editMode ? '' : '', [Validators.required]),
-          department: new FormControl(this.editMode ? '' : '', [Validators.required]),
-          });
-  }
+        this.invitationForm = this.createinvitationForm();
+        this.editMode = _data.action === AppConst.modalActionTypes.NEW ? false : true;
+        this.intakes = _data.intakes;
+        this.departments = _data.departments;
+        this.dialogTitle = this.editMode ? 'Update Invitation' : 'New Invitation';
+        console.log(_data);
+        this._unsubscribeAll = new Subject();
 
-  get fc(): any 
-  { 
-      return this.invitationForm.controls; 
-  }
+    }
+    ngOnInit() {
+    }
 
-  onFormSubmit(e: MouseEvent): void
-  {
-      e.preventDefault();
+    createinvitationForm(): FormGroup {
+        return new FormGroup({
+            email: new FormControl(this.editMode ? '' : '', [
+                Validators.required, Validators.email], [valueExists(this._commonService, 'invitation.email')]),
+            expiry_date: new FormControl(this.editMode ? '' : '', [Validators.required]),
+            type: new FormControl(this.editMode ? '' : '', [Validators.required]),
+            intake: new FormControl(this.editMode ? '' : '', [Validators.required]),
+            department: new FormControl(this.editMode ? '' : '', [Validators.required]),
+        });
+    }
 
-      if (this.invitationForm.invalid)
-      {
-          return;
-      }
+    get fc(): any {
+        return this.invitationForm.controls;
+    }
 
-      const sendObj = {
-          email: this.fc.email.value,
-          expiry_date: DateTimeHelper.getUtcDate(this.fc.expiry_date.value),
-          type: this.fc.type.value,
-      };
+    onFormSubmit(e: MouseEvent): void {
+        e.preventDefault();
 
-      console.log('[branch object]', sendObj);
+        if (this.invitationForm.invalid) {
+            return;
+        }
 
-      this.buttonLoader = true;
+        const sendObj = {
+            email: this.fc.email.value,
+            expiry_date: DateTimeHelper.getUtcDate(this.fc.expiry_date.value),
+            type: this.fc.type.value,
+            intake: this.fc.intake.value,
+            department: this.fc.department.value
+        };
 
-      setTimeout(() => {
-        this.buttonLoader = false;
-      }, 1000);
+        console.log('[invitation object]', sendObj);
 
-      this._invitationService
-          .storeInvitation(sendObj)
-          .pipe(
-              takeUntil(this._unsubscribeAll),
-              finalize(() => setTimeout(() => this.buttonLoader = false, 200))
-          )
-          .subscribe(
-              res =>
-              {
-                  this.resetForm(null);
+        this.buttonLoader = true;
 
-                  setTimeout(() => this.matDialogRef.close(res), 250);
-              },
-              error =>
-              {
-                  throw error;
-              },
-              () =>
-              {
-                  console.log('😀 all good. 🍺');
-              }
-          );
-  }
+        setTimeout(() => {
+            this.buttonLoader = false;
+        }, 1000);
 
-  trackByFn(index: number, item: any): number
-  {
-      return index;
-  }
+        this._invitationService
+        .storeInvitation(sendObj)
+            .pipe(
+                takeUntil(this._unsubscribeAll),
+                finalize(() => setTimeout(() => this.buttonLoader = false, 200))
+            )
+            .subscribe(
+                res => {
+                    this.resetForm(null);
 
-  // setAsyncValidators(): void
-  //   {
-  //       setTimeout(() =>
-  //       {
-  //           this.invitationForm.get('email').setAsyncValidators([this.emailExistsValidator(this.editMode ? this._data.response.invitation.id : '')]);
-  //       }, 500);
-  //   }
+                    setTimeout(() => this.matDialogRef.close(res), 250);
+                },
+                error => {
+                    throw error;
+                },
+                () => {
+                    console.log('😀 all good. 🍺');
+                }
+            );
+    }
+
+    trackByFn(index: number, item: any): number {
+        return index;
+    }
+
+    // setAsyncValidators(): void
+    //   {
+    //       setTimeout(() =>
+    //       {
+    //           this.invitationForm.get('email').setAsyncValidators([this.emailExistsValidator(this.editMode ? this._data.response.invitation.id : '')]);
+    //       }, 500);
+    //   }
 
     // emailExistsValidator(id: string = ''): AsyncValidatorFn
     // {
@@ -139,12 +132,12 @@ export class NewOrEditComponentInvitation implements OnInit {
     // }
 
 
-    resetForm(e: MouseEvent): void
-    {
+    resetForm(e: MouseEvent): void {
+
         if (e) { e.preventDefault(); }
 
         this.invitationForm.reset();
     }
-  
+
 
 }

@@ -65,7 +65,18 @@ Route::prefix('v1')->group(function(){
 
     Route::group(['middleware' => ['auth:api', 'api_auth_user']], function () {
         Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
+        /* post routes */
+
+
+        Route::post('/create-invitation', 'App\Http\Controllers\InvitationController@create')
+    ->name('create-invitation');
+
+    Route::get('get-invitation-list', 'App\Http\Controllers\InvitationController@list')
+    ->name('InvitationController');
+    
     });
+
+    
 
     
     

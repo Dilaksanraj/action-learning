@@ -25,7 +25,6 @@ class DepartmentController extends Controller
     //
     public function create(Request $request){
 
-        Log::info($request->all());
         DB::beginTransaction();
         try{
 

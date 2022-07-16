@@ -12,7 +12,7 @@ import { tap, finalize } from 'rxjs/operators';
 
 import * as _ from 'lodash';
 
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 import { AuthService } from '../service/auth.service';
 
@@ -25,7 +25,7 @@ export class RefreshTokenCheckerInterceptor implements HttpInterceptor {
 	 * @param {NGXLogger} _logger
      */
     constructor(
-        private _logger: NGXLogger,
+        // private _logger: NGXLogger,
         private _authService: AuthService
     )
     { 
@@ -71,7 +71,7 @@ export class RefreshTokenCheckerInterceptor implements HttpInterceptor {
                 const token = _.trim(event.headers.get('Authorization').replace('Bearer ', ''));
                 const refresh = _.trim(event.headers.get('Refresh-Token'));
 
-                this._logger.debug('[tokens]', token + '|' + refresh);
+                // this._logger.debug('[tokens]', token + '|' + refresh);
                 
                 if (token !== this._authService.getAccessToken() && refresh !== this._authService.getRefreshToken())
                 {

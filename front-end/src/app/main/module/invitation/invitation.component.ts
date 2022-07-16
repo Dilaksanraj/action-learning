@@ -16,6 +16,8 @@ import { Intake } from '../intake/model/intake.model';
 import { IntakeService } from '../intake/service/intake.service';
 import { UserAddDialogComponent } from '../user/dialog/new/new.component';
 import { NewOrEditComponentInvitation } from './dialog/new-or-edit/new-or-edit.component';
+import { InvitationService } from './invitation.service';
+import { Invitation } from './model/invitation.model';
 
 @Component({
     selector: 'manage-invitation',
@@ -34,6 +36,7 @@ export class InvitationComponent implements OnInit {
     total: number;
     roomList: any;
     isLoadingData: boolean;
+    invitations: Invitation[];
 
     pageIndex: any;
     pageSize: any = 1;
@@ -53,6 +56,7 @@ export class InvitationComponent implements OnInit {
         private _intakeService: IntakeService,
         private _departmentservice: Departmentservice,
         private _authService: AuthService,
+        private _invitationService: InvitationService,
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -62,7 +66,16 @@ export class InvitationComponent implements OnInit {
     }
 
     ngOnInit() {
-        
+
+        this._invitationService
+            .onInvitationChanged
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((invitation: Invitation[]) => {
+                console.log('[invitation]', Invitation);
+
+                this.invitations = invitation;
+            });
+
     }
 
     addDialog(e: MouseEvent): void {

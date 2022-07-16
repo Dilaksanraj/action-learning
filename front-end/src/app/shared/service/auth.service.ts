@@ -439,54 +439,7 @@ export class AuthService {
 
     resolveUnauthorizedPath(): void
     {
-        if (this._domain === AppConst.appStart.PORTAL.NAME)
-        {
-            this._router.navigate([AppConst.appStart.PORTAL.LOGIN_URL]);
-        }
-        else if (this._domain === AppConst.appStart.SITE_MANAGER.NAME)
-        {	
-            this._router.navigate([AppConst.appStart.SITE_MANAGER.LOGIN_URL]);
-        }
-        else if (this._domain === AppConst.appStart.INVITATION.NAME)
-        {
-            const queryParams = UrlHelper.getQueryParameters();
-
-            if (UrlHelper.getRootPath()
-                || _.isEmpty(queryParams)
-                || !queryParams.token
-                || UrlHelper.removeQueryParameters(location.pathname) !== AppConst.appStart.INVITATION.BASE_URL)
-            {
-                this._router.navigate([AppConst.appStart.INVITATION.BASE_URL]);
-            }
-        }
-        else if (this._domain === AppConst.appStart.PASSWORD_SETUP.NAME)
-        {
-            const queryParams = UrlHelper.getQueryParameters();
-
-            if (UrlHelper.getRootPath()
-                || _.isEmpty(queryParams)
-                || !queryParams.id
-                || UrlHelper.removeQueryParameters(location.pathname) !== AppConst.appStart.PASSWORD_SETUP.BASE_URL)
-            {
-                this._router.navigate([AppConst.appStart.PASSWORD_SETUP.BASE_URL]);
-            }
-        }
-        else if (this._domain === AppConst.appStart.MARKET_PLACE.NAME)
-        {
-            this._router.navigate([AppConst.appStart.MARKET_PLACE.BASE_URL]);
-        }
-        else if (this._domain === AppConst.appStart.ENROLLMENT.NAME)
-        {
-            this._router.navigate([AppConst.appStart.ENROLLMENT.BASE_URL]);
-        }
-        else if (this._domain === AppConst.appStart.ENQUIRY.NAME)
-        {
-            this._router.navigate([AppConst.appStart.ENQUIRY.BASE_URL]);
-        }
-        else
-        {
-            this._router.navigate([AppConst.appStart.CLIENT.LOGIN_URL]);
-        }
+        this._router.navigate(['auth/login']);
     }
 
     resolveUnauthorizedUrl(url: string): void

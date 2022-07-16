@@ -39,7 +39,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { FuseDemoModule } from '@fuse/components';
 import { IntakeComponent } from './intake.component';
 import { IntakeNewOrEditComponent } from './dialog/new-or-edit/new-or-edit.component';
-import { InvitationService } from '../invitation/invitation.service';
 import { IntakeService } from './service/intake.service';
 
 

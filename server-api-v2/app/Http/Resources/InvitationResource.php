@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class InvitationResource extends JsonResource
 {
     private $params;
 
@@ -28,15 +28,15 @@ class DepartmentResource extends JsonResource
         {
             $prop = [
                 'id' => $this->index,
-                'name' => $this->name,
+                'email' => $this->email,
             ];
         }
         else{
 
             $prop = [
                 'id' => $this->index,
-                'name' => $this->name,
-                'code' => $this->code,
+                'email' => $this->email,
+                'expiry_date' => $this->expires_at,
             ];
         }
         return $prop;

@@ -16,14 +16,7 @@ import { CommonService } from '../service/common.service';
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-    /**
-     * Constructor
-     *
-     * @param {AuthService} _authService
-     * @param {NGXLogger} _logger
-     * @param {CommonService} _commonService
-	 * @param {Injector} _injector
-     */
+
     constructor(
         private _authService: AuthService,
         private _commonService: CommonService
@@ -53,7 +46,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
     private handle401Error(): void
     {
-        // this._logger.debug('[401 Unauthorized. 😨]');
+        console.log('[401 Unauthorized. 😨]');
 
         // ui related
         this._commonService.closeAllModels();

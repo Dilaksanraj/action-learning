@@ -10,12 +10,7 @@ class IntakeResource extends JsonResource
 
     private $params;
 
-    /**
-     * Create a new resource instance.
-     *
-     * @param mixed $resource
-     * @param array $params
-     */
+
     public function __construct($resource, $params = [])
     {
         // Ensure you call the parent constructor
@@ -26,12 +21,6 @@ class IntakeResource extends JsonResource
         $this->params = $params;
     }
 
-    /**
-     * Transform the resource into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
     public function toArray($request)
     {
         if (is_null($this->resource))

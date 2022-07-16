@@ -50,10 +50,10 @@ const routes = [
     {
         path     : '',
         component: InvitationComponent,
-        // resolve:
-        // {
-        //     branch: LoginService
-        // }
+        resolve:
+        {
+            invitation: InvitationService
+        }
     },
     
 ];

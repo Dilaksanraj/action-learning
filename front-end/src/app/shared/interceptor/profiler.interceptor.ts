@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 @Injectable()
 export class ProfilerInterceptor implements HttpInterceptor {
@@ -20,7 +20,7 @@ export class ProfilerInterceptor implements HttpInterceptor {
 	 * @param {NGXLogger} _logger
      */
     constructor(
-        private _logger: NGXLogger
+        // private _logger: NGXLogger
     )
     { 
 
@@ -49,7 +49,7 @@ export class ProfilerInterceptor implements HttpInterceptor {
                 
                 const elapsed = Date.now() - started;
                 const msg = `${request.method} "${request.urlWithParams}" ${ok} in ${elapsed} ms.`;
-                this._logger.debug('[request profiler info]', msg);
+                // this._logger.debug('[request profiler info]', msg);
             })
         );
     }

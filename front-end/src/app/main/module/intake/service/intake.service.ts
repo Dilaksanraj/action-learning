@@ -11,6 +11,7 @@ import { AppConst } from 'app/shared/AppConst';
 import { PaginationProp } from 'app/shared/interface/pagination';
 import { SortProp } from 'app/shared/interface/sort';
 import { Intake } from '../model/intake.model';
+import { Invitation } from '../../invitation/model/invitation.model';
 
 @Injectable()
 export class IntakeService implements Resolve<any>
@@ -118,6 +119,34 @@ export class IntakeService implements Resolve<any>
                             });
     
                             setTimeout(() => this.onIntakeChanged.next([...this.intake]), 350);
+                        }
+    
+                        return response.message;
+                    }),
+            );
+    }
+
+    storeInvitation(data: object): Observable<any>
+    {
+        console.log('data in service' , data);
+        
+        return this._httpClient
+            .post<any>(`${AppConst.apiBaseUrl}/create-invitation`, data)
+            .pipe(
+                map(response => 
+                    {
+                        if (response.data && _.keys(response.data).length > 0)
+                        {
+                            const item = new Invitation(response.data);
+                            item.isNew = true;
+    
+                            // this.invitations = this.invitations.concat(item).map((v, i) =>
+                            // {
+                            //     v.index = i;
+                            //     return v;
+                            // });
+    
+                            // setTimeout(() => this.onInvitationChanged.next([...this.invitations]), 350);
                         }
     
                         return response.message;

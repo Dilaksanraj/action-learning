@@ -84,238 +84,47 @@ export class InvitationService implements Resolve<any>
      */
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
-        return new Promise((resolve, reject) =>
+        return new Promise<void>((resolve, reject) =>
         {
-            // if (this._authService.isOwner())
-            // {
-            //     Promise.all([
-            //         this.getInvitations(),
-            //         this.getBranches()
-            //     ])
-            //     .then(([invitations, branches]: [any, any]) => 
-            //     {
-            //         this.setEvents(branches);
-                    
-            //         resolve();
-            //     })
-            //     .catch(error => 
-            //     {
-            //         reject(error);
-            //     });
-            // }
-            // else if (this._authService.isAdministrative())
-            // {
-            //     Promise.all([
-            //         this.getInvitations()
-            //     ])
-            //     .then(([invitations]: [any]) => 
-            //     {
-            //         this.setEvents();
-
-            //         resolve();
-            //     })
-            //     .catch(error => 
-            //     {
-            //         reject(error);
-            //     });
-            // }
-            // else
-            // {
-            //     reject();    
-            // }
+            Promise.all([
+                this.getInvitation()
+            ])
+            .then(([intakes]: [any]) => 
+            {
+                resolve();
+            })
+            .catch(error => 
+            {
+                reject(error);
+            });
         });
     }
 
-    /**
-     * set events after resolve
-     */
-    // setEvents(branches: Branch[] = []): void
-    // {
-    //     if (!_.isEmpty(branches))
-    //     {
-    //         this.onFilterBranchesChanged.next(branches);
-    //     }
+    getInvitation(): Promise<any>
+    {
+        return new Promise<void>((resolve, reject) =>
+        {
+            this._httpClient
+                .get<any>(`${AppConst.apiBaseUrl}/get-invitation-list`, {})
+                .pipe(
+                    map(response => response.data),
+                    shareReplay()
+                )
+                .subscribe(
+                    (response: any) => 
+                    {
+                        console.log(response);
+                        
+                        this.invitations = response.map((i, idx) => new Invitation(i, idx));
+                        this.onInvitationChanged.next([...this.invitations]);
+                        resolve();
+                    },
+                    reject
+                );
+        });
+    }
+    
 
-    //     this.onSearchTextChanged
-    //         .pipe(takeUntil(this._unsubscribeAll))
-    //         .subscribe(searchText =>
-    //         {
-    //             this.searchText = searchText;
-
-    //             this.getInvitations();
-    //         });
-
-    //     this.onSortChanged
-    //         .pipe(takeUntil(this._unsubscribeAll))
-    //         .subscribe(sort =>
-    //         {
-    //             this.sortBy = sort;
-
-    //             this.getInvitations();
-    //         });
-
-    //     this.onFilterChanged
-    //         .pipe(takeUntil(this._unsubscribeAll))
-    //         .subscribe(filter =>
-    //         {
-    //             this.filterBy = filter;
-
-    //             // reset page index
-    //             if (!_.isNull(this.pagination))
-    //             {
-    //                 this.pagination.page = this.defaultPageIndex;
-    //             }
-
-    //             this.getInvitations();
-    //         });
-
-    //     this.onPaginationChanged
-    //         .pipe(takeUntil(this._unsubscribeAll))
-    //         .subscribe(pagination =>
-    //         {
-    //             this.pagination = pagination;
-                
-    //             this.getInvitations();
-    //         });
-    // }
-
-    /**
-     * get branch list by user
-     *
-     * @returns {Promise<any>}
-     */
-    // getBranches(): Promise<any>
-    // {
-    //     return new Promise((resolve, reject) =>
-    //     {
-    //         this._branchService
-    //             .getBranchesByUser()
-    //             .pipe(
-    //                 map(response => !_.isEmpty(response) ? response.map((i: any, idx: number) => new Branch(i, idx)) : [])
-    //             )
-    //             .subscribe((response: any) =>
-    //                 {
-    //                     resolve(response);
-    //                 },
-    //                 reject
-    //             );
-    //     });
-    // }
-
-    /**
-     * get assign roles
-     *
-     * @param {string} id
-     * @returns {Observable<any>}
-     */
-    // getRoles(id: string): Observable<any>
-    // {
-    //     const params = new HttpParams().set('id', id);
-
-    //     return this._httpClient
-    //         .get<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/get-invitation-roles`, { params })
-    //         .pipe(
-    //             map(response => response.data),
-    //             shareReplay()
-    //         );
-    // }
-
-    /**
-     * Get invitation list
-     *
-     * @returns {Promise<any>}
-     */
-    // getInvitations(): Promise<any>
-    // {
-    //     return new Promise((resolve, reject) =>
-    //     {
-    //         // set table loader
-    //         this.onTableLoaderChanged.next(true);
-
-    //         if (_.isNull(this.pagination))
-    //         {
-    //             // set default value
-    //             this.pagination = {
-    //                 page: this.defaultPageIndex,
-    //                 size: this.defaultPageSize
-    //             };
-    //         }
-
-    //         const params = new HttpParams()
-    //             .set('page', this.pagination.page)
-    //             .set('offset', this.pagination.size)
-    //             .set('search', this.searchText)
-    //             .set('sort', JSON.stringify(this.sortBy))
-    //             .set('filters', JSON.stringify(this.filterBy));
-            
-    //         return this._httpClient
-    //             .get<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/get-invitation-list`, { params })
-    //             .pipe(
-    //                 map(response =>
-    //                 {
-    //                     this.invitations = response.data.map((i: any, idx: number) => new Invitation(i, idx));
-
-    //                     this.totalDisplayRecords = response.meta ? response.meta.total : 0;
-    //                     this.totalRecords = response.totalRecords;
-    //                     this.isFiltered = response.filtered;
-
-    //                     return {
-    //                         items: (_.keys(response).length < 1 || (response.data && response.data.length < 1)) ? [] : [...this.invitations],
-    //                         totalDisplay: this.totalDisplayRecords,
-    //                         total: this.totalRecords,
-    //                         filtered: this.isFiltered
-    //                     };
-    //                 }),
-    //                 finalize(() => setTimeout(() => this.onTableLoaderChanged.next(false), 200)),
-    //                 shareReplay()
-    //             )
-    //             .subscribe(
-    //                 (response: any) =>
-    //                 {
-    //                     this.onInvitationChanged.next(response);
-
-    //                     resolve();
-    //                 },
-    //                 reject
-    //             );
-    //     });
-    // }
-
-    /**
-     * get invitation dependency
-     *
-     * @returns {Observable<any>}
-     */
-    // getDependency(): Observable<any>
-    // {
-    //     return this._httpClient
-    //         .get<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/user-data`, {})
-    //         .pipe(
-    //             map(response =>
-    //             {
-    //                 if (response.data && _.keys(response.data).length < 1 || (response.data.roles.length < 1 || response.data.branches.length < 1 || response.data.rolelevels.length < 1))
-    //                 {
-    //                     return {};
-    //                 }
-    //                 else
-    //                 {
-    //                     return {
-    //                         roles: response.data.roles.map((i: any, idx: number) => new Role(i, idx)),
-    //                         branches: response.data.branches.map((i: any, idx: number) => new Branch(i, idx)),
-    //                         levels: response.data.rolelevels
-    //                     };
-    //                 }
-    //             }),
-    //             shareReplay()
-    //         );
-    // }
-
-    /**
-     * check if email exists
-     *
-     * @param {string} email
-     * @returns {Observable<any>}
-     */
     emailExists(email: string, index: string = ''): Observable<any>
     {
         const params = new HttpParams()
@@ -335,129 +144,45 @@ export class InvitationService implements Resolve<any>
      * 
      * @returns {Observable<any>}
      */
-    storeInvitation(data: object): Observable<any>
-    {
-        console.log(data);
-        
-        return this._httpClient
-            .post<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/create-invitation`, data)
-            .pipe(
-                map(response => response.message),
-                shareReplay()
-            );
-    }
-
-    /**
-     * Get invitation item
-     * 
-     * @returns {Observable<any>}
-     */
-    // getInvitation(index: string): Observable<any>
+    // storeInvitation(data: object): Observable<any>
     // {
-    //     const params = new HttpParams().set('index', index);
-
-    //     return this._httpClient
-    //         .get<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/edit-invitation`, { params })
-    //         .pipe(
-    //             map(response => new Invitation(response.data)),
-    //             shareReplay()
-    //         );
-    // }
-
-    /**
-     * Update invitation item
-     * 
-     * @returns {Observable<any>}
-     */
-    // updateInvitation(data: object): Observable<any>
-    // {
-    //     return this._httpClient
-    //         .post<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/update-invitation`, data)
-    //         .pipe(
-    //             map(response => 
-    //             {
-    //                 if (response.data && _.keys(response.data).length > 0)
-    //                 {
-    //                     const item = new Invitation(response.data);
-    
-    //                     const index = this.invitations.findIndex((val) => val.id === item.id);
-
-    //                     item.index = this.invitations[index].index;
-    //                     this.invitations[index] = item;
-
-    //                     setTimeout(() => this.onInvitationChanged.next(
-    //                         {
-    //                             items: [...this.invitations],
-    //                             totalDisplay: this.totalDisplayRecords,
-    //                             total: this.totalRecords,
-    //                             filtered: this.isFiltered
-    //                         }
-    //                     ), 500);
-    //                 }
-
-    //                 return response.message;
-    //             }),
-    //             shareReplay()
-    //         );
-    // }
-
-    // resendInvitation(id: string): Observable<any>
-    // {
-    //     this.onTableLoaderChanged.next(true);
-
-    //     const params = new HttpParams().set('id', id);
+    //     console.log(data);
         
     //     return this._httpClient
-    //         .get<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/resend-invitation`, {params})
-    //         .pipe(
-    //             map(response => 
-    //             {
-    //                 if (response.data && _.keys(response.data).length > 0)
-    //                 {
-    //                     const item = new Invitation(response.data);
-    
-    //                     const index = this.invitations.findIndex((val) => val.id === item.id);
-
-    //                     item.index = this.invitations[index].index;
-    //                     this.invitations[index] = item;
-
-    //                     setTimeout(() => this.onInvitationChanged.next(
-    //                         {
-    //                             items: [...this.invitations],
-    //                             totalDisplay: this.totalDisplayRecords,
-    //                             total: this.totalRecords,
-    //                             filtered: this.isFiltered
-    //                         }
-    //                     ), 500);
-    //                 }
-
-    //                 return response.message;
-    //             }),
-    //             finalize(() => setTimeout(() => this.onTableLoaderChanged.next(false), 200)),
-    //             shareReplay()
-    //         );
-    // }
-
-    /**
-     * Delete a invitation
-     * 
-     * @returns {Observable<any>}
-     */
-    // deleteInvitation(index: string): Observable<any>
-    // {
-    //     const params = new HttpParams().set('id', index);
-
-    //     return this._httpClient
-    //         .delete<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/delete-invitation`, { params })
+    //         .post<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/create-invitation`, data)
     //         .pipe(
     //             map(response => response.message),
     //             shareReplay()
     //         );
     // }
 
-    /**
-     * Unsubscribe options
-     */
+    storeInvitation(data: object): Observable<any>
+    {
+        console.log('data in service' , data);
+        return this._httpClient
+            .post<any>(`${AppConst.apiBaseUrl}/create-invitation`, data)
+            .pipe(
+                map(response => 
+                    {
+                        if (response.data && _.keys(response.data).length > 0)
+                        {
+                            const item = new Invitation(response.data);
+                            item.isNew = true;
+    
+                            this.invitations = this.invitations.concat(item).map((v, i) =>
+                            {
+                                v.index = i;
+                                return v;
+                            });
+    
+                            setTimeout(() => this.onInvitationChanged.next([...this.invitations]), 350);
+                        }
+    
+                        return response.message;
+                    }),
+            );
+    }
+
     unsubscribeOptions(): void
     {
         this._unsubscribeAll.next();

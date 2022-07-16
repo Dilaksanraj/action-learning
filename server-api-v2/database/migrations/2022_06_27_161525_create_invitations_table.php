@@ -21,10 +21,10 @@ return new class extends Migration
 
 
             $table->unsignedBigInteger('department_id')->index();
-            $table->unsignedBigInteger('intake_id')->nullable()->default(null)->index();
+            $table->unsignedBigInteger('intake_id')->index();
 
             $table->string('token');
-            $table->timestamp('expires_at')->nullable();
+            $table->timestamp('expires_at');
             $table->timestamps();
 
             $table->softDeletes();
