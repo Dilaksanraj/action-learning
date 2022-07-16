@@ -73,7 +73,7 @@ Route::prefix('v1')->group(function(){
 
     Route::get('get-invitation-list', 'App\Http\Controllers\InvitationController@list')
     ->name('InvitationController');
-    
+
     });
 
     

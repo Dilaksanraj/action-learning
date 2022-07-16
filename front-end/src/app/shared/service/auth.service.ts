@@ -144,25 +144,14 @@ export class AuthService {
             );
     }
 
-    getAuthUser(): Promise<any>
+    getAuthUser(): Observable<any>
     {
-        const header = new HttpHeaders({
-            Authorization: `Bearer ${this.getAccessToken()}`
-        });
-        return new Promise((resolve, reject) => 
-        {
-            this._httpClient
-                .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
-                .pipe(
-                    map((response: any) => new AuthUser(response.data)),
-                    shareReplay()
-                )
-                .subscribe(
-                    (response: any) => resolve(response),
-                    reject
-                );
-            
-        });
+        return this._httpClient
+            .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {})
+            .pipe(
+                map(response => response.data),
+                shareReplay()
+            );
     }
 
 
@@ -265,15 +254,10 @@ export class AuthService {
         // set user navigation menu
         this._navService.setNavigation(response);
 
-        // set permission data
-        this.setPermissions(response.permissions);
 
         // remove permissions && menu items
         delete response.permissions;
         delete response.navigators;
-
-        // set role data
-        this.setUserRole(response);
 
         // set user data
         this.setUser(response);
@@ -359,18 +343,6 @@ export class AuthService {
         }
     }
 
-    isParent(): boolean
-    {
-        try 
-        {
-            return (this.isAuthenticated()) ? _.indexOf(this.currentUserValue.level, AppConst.roleLevel.PARENT) > -1 : false;
-        } 
-        catch (err) 
-        {
-            return false;
-        }
-    }
-
     isAdministrative(): boolean
     {
         try 
@@ -414,27 +386,15 @@ export class AuthService {
 
     resolvePath(): void
     {
-        (this.isAuthenticated()) ? this.resolveDefaultPath(this.isParent()) : this.resolveUnauthorizedPath();
+        (this.isAuthenticated()) ? this.resolveDefaultPath() : this.resolveUnauthorizedPath();
     }
 
-    resolveDefaultPath(isEndUserOnBoot: boolean = false): void
+    resolveDefaultPath(): void
     {
 
         this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
                     replaceUrl: true
                 });
-        // if (this._domain === AppConst.appStart.PORTAL.NAME || this._domain === AppConst.appStart.SITE_MANAGER.NAME)
-        // {
-        //     this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
-        //         replaceUrl: true
-        //     });
-        // }
-        // else
-        // {
-        //     this._router.navigate([isEndUserOnBoot ? AppConst.appStart.CLIENT.DEFAULT_AUTH_PARENT_URL : AppConst.appStart.CLIENT.DEFAULT_AUTH_URL], {
-        //         replaceUrl: true
-        //     });
-        // }
     }
 
     resolveUnauthorizedPath(): void
@@ -535,264 +495,4 @@ export class AuthService {
         }
     }
 
-
-    /*--------------------------------------------------------------*/
-    /*------------------------- Permission -------------------------*/
-    /*--------------------------------------------------------------*/
-
-    getPermissions(): any 
-    {
-        try
-        {
-            // return JSON.parse(this._localStorage.retrieve(AppConst.auth.userPerms));
-        }
-        catch (err)
-        {
-            return [];	
-        }
-    }
-
-    getPermissionKeys(): string[]
-    {
-        return Object.keys(this.getPermissions());
-    }
-    
-    setPermissions(perms: string[]): void
-    {
-        try
-        {
-            console.log('[permission object size]', CommonHelper.getSizeOf(perms, true));
-            
-            // this._localStorage.store(AppConst.auth.userPerms, JSON.stringify(perms));
-        }
-        catch (err)
-        {
-            throw err;
-        }
-    }
-
-    clearPermission(): void
-    {
-        // this._localStorage.clear(AppConst.auth.userPerms);
-    }
-
-    hasPermission(perms: any, belongsTo: string): Promise<boolean>
-    {
-        console.log('[permission belongs to]', belongsTo);
-        console.log('[permission list]', perms);
-
-        return new Promise((resolve, reject) => 
-        {
-            if (!this.isAuthenticated() || _.isEmpty(this.getPermissions()))
-            {
-                resolve(false);
-            }
-
-            // common routes
-            if (belongsTo === 'N00')
-            {
-               resolve(true); 
-            }
-
-            const permsList = this.getPermissions()[belongsTo] || [];
-
-            if (permsList.length > 0)
-            {
-                if (_.isArray(perms))
-                {
-                    return resolve(_.intersection(permsList, perms).length > 0);
-                }
-                else
-                {
-                    return resolve(_.has(permsList, perms));
-                }
-            }
-            else
-            {
-                resolve(false);
-            }
-        });
-    }
-    
-    canAccess(perms: any, belongsTo: string): boolean
-    {
-        const permsList = this.getPermissions()[belongsTo] || [];
-
-        if (permsList.length > 0)
-        {
-            if (_.isArray(perms))
-            {
-                return _.intersection(permsList, perms).length > 0;
-            }
-            else
-            {
-                return _.has(permsList, perms);
-            }
-        }
-        
-        return false;
-    }
-
-    /*--------------------------------------------------------------*/
-    /*---------------------------- Role ----------------------------*/
-    /*--------------------------------------------------------------*/
-
-    setUserRole(response: any): void
-    {
-        try
-        {
-            // this._localStorage.store(AppConst.auth.currentRole, response.role[0].index);
-        }
-        catch (err)
-        {
-            throw err;
-        }
-    }
-
-    clearUserRole(): void
-    {
-        // this._localStorage.clear(AppConst.auth.currentRole);
-    }
-
-    /*--------------------------------------------------------------*/
-    /*--------------------------- Client ---------------------------*/
-    /*--------------------------------------------------------------*/
-
-    /**
-     * verify branch information
-     *
-     * @returns {Observable<any>}
-     */
-    getClientInformation(): Observable<any>
-    {
-        const params = new HttpParams().set('domain', UrlHelper.extractTenantNameFromUrl(location.host));
-
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/verify-org`, { params: params })
-            .pipe(
-                map(response => response),
-                shareReplay()
-            );
-    }
-
-    /**
-     * get branch information
-     *
-     * @returns {Promise<any>}
-     */
-    async checkClientAccount(): Promise<any>
-    {
-        return new Promise((resolve, reject) => 
-        {
-            // clear client data
-            this.clearClient();
-
-            if (!this.isClientPath())
-            {
-                resolve(true);	
-            }
-            else
-            {
-                console.log('[client information]');
-
-                let clientStatus = false; 
-    
-                const _subscription = this.getClientInformation()
-                    .pipe(
-                        take(1),
-                        distinctUntilChanged(),
-                        tap(response => this.setClient(response.data)),
-                        map(response => new AuthClient(response.data)),
-                        tap(response => clientStatus = response.isActive()),
-                        finalize(() =>
-                        {
-                            // Unsubscribe 
-                            _subscription.unsubscribe();
-
-                            if (!clientStatus)
-                            {
-                                // clear user data on client inactive
-                                if (this.isAuthenticated())
-                                {
-                                    this.clearAuthUser();
-                                }
-
-                                this.gotToErrorPage();
-                            }
-
-                            resolve(clientStatus);
-                        })
-                    )
-                    .subscribe(
-                        response => console.log('😀 get client information done. 🍺', response),
-                        error =>
-                        {
-                            console.error(error);
-
-                            clientStatus = false;
-                        }
-                    );
-            }
-        });
-    }
-
-    /**
-     * set client object to local storage
-     *
-     * @param {*} response
-     */
-    setClient(response: any): void
-    {
-        try
-        {
-            this.clearClient();
-
-            // this._localStorage.store(AppConst.auth.orgObj, JSON.stringify(response));
-        }
-        catch (err)
-        {
-            throw err;
-        }
-    }
-
-    /**
-     * get client object (branch)
-     *
-     * @returns {AuthClient}
-     */
-    getClient(): AuthClient
-    {
-        try
-        {
-            // return new AuthClient(JSON.parse(this._localStorage.retrieve(AppConst.auth.orgObj)));
-        }
-        catch (error)
-        {
-            return null;
-        }
-    }
-
-    /**
-     * clear client from local storage
-     */
-    clearClient(): void
-    {
-        // this._localStorage.clear(AppConst.auth.orgObj);
-    }
-
-    /**
-     * get subscriber payment details
-     *
-     * @returns {Observable<any>}
-     */
-    getPaymentInformation(): Observable<any>
-    {
-        return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/get-client-payment-info`)
-            .pipe(
-                map(response => response.data),
-                shareReplay()
-            );
-    }
-    
 }

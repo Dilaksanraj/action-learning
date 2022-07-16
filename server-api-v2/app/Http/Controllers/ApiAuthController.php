@@ -98,13 +98,15 @@ class ApiAuthController extends Controller
     {
         try
         {
-            $user = auth()->user();
+            
+            $user = auth('api')->user();
+            Log::info($user);
 
             //delete refresh token
-            RefreshToken::where('access_token_id', auth()->user()->token()->id)->delete();
+            RefreshToken::where('access_token_id', auth('api')->user()->token()->id)->delete();
 
             //delete access token
-            auth()->user()->token()->delete();
+            auth('api')->user()->token()->delete();
 
             //dispatch events
             // event(new AuthLogEventHandler($user, AuthLogType::Logout));

@@ -44,12 +44,17 @@ import { InvitationService } from './invitation.service';
 import { IntakeService } from '../intake/service/intake.service';
 import { Departmentservice } from '../department/service/department.service';
 import { CommonService } from 'app/shared/service/common.service';
+import { AuthGuard } from 'app/shared/guard/auth.guard';
 
 
 const routes = [
     {
         path     : '',
         component: InvitationComponent,
+        canActivate:
+        [
+            AuthGuard
+        ],
         resolve:
         {
             invitation: InvitationService

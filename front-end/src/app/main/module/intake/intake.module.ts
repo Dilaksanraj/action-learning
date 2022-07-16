@@ -40,12 +40,17 @@ import { FuseDemoModule } from '@fuse/components';
 import { IntakeComponent } from './intake.component';
 import { IntakeNewOrEditComponent } from './dialog/new-or-edit/new-or-edit.component';
 import { IntakeService } from './service/intake.service';
+import { AuthGuard } from 'app/shared/guard/auth.guard';
 
 
 const routes = [
     {
         path     : '',
         component: IntakeComponent,
+        canActivate:
+        [
+            AuthGuard
+        ],
         resolve:
         {
             intake: IntakeService

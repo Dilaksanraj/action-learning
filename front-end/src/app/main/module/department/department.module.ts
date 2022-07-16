@@ -40,12 +40,17 @@ import { FuseDemoModule } from '@fuse/components';
 import { DepartmentComponent } from './department.component';
 import { Departmentservice } from './service/department.service';
 import { NewOrEditDepartmentComponent } from './dialog/new-or-edit-department/new-or-edit-department.component';
+import { AuthGuard } from 'app/shared/guard/auth.guard';
 
 
 const routes = [
     {
         path     : '',
         component: DepartmentComponent,
+        canActivate:
+        [
+            AuthGuard
+        ],
         resolve:
         {
             department: Departmentservice
