@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ClientLoginModule } from './auth/client-login/client-login.module';
+import { InvitationAuthModule } from './public/invitation/invitation.module';
 
 @NgModule({
     imports: [
         // Authentication
         ClientLoginModule,
+        InvitationAuthModule
 
         // // Coming-soon
         // ComingSoonModule,
@@ -35,7 +37,8 @@ import { ClientLoginModule } from './auth/client-login/client-login.module';
 
         // // Knowledge base
         // KnowledgeBaseModule
-    ]
+    ],
+    declarations: []
 })
 export class CommonModule
 {

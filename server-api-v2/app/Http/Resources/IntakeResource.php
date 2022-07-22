@@ -32,7 +32,6 @@ class IntakeResource extends JsonResource
             $prop = [
                 'id' => $this->index,
                 'name' => $this->name,
-                'url' => PathHelper::getBranchUrls($request->fullUrl(), $this)
             ];
         }
         else{

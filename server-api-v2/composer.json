@@ -33,7 +33,10 @@
             "helper-class/Helper.php",
             "helper-class/RequestHelper.php",
             "helper-class/LocalizationHelper.php",
-            "helper-class/ErrorHandler.php"
+            "helper-class/ErrorHandler.php",
+            "helper-class/PathHelper.php",
+            "helper-class/ImageHelper.php",
+            "helper-class/EmailHelper.php"
         ]
     },
     "autoload-dev": {

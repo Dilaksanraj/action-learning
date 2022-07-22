@@ -22,6 +22,13 @@ Route::prefix('v1')->group(function(){
 
     Route::post('login', 'App\Http\Controllers\ApiAuthController@login');
     Route::post('register', 'App\Http\Controllers\ApiAuthController@register');
+
+    // verify invitation
+    Route::get('/auth_verify_invitation', 'App\Http\Controllers\InvitationController@verifyInvitation')
+    ->name('verify-client-invitation');
+
+    Route::post('/auth_accept_invitation', 'App\Http\Controllers\InvitationController@acceptInvitation')
+    ->name('accept-client-invitation');
     
 
     //this is only for auth user
@@ -70,13 +77,6 @@ Route::prefix('v1')->group(function(){
 
     });
 
-    
-
-    
-    
-
-    
-    
    });
 
 //    Route::group(['prefix' => 'v1', 'middleware' => ['auth.user']], function () {

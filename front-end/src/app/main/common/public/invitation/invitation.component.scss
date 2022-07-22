@@ -1,0 +1,191 @@
+@import "src/@fuse/scss/fuse";
+@import "src/@fuse/scss/variables";
+
+invitation-auth {
+
+    #auth-invitation {
+        width: 100%;
+        background: $default-background-color;
+
+        #invitation-auth-form-wrapper {
+            flex: 1 0 auto;
+            padding: 24px;
+
+            @include media-breakpoint('xs') {
+                padding: 16px;
+            }
+
+            #invitation-auth-form {
+                width: 768px;
+                max-width: 768px;
+                min-height: 460px;
+                box-shadow: $custom-box-shadow;
+
+                @include media-breakpoint('lt-md') {
+                    width: 100%;
+                    max-width: 100%;
+                    min-height: auto;
+                }
+
+                .inner-wrapper {
+                    width: 100%;
+
+                    @media screen and (max-width: 768px) {
+                        flex-wrap: wrap;
+                        place-content: start !important;
+                        flex: auto;
+                    }
+
+                    .left-area {
+                        color: #fff;
+                        padding: 55px 50px 30px;
+                        height: 100%;
+                        width: 40%;
+                        overflow: hidden;
+                        flex: 1 0 auto;
+
+                        @media screen and (max-width: 768px) {
+                            width: 100%;
+                            height: auto;
+                            padding: 30px;
+                        }
+
+                        &.inv-red {
+                            background: #e74c3c;
+                            background-image: linear-gradient(-152deg, #FF5E3A 1%, #e74c3c 65%);
+                        }
+
+                        &.inv-green {
+                            background: #4CAF50;
+                            background-image: linear-gradient(-152deg, #8BC34A 1%, #4CAF50 65%);
+                        }
+
+                        &.inv-blue {
+                            background: #009ee8;
+                            background-image: linear-gradient(-152deg, #377FEA 1%, #009fe9 65%);
+                        }
+
+                        .inner-content {
+                            text-align: center;
+
+                            @media screen and (max-width: 768px) {
+                                text-align: left;
+                                display: flex;
+                                width: 100%;
+                                align-items: center;
+                            }
+
+                            img {
+                                max-width: 150px;
+                                max-height: 150px;
+                                margin-bottom: 16px;
+
+                                @media screen and (max-width: 768px) {
+                                    max-width: 70px;
+                                    max-height: 70px;
+                                    margin-right: 16px;
+                                    margin-bottom: 0;
+                                }
+                            }
+
+                            > div {
+
+                                h1 {
+                                    line-height: normal;
+                                    font-size: 18px;
+                                    color: #fff;
+                                    font-weight: 400;
+                                    margin: 0.8rem 0 1.4rem;
+
+                                    @media screen and (max-width: 768px) {
+                                        margin: 0 0 0.6rem;
+                                    }
+
+                                }
+
+                                p  {
+                                    margin: 0 0 0.2rem;
+                                    color: #fff;
+                                }
+                            }
+
+                        }
+                    }
+
+                    .right-area {
+                        flex: 1 0 auto;
+                        width: 60%;
+
+                        @media screen and (max-width: 768px) {
+                            width: 100%;
+                        }
+
+                        form {
+
+                            h3 {
+                                margin-bottom: 16px;
+                                // margin-top: -8px;
+
+                                .email {
+                                    font-size: 24px;
+                                    padding-left: 8px;
+                                    color: #b0b7c5;
+                                }
+                            }
+
+                            .form-hint {
+                                display: block;
+                                font-size: 12px;
+                                line-height: 15px;
+                                color: #999;
+                                margin-bottom: 8px;
+                            }
+
+                            .terms {
+                                .ant-form-item-control {
+                                    line-height: normal;
+
+                                    * {
+                                        font-size: 15px;
+                                    }
+                                }
+                            }
+
+                            .recaptcha-wrapper {
+                                > div {
+                                    > div {
+                                        > div {
+                                            margin: 0 auto;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .link-expired {
+                    flex: 1;
+
+                    img {
+                        max-width: 150px;
+                        max-height: 150px;
+                    }
+
+                    h2 {
+                        margin: 1.8rem 0 0.8rem;
+                        font-weight: 600;
+                    }
+                    p {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+}

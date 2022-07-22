@@ -1,0 +1,251 @@
+<div id="auth-invitation" fxLayout="column">
+
+  <div id="invitation-auth-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+
+      <div id="invitation-auth-form" fxLayout="row">
+
+          <div class="inner-wrapper"
+              fxLayoutAlign="center center"
+              *ngIf="!invalidAccess && !linkExpired">
+
+              <div class="left-area inv-green" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center"
+                  [@animate]="{ value:'*', params:{ delay:'300ms', scale: '0.95' }}">
+
+                  <div class="inner-content">
+
+                      <img src="{{ invitation.getPageIcon() }}" alt="page-logo">
+
+                      <div>
+                          <h1>Setup your account</h1>
+                          <p>Copyright © {{ copyRightYear }}</p>
+                          <p><strong>Epita</strong>, All rights reserved.</p>
+                      </div>
+
+                  </div>
+
+              </div>
+
+              <div class="right-area"
+                  fxLayout="column"
+                  fxLayoutAlign="center stretch">
+
+                  <div *ngIf="invitationAccepted"
+                      [@animate]="{ value:'*', params:{ delay:'300ms', x:'-15px' }}">
+
+                      <div class="p-24">
+
+                          <div class="message-wrapper">
+  
+                              <div class="msg-icon">
+                                  <img src="assets/icons/flat/icons1/svg/003-goal.svg" alt="icon">
+                              </div>
+  
+                              <p class="msg-title h2">Thank You</p>
+  
+                              <p class="msg-subtitle">You have been successfully registered with our web portal. Please check your inbox for more details.</p>
+  
+                          </div>
+
+                      </div>
+
+                  </div>
+
+                  <div *ngIf="!invitationAccepted"
+                      [@animate]="{ value:'*', params:{ delay:'350ms', x:'-15px' }}">
+
+                      <form name="invitationForm" class="p-24" 
+                          nz-form 
+                          [nzLayout]="'vertical'"
+                          [formGroup]="invitationForm" 
+                          (ngSubmit)="onFormSubmit($event)">
+
+                          <h3>
+                              <span>Your email</span>, <small>{{ invitation.email }}</small>
+                          </h3>
+
+                          <div>
+
+                              <nz-form-item>
+
+                                  <nz-form-label nzRequired>First Name</nz-form-label>
+
+                                  <nz-form-control nzHasFeedback [nzErrorTip]="firstNameErrorTpl">
+
+                                      <input nz-input formControlName="first_name" placeholder="first name" type="text" />
+
+                                      <ng-template #firstNameErrorTpl let-control>
+                                          <ng-container *ngIf="control.hasError('required')">Please input your first name</ng-container>
+                                          <ng-container *ngIf="control.hasError('pattern')">Invalid input first name</ng-container>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <nz-form-item>
+
+                                  <nz-form-label nzRequired>Last Name</nz-form-label>
+
+                                  <nz-form-control nzHasFeedback [nzErrorTip]="lastNameErrorTpl">
+
+                                      <input nz-input formControlName="last_name" placeholder="last name" type="text" />
+
+                                      <ng-template #lastNameErrorTpl let-control>
+                                          <ng-container *ngIf="control.hasError('required')">Please input your last name</ng-container>
+                                          <ng-container *ngIf="control.hasError('pattern')">Invalid input last name</ng-container>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <nz-form-item>
+
+                                  <nz-form-label nzRequired>Date of Birth</nz-form-label>
+
+                                  <nz-form-control nzHasFeedback [nzErrorTip]="dobErrorTpl">
+
+                                      <nz-date-picker class="block"
+                                          [nzDisabledDate]="disabledDate" 
+                                          formControlName="date_of_birth" 
+                                          nzPlaceHolder="date of birth"></nz-date-picker>
+
+                                      <ng-template #dobErrorTpl let-control>
+                                          <ng-container *ngIf="control.hasError('required')">Please input your date of birth</ng-container>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <p class="form-hint">To conform with our Strong Password policy, you are required to use a sufficiently strong password.</p>
+
+                              <nz-form-item>
+
+                                  <nz-form-label nzRequired>Password</nz-form-label>
+
+                                  <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+
+                                      <input nz-input formControlName="password" placeholder="password" type="password" />
+
+                                      <ng-template #passwordErrorTpl let-control>
+                                          <p class="m-0">{{ getPasswordErrorMessage() }}</p>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <nz-form-item>
+
+                                  <nz-form-label nzRequired>Password (Confirm)</nz-form-label>
+
+                                  <nz-form-control nzHasFeedback [nzErrorTip]="confirmPasswordErrorTpl">
+
+                                      <input nz-input formControlName="passwordConfirm" placeholder="confirm password" type="password" />
+
+                                      <ng-template #confirmPasswordErrorTpl let-control>
+                                          <ng-container *ngIf="control.hasError('required')">Password confirmation is required
+                                          </ng-container>
+                                          <ng-container *ngIf="!invitationForm.get('passwordConfirm').hasError('required') && 
+                                              invitationForm.get('passwordConfirm').hasError('passwordsNotMatching')">
+                                              Passwords must match
+                                          </ng-container>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <nz-form-item>
+
+                                  <nz-form-control class="terms">
+
+                                      <div fxLayout="row" fxLayoutAlign="center center">
+
+                                          <label nz-checkbox formControlName="terms">
+                                              <span>I read and accept</span>
+                                          </label>
+
+                                          <a (click)="openTermsConditions($event)">terms and conditions</a>
+
+                                      </div>
+
+                                      <ng-template #termsErrorTpl let-control>
+                                          <ng-container *ngIf="control.hasError('required')">You must accept terms and conditions before submitting the form
+                                          </ng-container>
+                                      </ng-template>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                              <nz-form-item class="mb-0">
+
+                                  <nz-form-control>
+
+                                      <div fxLayout="row" fxLayoutAlign="space-between center">
+
+                                          <span></span>
+                                          
+                                          <button 
+                                              nz-button 
+                                              nzType="primary" 
+                                              nzSize="large"
+                                              [disabled]="!invitationForm.valid">Submit</button>
+
+                                      </div>
+
+                                  </nz-form-control>
+
+                              </nz-form-item>
+
+                          </div>
+
+                      </form>
+
+                  </div>
+                  
+              </div>
+
+          </div>
+
+          <div class="link-expired" fxLayoutAlign="center center"
+              *ngIf="invalidAccess"
+              [@animate]="{ value:'*', params:{ delay:'300ms', y:'15px', scale: '0.95' }}">
+
+              <div class="text-center">
+
+                  <img src="assets/icons/flat/ui_set/custom_icons/404_3.svg" alt="error-icon">
+
+                  <h2>The page you are looking for doesn't exist</h2>
+
+                  <p>You may have mistyped the address or the page may have moved</p>
+
+              </div>
+
+          </div>
+
+          <div class="link-expired" fxLayoutAlign="center center"
+              *ngIf="linkExpired"
+              [@animate]="{ value:'*', params:{ delay:'300ms', y:'15px', scale: '0.95' }}">
+
+              <div class="text-center">
+
+                  <img src="assets/icons/flat/ui_set/custom_icons/404_3.svg" alt="error-icon">
+
+                  <h2>Link Expired</h2>
+
+                  <p>The activation link has expired. kindly request kinderm8 support team to resend activation email.</p>
+
+              </div>
+
+          </div>
+
+      </div>
+
+  </div>
+
+</div>

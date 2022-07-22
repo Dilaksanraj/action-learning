@@ -16,6 +16,5 @@ return [
     'success_send' => 'Successfully send.',
     'empty_response_from_api' => "No data returned",
     'success_sent_email' => "Email successfully Sent.",
-    'success_cwa_approved' => "CWA successfully approved in KinderPay",
     'no_permission_to_role' => "User should perform from top level of user role account",
 ];

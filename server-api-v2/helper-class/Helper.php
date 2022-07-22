@@ -466,11 +466,6 @@ class Helpers
         return $values;
     }
 
-    /**
-     * @param $array
-     * @param $column
-     * @param int $direction
-     */
     public static function array_sort_by_column(&$array, $column, $direction = SORT_ASC)
     {
         $reference_array = array();
@@ -483,11 +478,6 @@ class Helpers
         array_multisort($reference_array, $direction, $array);
     }
 
-    /**
-     * @param $array1
-     * @param $array2
-     * @return array
-     */
     public static function array_diff_assoc_recursive($array1, $array2)
     {
         foreach($array1 as $key => $value)
@@ -518,44 +508,6 @@ class Helpers
             }
         }
         return !isset($difference) ? [] : $difference;
-    }
-
-    /**
-     * Returns an pincode
-     *
-     * @param integer $digits
-     * @param string $user_model
-     * @param $organization_id
-     * @return string
-     * @throws BindingResolutionException
-     */
-    public static function generatePinCode($digits, $user_model, $organization_id)
-    {
-        $pinCodeList = array();
-
-        $org_users = app()->make("Kinderm8\\{$user_model}")
-            ->where('organization_id', '=', $organization_id)
-            ->where('pincode', '!=', null)->get();
-
-        foreach ($org_users as $user)
-        {
-            array_push($pinCodeList, $user['pincode']);
-        }
-
-        $x = 0;
-        while($x < 50)
-        {
-            $generated_pin_code = rand(pow(10, $digits-1), pow(10, $digits)-1);
-
-            if(!in_array($generated_pin_code, $pinCodeList))
-            {
-                return $generated_pin_code;
-            }
-
-            $x++;
-        }
-
-        return null;
     }
 
     public static function getJsonDecodeError()

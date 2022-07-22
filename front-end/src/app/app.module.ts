@@ -33,6 +33,7 @@ import { of } from 'rxjs';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from './main/common/common.module';
 // import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
@@ -122,6 +123,8 @@ export function appInitFactory(injector: Injector): any
         AppStoreModule,
         NgZorroAntdModule,
         FormsModule,
+
+        CommonModule
         
         // LoggerModule.forRoot({
         //     serverLoggingUrl: '/api/logs',
