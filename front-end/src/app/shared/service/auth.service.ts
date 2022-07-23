@@ -40,7 +40,7 @@ export class AuthService {
         AppConst.appStart.MARKET_PLACE.CUST_PLAN_URL,
         AppConst.appStart.MARKET_PLACE.QUOTE_VERIFY_URL,
         AppConst.appStart.PASSWORD_SETUP.BASE_URL,
-        
+
     ];
 
     private readonly ignoredPaths = [
@@ -51,12 +51,12 @@ export class AuthService {
         AppConst.appStart.RESET_PASSWORD.BASE_URL,
         AppConst.appStart.KISOK_SETUP.BASE_URL
     ];
-    
+
     public readonly _domain = UrlHelper.extractTenantNameFromUrl(location.host);
 
     private currentUserSubject: BehaviorSubject<AuthUser>;
     public currentUser: Observable<AuthUser>;
-    
+
     /**
      * Constructor
      * 
@@ -75,8 +75,7 @@ export class AuthService {
         private _navService: NavigationService,
         // private _localStorage: LocalStorageService,
         // private _sessionStorage: SessionStorageService,
-    ) 
-    { 		
+    ) {
         // Set defaults
         this.currentUserSubject = new BehaviorSubject<any>(this._cookieService.get('user'));
 
@@ -94,32 +93,62 @@ export class AuthService {
      * @param {string} _password
      * @returns {Observable<boolean>}
      */
-     login(_email: string, _password: string): Observable<boolean>
-     {
+    login(_email: string, _password: string): Observable<boolean> {
 
-         return this._httpClient
-             .post<any>(`${AppConst.apiBaseUrl}/login`, { email: _email, password: _password })
-             .pipe(
-                 map(response => response.data),
-                 tap(response => this.updateTokens(response)),
-                 tap(response => this.resolveDefaultPath()),
-                 shareReplay(),
-             );
-     }
+        return this._httpClient
+            .post<any>(`${AppConst.apiBaseUrl}/login`, { email: _email, password: _password })
+            .pipe(
+                map(response => response.data),
+                tap(response => this.updateTokens(response)),
+                tap(response => this.UpdateAuthUser()),
+                tap(response => this.resolveDefaultPath()),
+                
+                shareReplay(),
+            );
+
+    }
+
+    getAuthUserObject(): AuthUser {
+
+        try {
+
+            if (localStorage.getItem(AppConst.auth.authUser)) {
+
+                return new AuthUser(JSON.parse(localStorage.getItem(AppConst.auth.authUser)));
+
+            }
+        }
+        catch (err) {
+            throw err;
+        }
+
+    }
 
 
+    UpdateAuthUser(): void {
+        this.getAuthUser()
+
+            .subscribe(data => {
+                localStorage.setItem(AppConst.auth.authUser, JSON.stringify(data));
+            });
+    }
+
+    clearAuthUserObject(): void {
+        localStorage.removeItem(AppConst.auth.authUser);
+        // localStorage.clear();
+    }
 
     /**
      * logout user
      *
      * @returns {Observable<boolean>}
      */
-    logout(): Observable<boolean>
-    {
+    logout(): Observable<boolean> {
         return this._httpClient
             .get<any>(`${AppConst.apiBaseUrl}/logout`, {})
             .pipe(
                 tap(() => this.clearAuthUser()),
+                tap(() => this.clearAuthUserObject()),
                 tap((response: any) => this._notify.displaySnackBar(response.message, NotifyType.SUCCESS)),
                 map(() => true),
                 shareReplay()
@@ -131,21 +160,19 @@ export class AuthService {
      *
      * @returns {Observable<any>}
      */
-    getAuthUserData(): Observable<any>
-    {
+    getAuthUserData(): Observable<any> {
         const header = new HttpHeaders({
             Authorization: `Bearer ${this.getAccessToken()}`
         });
         return this._httpClient
-            .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {headers: header})
+            .get<any>(`${AppConst.apiBaseUrl}/auth_user`, { headers: header })
             .pipe(
                 map(response => response),
                 shareReplay()
             );
     }
 
-    getAuthUser(): Observable<any>
-    {
+    getAuthUser(): Observable<any> {
         return this._httpClient
             .get<any>(`${AppConst.apiBaseUrl}/auth_user`, {})
             .pipe(
@@ -161,62 +188,50 @@ export class AuthService {
      * @readonly
      * @type {AuthUser}
      */
-    get currentUserValue(): AuthUser 
-    {
+    get currentUserValue(): AuthUser {
         return this.currentUserSubject.value;
     }
-    
-    setAccessToken(token: string): void
-    {
-        try
-        {
+
+    setAccessToken(token: string): void {
+        try {
             console.log(token);
-            
+
             this._cookieService.set(AppConst.auth.accessToken, token, undefined, '/');
         }
-        catch (err)
-        {
+        catch (err) {
             throw err;
         }
     }
 
-    getAccessToken(): string 
-    {
+    getAccessToken(): string {
         return this._cookieService.get(AppConst.auth.accessToken);
     }
 
-    getRefreshToken(): string 
-    {
+    getRefreshToken(): string {
         return this._cookieService.get(AppConst.auth.refreshToken);
     }
 
-    setRefreshToken(token: string): void
-    {
-        try
-        {
+    setRefreshToken(token: string): void {
+        try {
             this._cookieService.set(AppConst.auth.refreshToken, token, undefined, '/');
         }
-        catch (err)
-        {
+        catch (err) {
             throw err;
         }
     }
 
-    getBearerToken(): string 
-    {
+    getBearerToken(): string {
         return 'Bearer ' + this.getAccessToken();
     }
 
-    updateTokens(response: any): boolean
-    {
+    updateTokens(response: any): boolean {
         let successState = false;
         console.log(response.access_token);
-        
 
-        try
-        {
-            if (response && response.access_token && response.refresh_token) 
-            {
+
+
+        try {
+            if (response && response.access_token && response.refresh_token) {
                 this.setAccessToken(response.access_token);
 
                 this.setRefreshToken(response.refresh_token);
@@ -224,31 +239,27 @@ export class AuthService {
                 successState = true;
             }
         }
-        catch (error)
-        {
+        catch (error) {
             CommonHelper.errorLog(error);
         }
 
-        
+
         return successState;
     }
 
-    getClaimsFromToken(): object
-    {
+    getClaimsFromToken(): object {
         const token = this.getAccessToken();
-        
+
         let user = {};
 
-        if (typeof token !== 'undefined')
-        {
+        if (typeof token !== 'undefined') {
             user = JSON.parse(CommonHelper.urlBase64Decode(token.split('.')[1]));
         }
 
         return user;
     }
 
-    authInitialSetup(response: any): void
-    {
+    authInitialSetup(response: any): void {
         console.log('[auth object size]', CommonHelper.getSizeOf(response, true));
 
         // set user navigation menu
@@ -256,31 +267,26 @@ export class AuthService {
 
 
         // remove permissions && menu items
-        delete response.permissions;
-        delete response.navigators;
+        // delete response.permissions;
+        // delete response.navigators;
 
         // set user data
-        this.setUser(response);
+        // this.setUser(response);
     }
 
-    setUser(response: any): void
-    {
+    setUser(response: any): void {
 
-        try
-        {
-            if (response) 
-            {
+        try {
+            if (response) {
                 response = new AuthUser(response);
 
                 // this._localStorage.store(AppConst.auth.userObj, JSON.stringify(response));
             }
-            else
-            {
-                response = null;	
+            else {
+                response = null;
             }
         }
-        catch (err)
-        {
+        catch (err) {
             CommonHelper.errorLog(err);
 
             response = null;
@@ -289,13 +295,12 @@ export class AuthService {
         this.currentUserSubject.next(response);
     }
 
-    clearUser(): void
-    {
-        // this._localStorage.clear(AppConst.auth.userObj);
+    clearUser(): void {
+
+        localStorage.removeItem(AppConst.auth.authUser);
     }
 
-    clearAuthUser(): void
-    {
+    clearAuthUser(): void {
         this._cookieService.delete(AppConst.auth.accessToken, '/');
         this._cookieService.delete(AppConst.auth.refreshToken, '/');
 
@@ -304,107 +309,43 @@ export class AuthService {
         setTimeout(() => this.currentUserSubject.next(null), 50);
     }
 
-    isAuthenticated(): boolean
-    {
-        return !!this.getAccessToken();
+    isAuthenticated(): boolean {
+        
+        return this.getAccessToken().length > 0 ? true : false;
     }
 
-    isAuthActive(): boolean
-    {
+    isAuthActive(): boolean {
         return (this.currentUserValue) ? this.currentUserValue.status : false;
     }
 
-    hasActivePaymentMethod(): boolean 
-    {        
-        return (this.currentUserValue) ? this.currentUserValue.hasPaymentMethod : false;
-    }
-
-    isAdmin(): boolean
-    {
-        try 
-        {
-            return (this.isAuthenticated()) ? _.indexOf(this.currentUserValue.level, AppConst.roleLevel.ROOT) > -1 : false;
-        } 
-        catch (err) 
-        {
-            return false;
-        }
-    }
-
-    isOwner(): boolean
-    {
-        try 
-        {
-            return (this.isAuthenticated()) ? _.indexOf(this.currentUserValue.level, AppConst.roleLevel.OWNER) > -1 : false;
-        } 
-        catch (err) 
-        {
-            return false;
-        }
-    }
-
-    isAdministrative(): boolean
-    {
-        try 
-        {
-            return (this.isAuthenticated()) ? _.indexOf(this.currentUserValue.level, AppConst.roleLevel.ADMINISTRATION) > -1 : false;
-        } 
-        catch (err) 
-        {
-            return false;
-        }
-    }
-
-    hasAdminRights(): boolean
-    {
-        return this.isAdministrative() && this.currentUserValue.isAdministrator;
-    }
-
-    getUserLevel(): string
-    {
-        if (this.isAdmin())
-        {
-            return AppConst.roleLevel.ROOT;
-        }
-        else if (this.isOwner())
-        {
-            return AppConst.roleLevel.OWNER;
-        }
-        else if (this.isAdministrative())
-        {
-            return AppConst.roleLevel.ADMINISTRATION;
-        }
-        else
-        {
-            return 'none';
-        }
-    }
 
     /*--------------------------------------------------------------*/
     /*------------------------ Resolve path ------------------------*/
     /*--------------------------------------------------------------*/
 
-    resolvePath(): void
-    {
+    resolvePath(): void {
         (this.isAuthenticated()) ? this.resolveDefaultPath() : this.resolveUnauthorizedPath();
     }
 
-    resolveDefaultPath(): void
-    {
+    resolveDefaultPath(): void {
 
-        this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
-                    replaceUrl: true
-                });
+        setTimeout(() => {
+
+            this._router.navigate([AppConst.appStart.PORTAL.DEFAULT_AUTH_URL], {
+                replaceUrl: true
+            });
+
+        }, 500);
+
+        
     }
 
-    resolveUnauthorizedPath(): void
-    {
+    resolveUnauthorizedPath(): void {
         this._router.navigate(['auth/login']);
     }
 
-    resolveUnauthorizedUrl(url: string): void
-    {
-        if (this._domain === AppConst.appStart.PORTAL.NAME && url === AppConst.appStart.PORTAL.LOGIN_URL || 
+    resolveUnauthorizedUrl(url: string): void {
+        if (this._domain === AppConst.appStart.PORTAL.NAME && url === AppConst.appStart.PORTAL.LOGIN_URL ||
             this._domain === AppConst.appStart.SITE_MANAGER.NAME && url === AppConst.appStart.SITE_MANAGER.LOGIN_URL ||
             this._domain === AppConst.appStart.ENQUIRY.NAME && url === AppConst.appStart.ENQUIRY.BASE_URL ||
             this._domain === AppConst.appStart.ENROLLMENT.NAME && url === AppConst.appStart.ENROLLMENT.BASE_URL ||
@@ -415,58 +356,48 @@ export class AuthService {
             this._domain === AppConst.appStart.MARKET_PLACE.NAME && UrlHelper.removeQueryParameters(url) === AppConst.appStart.MARKET_PLACE.CUST_PLAN_URL ||
             this._domain === AppConst.appStart.MARKET_PLACE.NAME && UrlHelper.removeQueryParameters(url) === AppConst.appStart.MARKET_PLACE.QUOTE_VERIFY_URL ||
             this._domain === AppConst.appStart.PASSWORD_SETUP.NAME && UrlHelper.removeQueryParameters(url) === AppConst.appStart.PASSWORD_SETUP.BASE_URL ||
-            
+
             this._domain === AppConst.appStart.ENROLLMENT.NAME && UrlHelper.removeQueryParameters(url) === AppConst.appStart.ENROLLMENT.BASE_URL ||
             (this.isClientPath() && UrlHelper.removeQueryParameters(url) === AppConst.appStart.ENROLLMENT.BASE_URL) ||
             UrlHelper.removeQueryParameters(url) === AppConst.appStart.CLIENT.LOGIN_URL
-            && this.isClientPath())
-        {
+            && this.isClientPath()) {
             return;
         }
 
         this.resolveUnauthorizedPath();
     }
 
-    isAccessiblePath(path: string): boolean
-    {
+    isAccessiblePath(path: string): boolean {
         return _.indexOf(this.appStartPaths, path) > -1;
     }
 
-    isIgnoredPath(path: string): boolean
-    {
+    isIgnoredPath(path: string): boolean {
         path = UrlHelper.removeQueryParameters(path);
 
         return _.indexOf(this.ignoredPaths, path) > -1;
     }
 
-    goToMaintenance(): void
-    {
+    goToMaintenance(): void {
         this._router.navigate([AppConst.appStart.MAINTENANCE.URL]);
     }
 
-    gotToErrorPage(): void 
-    {
+    gotToErrorPage(): void {
         this._router.navigate([AppConst.appStart.ERROR.NOT_FOUND.URL]);
     }
 
-    isOwnerPath(): boolean
-    {
-        try
-        {
+    isOwnerPath(): boolean {
+        try {
             return (!_.isNull(this._domain)
                 && this._domain !== ''
                 && this._domain === AppConst.appStart.SITE_MANAGER.NAME);
         }
-        catch (error)
-        {
+        catch (error) {
             throw error;
         }
     }
 
-    isClientPath(): boolean
-    {
-        try
-        {
+    isClientPath(): boolean {
+        try {
             return (!_.isNull(this._domain)
                 && this._domain !== ''
                 && (this._domain !== AppConst.appStart.PORTAL.NAME
@@ -477,22 +408,10 @@ export class AuthService {
                     && this._domain !== AppConst.appStart.ENQUIRY.NAME
                     && this._domain !== AppConst.appStart.ENROLLMENT.NAME));
         }
-        catch (error)
-        {
+        catch (error) {
             throw error;
         }
     }
 
-    isEndUserPath(): boolean
-    {
-        try
-        {
-            return this.isClientPath() && _.indexOf(this.currentUserValue.level, AppConst.roleLevel.PARENT) > -1;
-        }
-        catch (error)
-        {
-            throw error;
-        }
-    }
 
 }

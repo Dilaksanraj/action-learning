@@ -9,6 +9,11 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { CommonHelper } from 'app/utils/common.helper';
 
 import { UrlHelper } from 'app/utils/url.helper';
+import { AuthUser } from '../model/authUser';
+import { siteManagerNavigation } from 'app/navigation/site-manager.navigation';
+import { FuseNavigation } from '@fuse/types';
+import { staffNavigation } from 'app/navigation/staff.navigation';
+import { StudentNavigation } from 'app/navigation/student.navigation';
 
 
 @Injectable({
@@ -41,19 +46,37 @@ export class NavigationService {
      * @param {*} data
      * @returns {void}
      */
-    setNavigation(data: any): void
+    setNavigation(data: AuthUser): void
     {
+        console.log('setnavigator', data);
+
+        // this._fuseNavigationService.unregister('main');
+
+        let navigation: FuseNavigation[];
+
+        if(data.hasSiteManagerAccess){
+
+            navigation = siteManagerNavigation;
+        }
+        if(data.isAdministrator){
+            navigation = staffNavigation;
+        }
+        if(data.isStudent){
+            navigation = StudentNavigation;
+        }
+        
         // navigation found already
         if (this._fuseNavigationService.getNavigation('main') && this._fuseNavigationService.getNavigation('main').length > 0)
         {
-            if (CommonHelper.isEqual(data.navigators, this._fuseNavigationService.getNavigation('main'))) { return; }
+            console.log('found');
+            
+            if (CommonHelper.isEqual(navigation, this._fuseNavigationService.getNavigation('main'))) { return; }
 
             // Unregister the navigation to the service
             this._fuseNavigationService.unregister('main');
         }
 
-        // Register the navigation to the service
-        this._fuseNavigationService.register('main', data.navigators);
+        this._fuseNavigationService.register('main',navigation);
 
         // Set the main navigation as our current navigation
         this._fuseNavigationService.setCurrentNavigation('main');

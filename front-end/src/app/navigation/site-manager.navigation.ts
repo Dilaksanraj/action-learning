@@ -1,6 +1,6 @@
-import { FuseNavigation } from '@fuse/types';
+import { FuseNavigation } from "@fuse/types";
 
-export const navigation: FuseNavigation[] = [
+export const siteManagerNavigation: FuseNavigation[] = [
     {
         id       : 'applications',
         title    : 'EPI-PROJECT',
@@ -66,5 +66,3 @@ export const navigation: FuseNavigation[] = [
         ]
     },
 ];
-
-

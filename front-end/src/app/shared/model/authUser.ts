@@ -4,17 +4,16 @@ export class AuthUser {
 
     id: string;
     image: string;
-    name: string;
+    firstName: string;
+    lastname: string;
+    type: string;
     email: string;
     created: string;
     status: boolean;
-    attrId: string;
-    level?: string[];
-    role?: string[];
     
-    isAdministrator?: boolean;
-    hasPaymentMethod?: boolean;
-    hasSiteManagerAccess?: boolean;
+    isAdministrator?: boolean; //staff
+    hasSiteManagerAccess?: boolean; //for admin
+    isStudent?: boolean;
 
     /**
      * Constructor
@@ -24,28 +23,17 @@ export class AuthUser {
     constructor(user?: any)
     {
         this.id = user.id || '';
-        this.attrId = user.attr_id || '';
         this.image = user.image || AppConst.image.PROFILE_CALLBACK;
-        this.name = user.name || '';
+        this.firstName = user.first_name || '';
+        this.lastname = user.last_name || '';
         this.email = user.email || '';
         this.status = user.status || false;
         this.created = user.created || '';
 
-        this.level = user.level || [];
-        this.role = user.role || [];  
     
-        this.isAdministrator = user.has_admin_rights || false;
-        this.hasPaymentMethod = user.has_payment_method || false;
-        this.hasSiteManagerAccess = user.site_manager || false;
+        this.isAdministrator = user.type === '1' ? true : false;
+        this.hasSiteManagerAccess = user.type === '0' ? true : false;
+        this.isStudent = !this.isAdministrator && !this.hasSiteManagerAccess ? true : false;
     }
     
-    getCurrentLevel(): string
-    {
-        return this.level.length > 0 ? this.level[0] : null;
-    }
-
-    getCurrentRole(): any
-    {
-        return this.role.length > 0 ? this.role[0] : null;
-    }
 }

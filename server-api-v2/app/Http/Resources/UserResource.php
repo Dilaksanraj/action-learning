@@ -34,17 +34,26 @@ class UserResource extends JsonResource
         {
             $prop = [
                 'id' => $this->index,
-                'name' => $this->name,
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'dob' => $this->dob,
+                'phone' => $this->phone,
+                'address_1' => $this->address_1,
+                'type'=>$this->type
             ];
         }
         else{
 
             $prop = [
-                'id' => $this->id,
-                'name' => $this->name,
+                'id' => $this->index,
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
                 'email' => $this->email,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
+                'dob' => $this->dob,
+                'phone' => $this->phone,
+                'address_1' => $this->address_1,
+                'type'=>$this->type
             ];
         }
         return $prop;

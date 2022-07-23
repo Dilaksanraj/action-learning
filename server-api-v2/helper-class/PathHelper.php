@@ -45,8 +45,9 @@ class PathHelper
     public static function getUserInvitationPath($url, $token)
     {
         $result = parse_url($url);
+        return 'http://localhost:4200/invitation-auth?token='. $token;
 
-        return $result['scheme']. ((self::isDevelopmentEnv()) ? 'localhost:' . self::getDevelopmentPort($url) : self::getProductionPath()) . '/invitation-auth?token=' . $token;
+        // return $result['scheme']. ((self::isDevelopmentEnv()) ? 'localhost:' . self::getDevelopmentPort($url) : self::getProductionPath()) . '/invitation-auth?token=' . $token;
     }
 
 

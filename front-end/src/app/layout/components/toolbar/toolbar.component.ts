@@ -7,9 +7,11 @@ import * as _ from 'lodash';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/shared/service/auth.service';
+import { AuthUser } from 'app/shared/model/authUser';
+import { AppConst } from 'app/shared/AppConst';
+import { siteManagerNavigation } from 'app/navigation/site-manager.navigation';
 
 @Component({
     selector     : 'toolbar',
@@ -27,6 +29,8 @@ export class ToolbarComponent implements OnInit, OnDestroy
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
+
+    authUser: AuthUser;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -88,10 +92,14 @@ export class ToolbarComponent implements OnInit, OnDestroy
             }
         ];
 
-        this.navigation = navigation;
+        this.navigation = siteManagerNavigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        this.authUser = this._authService.getAuthUserObject();
+        console.log('tool', this.authUser);
+        
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -177,7 +185,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
                  .logout()
                  .pipe(takeUntil(this._unsubscribeAll))
                  .subscribe(
-                     () => setTimeout(() => location.reload(), 1500),
+                     () => setTimeout(() => location.reload(), 2500),
                      error => { throw error; },
                      () => console.log('😀 logout success. 🍺')
                  );

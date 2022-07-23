@@ -34,6 +34,7 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from './main/common/common.module';
+import { AuthUser } from './shared/model/authUser';
 // import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
@@ -47,8 +48,6 @@ export function appInitFactory(injector: Injector): any
             
             const _authService = injector.get(AuthService);
 
-           
-            
             // check for auth user
             if (_authService.isAuthenticated())
             {
@@ -75,7 +74,9 @@ export function appInitFactory(injector: Injector): any
                     {                        
                         if (data && data != null)
                         {
-                            _authService.authInitialSetup(Object.assign({}, data));
+                            console.log('auth user data in app module', data);
+                            
+                            _authService.authInitialSetup(Object.assign({}, new AuthUser(data.data)));
                         }
                     });
             }
@@ -143,12 +144,12 @@ export function appInitFactory(injector: Injector): any
         // StrategyIndex,
         // StrategyCacheService,
         CookieService,
-        // {
-        //     provide: APP_INITIALIZER,
-        //     useFactory: appInitFactory,
-        //     deps: [Injector],
-        //     multi: true
-        // },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: appInitFactory,
+            deps: [Injector],
+            multi: true
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: HttpErrorInterceptor,

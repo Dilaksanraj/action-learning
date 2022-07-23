@@ -127,11 +127,7 @@ class ApiAuthController extends Controller
 
     public function getUser()
     {
-        Log::info('get user started');
 
-        Log::info(auth('api')->user());
-
-        
         try
         {
             if (!auth('api')->check())

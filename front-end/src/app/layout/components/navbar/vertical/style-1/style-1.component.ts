@@ -9,6 +9,7 @@ import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scr
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { AppConst } from 'app/shared/AppConst';
 import { AuthUser } from 'app/shared/model/authUser';
+import { AuthService } from 'app/shared/service/auth.service';
 // import { AuthService } from 'app/shared/service/auth.service';
 
 @Component({
@@ -41,12 +42,15 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy
         private _fuseNavigationService: FuseNavigationService,
         private _fuseSidebarService: FuseSidebarService,
         private _router: Router,
-        // private _authService: AuthService,
+        private _authService: AuthService,
     )
     {
         this.logo = AppConst.image.DEFAULT_LOGO;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        this.userObj = this._authService.getAuthUserObject();
+        console.log('tool', this.userObj);
     }
 
     // -----------------------------------------------------------------------------------------------------

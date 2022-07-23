@@ -10,14 +10,20 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
-
-import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { fuseAnimations } from '@fuse/animations';
 import { fadeInOnEnterAnimation, slideOutUpOnLeaveAnimation } from 'angular-animations';
 import { slideMotion, fadeMotion } from 'ng-zorro-antd';
 import { NavigationStart, Router } from '@angular/router';
+import { AuthService } from './shared/service/auth.service';
+import { AuthUser } from './shared/model/authUser';
+import { siteManagerNavigation } from './navigation/site-manager.navigation';
+import { StudentNavigation } from './navigation/student.navigation';
+import { staffNavigation } from './navigation/staff.navigation';
+import { CookieService } from 'ngx-cookie-service';
+import { AppConst } from './shared/AppConst';
+import { navigation } from './navigation/navigation';
 export let browserRefresh = false;
 
 @Component({
@@ -35,6 +41,8 @@ export let browserRefresh = false;
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+
+    authUser: AuthUser;
 
     viewPageLoader: boolean;
     routeLinks = [];
@@ -64,10 +72,39 @@ export class AppComponent implements OnInit, OnDestroy {
         private _translateService: TranslateService,
         private _platform: Platform,
         private _router: Router,
+        private _authService: AuthService,
+        private _cookieService: CookieService,
         // private _serviceWorker: SwUpdate,
     ) {
         // Get default navigation
+
         this.navigation = navigation;
+
+        // setTimeout(() => {
+            
+        //     if(this._cookieService.get(AppConst.auth.accessToken)){
+
+        //         console.log('authenticated');
+                
+        //         this.authUser = this._authService.getAuthUserObject();
+    
+        //         if(this.authUser.isAdministrator){
+    
+        //             this.navigation = staffNavigation;
+                    
+        //         }
+        //         if(this.authUser.hasSiteManagerAccess){
+    
+        //             this.navigation = siteManagerNavigation;
+        //         }
+        //         if(this.authUser.isStudent){
+    
+        //             this.navigation = StudentNavigation;
+        //         }
+        //     }
+            
+        //  },1500);
+        
 
         // Register the navigation to the service
         this._fuseNavigationService.register('main', this.navigation);

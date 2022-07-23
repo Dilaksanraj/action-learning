@@ -23,5 +23,11 @@
                 "@fuse/"
             ]
         }
+    },
+    "angularCompilerOptions": {
+        "fullTemplateTypeCheck": false,
+        "strictInjectionParameters": false,
+        "strictTemplates": true,
+        "preserveWhitespaces": false
     }
 }

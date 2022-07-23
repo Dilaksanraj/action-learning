@@ -386,16 +386,4 @@ export class CommonService {
 
         return list;
     }
-
-    getReminders(): Observable<any> {
-
-        if (this._authService.isAuthenticated() && this._authService.isAdministrative()) {
-
-            this.onReminderChanged.next(true);
-
-        } else {
-            return of(null);
-        }
-
-    }
 }

@@ -21,6 +21,7 @@ export class AppConst {
         currentLevel: 'current_level',
         orgObj: 'org_object',
         language: 'lang',
+        authUser: 'authUser'
     };
 
     static readonly appKeys = {
