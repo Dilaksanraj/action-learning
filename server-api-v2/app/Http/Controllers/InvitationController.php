@@ -70,7 +70,6 @@ class InvitationController extends Controller
 
             // create user accounts
             
-            Log::info($invitationObj);
             $userAcc = new User();
 
             $userAcc->email = $invitationObj->email;
@@ -99,13 +98,11 @@ class InvitationController extends Controller
             // get all attributes
             $userAcc->refresh();
 
-            /*------------- delete invitation --------------*/
-
-            
-
             /*------------- Send Mail --------------*/
 
             \Mail::to('dilaksanraj@gmail.com')->send(new \App\Mail\SendUserInvitationAccept($userAcc));
+
+            /*------------- delete invitation --------------*/
 
             $invitationObj->delete();
 
@@ -175,11 +172,6 @@ class InvitationController extends Controller
 
             \Mail::to('dilaksanraj@gmail.com')->send(new \App\Mail\SendUserInvitation($newObj,PathHelper::getUserInvitationPath(request()->fullUrl(), $newObj->token)));
 
-            // $newObj->notify(
-            //     new SendUserInvitation($newObj,
-            //         PathHelper::getUserInvitationPath(request()->fullUrl(), $newObj->token)
-            //     )
-            // );
 
             DB::commit();
 

@@ -57,6 +57,14 @@ export const siteManagerNavigation: FuseNavigation[] = [
             },
 
             {
+                id: 'project',
+                title: 'Project',
+                type: 'item',
+                icon: 'assets/icons/flat/ui_set/concentration/svg/009-clipboard.svg',
+                url: '/manage-project',
+            },
+
+            {
                 id       : 'room',
                 title    : 'Room',
                 type     : 'item',

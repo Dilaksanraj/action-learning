@@ -1,0 +1,47 @@
+@import "src/@fuse/scss/fuse";
+
+.room-new-dialog {
+
+    @include media-breakpoint('xs') {
+        width: 100%;
+    }
+
+    @include media-breakpoint('gt-xs') {
+        width: 640px;
+    }
+
+    .mat-dialog-container {
+        padding: 0;
+
+        .domainURL {
+            background: #4CAF50 !important;
+            background-image: -webkit-linear-gradient(242deg, #8BC34A 1%, #4CAF50 65%) !important;
+            background-image: linear-gradient(-152deg, #8BC34A 1%, #4CAF50 65%) !important;
+            line-height: 0;
+            padding: 4px 6px;
+            padding-left: 4px;
+            border-radius: 15px;
+            margin-bottom: 4px;
+            margin-left: 8px;
+            margin-top: 8px;
+            color: #fff;
+
+            i {
+                background: #fff;
+                padding: 4px;
+                border-radius: 100%;
+                margin-right: 5px;
+                font-size: 12px !important;
+            }
+        }
+
+        // .compose-form {
+
+        // }
+    }
+
+    .dialog-content-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}

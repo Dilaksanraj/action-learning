@@ -45,10 +45,7 @@ const routes = [
     {
         path     : '',
         component: UserComponent,
-        // resolve:
-        // {
-        //     branch: LoginService
-        // }
+
     },
     
 ];

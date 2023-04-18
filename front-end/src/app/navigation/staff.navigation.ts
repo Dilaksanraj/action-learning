@@ -23,13 +23,6 @@ export const staffNavigation: FuseNavigation[] = [
 
             },
             {
-                id: 'invitation',
-                title: 'Invitation',
-                type: 'item',
-                icon: 'assets/icons/flat/ui_set/custom_icons/invitation2.svg',
-                url: '/invitation',
-            },
-            {
                 id: 'department',
                 title: 'Department',
                 type: 'item',
@@ -42,6 +35,14 @@ export const staffNavigation: FuseNavigation[] = [
                 type: 'item',
                 icon: 'assets/icons/flat/ui_set/e-learning/png/certificate.png',
                 url: '/intake',
+            },
+
+            {
+                id: 'project',
+                title: 'Project',
+                type: 'item',
+                icon: 'assets/icons/flat/ui_set/concentration/svg/009-clipboard.svg',
+                url: '/manage-project',
             },
 
             {

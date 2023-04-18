@@ -15,11 +15,11 @@ export const StudentNavigation: FuseNavigation[] = [
                 url  : '/dashboard'
             },
             {
-                id       : 'Project',
-                title    : 'Project',
-                type     : 'item',
-                icon     : 'assets/icons/flat/ui_set/custom_icons/house.svg',
-                url  : '/manage-room',
+                id: 'project',
+                title: 'Project',
+                type: 'item',
+                icon: 'assets/icons/flat/ui_set/concentration/svg/009-clipboard.svg',
+                url: '/manage-project',
             },
         ]
     },

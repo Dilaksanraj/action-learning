@@ -56,7 +56,6 @@ export class IntakeComponent implements OnInit {
 
     ngOnInit() {
 
-        // Subscribe to branch changes
         this._intakeService
             .onIntakeChanged
             .pipe(takeUntil(this._unsubscribeAll))

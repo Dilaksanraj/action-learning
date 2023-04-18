@@ -38,6 +38,12 @@ Route::prefix('v1')->group(function(){
     Route::get('/auth_user', 'App\Http\Controllers\ApiAuthController@getUser')->name('get-auth-user-info');
     Route::get('logout', 'App\Http\Controllers\ApiAuthController@logout');
 
+    // get all staff only
+    Route::get('/get-all-staff', 'App\Http\Controllers\UserController@getAllStaff')->name('get-all-staff');
+
+    // get all students only
+    Route::get('/get-all-student', 'App\Http\Controllers\UserController@getAllStudent')->name('get-all-student');
+    
     // common routes
     Route::get('/value-exists', 'App\Http\Controllers\CommonController@checkValueExists')->name('check-value-exists');
 
@@ -73,28 +79,34 @@ Route::prefix('v1')->group(function(){
     ->name('create-invitation');
 
     Route::get('get-invitation-list', 'App\Http\Controllers\InvitationController@list')
-    ->name('InvitationController');
+    ->name('get-invitation-list');
+
+
+    // Project routes
+    
+    Route::post('/create-project', 'App\Http\Controllers\ProjectController@create')
+    ->name('create-project');
+
+    Route::get('get-project-list', 'App\Http\Controllers\ProjectController@list')
+    ->name('get-project-list');
+
+    Route::post('update-project', 'App\Http\Controllers\ProjectController@update')
+    ->name('update-project');
+
+    Route::delete('delete-project', 'App\Http\Controllers\ProjectController@delete')
+    ->name('delete-project');
+
+    // room routes
+    Route::post('/create-room', 'App\Http\Controllers\RoomController@create')
+    ->name('create-room');
+
+    
+    Route::get('get-room-list', 'App\Http\Controllers\RoomController@list')
+    ->name('get-room-list');
 
     });
 
    });
-
-//    Route::group(['prefix' => 'v1', 'middleware' => ['auth.user']], function () {
-
-//     Route::get('adjustment-item-list', 'AdjustmentItemController@list')
-//          ->middleware('permission:child-access')
-//         ->name('adjustment-item-list');
-
-//     Route::post('adjustment-item-create', 'AdjustmentItemController@create')
-//         ->name('adjustment-item-create');
-
-//     Route::post('adjustment-item-update', 'AdjustmentItemController@update')
-//         ->name('adjustment-item-update');
-
-//     Route::post('adjustment-item-delete', 'AdjustmentItemController@delete')
-//         ->name('adjustment-item-delete');
-
-// });
 
 
    

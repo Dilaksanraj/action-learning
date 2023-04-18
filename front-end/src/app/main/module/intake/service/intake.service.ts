@@ -21,7 +21,6 @@ export class IntakeService implements Resolve<any>
     private intake: Intake[];
 
     onIntakeChanged: BehaviorSubject<any>;
-    onFilterBranchesChanged: BehaviorSubject<any>;
 
     onPaginationChanged: Subject<PaginationProp>;
     onSearchTextChanged: Subject<any>;
@@ -41,14 +40,7 @@ export class IntakeService implements Resolve<any>
     sortBy: any | null = null;
     searchText: string | null = null;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     * @param {NGXLogger} _logger
-     * @param {BranchService} _branchService
-     * @param {AuthService} _authService
-     */
+ 
     constructor(
         private _httpClient: HttpClient,
         private _authService: AuthService
@@ -60,7 +52,6 @@ export class IntakeService implements Resolve<any>
         this.isFiltered = false;
 
         this.onIntakeChanged = new BehaviorSubject([]);
-        this.onFilterBranchesChanged = new BehaviorSubject([]);
         
         this.onSearchTextChanged = new Subject();
         this.onSortChanged = new Subject();

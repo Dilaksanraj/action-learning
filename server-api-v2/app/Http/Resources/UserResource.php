@@ -53,7 +53,9 @@ class UserResource extends JsonResource
                 'dob' => $this->dob,
                 'phone' => $this->phone,
                 'address_1' => $this->address_1,
-                'type'=>$this->type
+                'type'=>$this->type,
+                'department'=> new DepartmentResource($this->department),
+                'intake'=> new IntakeResource($this->intake)
             ];
         }
         return $prop;

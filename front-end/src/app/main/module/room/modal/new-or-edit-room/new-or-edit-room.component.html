@@ -1,0 +1,278 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mat-accent m-0">
+
+      <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+
+          <span class="title dialog-title">{{dialogTitle}}</span>
+
+          <button mat-icon-button disableRipple="true" type="button" (click)="matDialogRef.close()"
+              aria-label="Close dialog">
+              <mat-icon>close</mat-icon>
+          </button>
+
+      </mat-toolbar-row>
+
+  </mat-toolbar>
+
+  <form name="intakeForm" class="compose-form" fxLayout="column" fxFlex nz-form [nzLayout]="'vertical'"
+      [formGroup]="intakeForm" (ngSubmit)="onFormSubmit($event)">
+
+      <div class="p-24 pt-16 m-0" mat-dialog-content fusePerfectScrollbar
+          [fusePerfectScrollbarOptions]="{ suppressScrollX: true }">
+
+          <div nz-row [nzGutter]="24">
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                  <nz-form-item>
+
+                      <nz-form-label nzRequired>Name</nz-form-label>
+
+                      <nz-form-control nzHasFeedback [nzErrorTip]="nameErrorTpl">
+
+                          <input nz-input formControlName="name" placeholder="name" type="text" />
+
+                          <ng-template #nameErrorTpl let-control>
+                              <ng-container *ngIf="control.hasError('required')">Please input your name</ng-container>
+                              <ng-container *ngIf="control.hasError('pattern')">Invalid input name</ng-container>
+                          </ng-template>
+
+                      </nz-form-control>
+
+                  </nz-form-item>
+
+              </div>
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                  <nz-form-item>
+
+                      <nz-form-label nzRequired>Project</nz-form-label>
+
+                      <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl">
+
+
+                        <nz-select  
+                            formControlName="project_id"
+                            nzShowSearch
+                            nzAllowClear
+                            nzPlaceHolder="Select a project">
+                            <nz-option *ngFor="let item of project " nzValue="{{ item.id }}" nzLabel="{{ item.name}}"></nz-option>
+                            
+                        </nz-select>
+
+                        <ng-template #typeErrorTpl let-control>
+                            <ng-container *ngIf="control.hasError('required')">Please select project</ng-container>
+                        </ng-template>
+
+                    </nz-form-control>
+
+
+                  </nz-form-item>
+
+              </div>
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+                <nz-form-item>
+    
+                  <nz-form-label nzRequired>Departments</nz-form-label>
+    
+                  <nz-form-control nzHasFeedback [nzErrorTip]="daysErrorTpl">
+    
+                    <nz-select 
+                        formControlName="dep_id"
+                        nzShowSearch 
+                        nzAllowClear
+                        [nzAllowClear] = true
+                        nzPlaceHolder="select departments">
+    
+                        <nz-option *ngFor="let item of departments" nzValue="{{ item.id }}" nzLabel="{{ item.name }}"></nz-option>
+    
+                    </nz-select>
+    
+                    
+    
+                    <ng-template #daysErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">Please select at least one department</ng-container>
+                    </ng-template>
+                
+                </nz-form-control>
+                  
+    
+                </nz-form-item>
+    
+            </div>
+
+
+            <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+              <nz-form-item>
+  
+                <nz-form-label nzRequired>Intakes</nz-form-label>
+  
+                <nz-form-control nzHasFeedback [nzErrorTip]="daysErrorTpl">
+  
+                  <nz-select 
+                      formControlName="intake_id"
+                      nzShowSearch 
+                      nzAllowClear
+                      [nzAllowClear] = true
+                      nzPlaceHolder="select intakes">
+  
+                      <nz-option *ngFor="let item of intakes" nzValue="{{ item.id }}" nzLabel="{{ item.name }}"></nz-option>
+  
+                  </nz-select>
+  
+                  
+  
+                  <ng-template #daysErrorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Please select at least one department</ng-container>
+                  </ng-template>
+              
+              </nz-form-control>
+                
+  
+              </nz-form-item>
+  
+          </div>
+
+
+              <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="24" [nzXXl]="24">
+
+                <nz-form-item>
+
+                  <nz-form-label nzRequired>Supervisor</nz-form-label>
+
+                  <nz-form-control nzHasFeedback [nzErrorTip]="typeErrorTpl">
+
+
+                    <nz-select  
+                        formControlName="staff_id"
+                        nzShowSearch
+                        nzMode="multiple"
+                        [nzAllowClear] = true
+                        nzPlaceHolder="Select a staff">
+                        <nz-option *ngFor="let item of user " nzValue="{{ item.id }}" nzLabel="{{ item.firstName}}"></nz-option>
+                    </nz-select>
+                   
+
+                    <ng-template #typeErrorTpl let-control>
+                        <ng-container *ngIf="control.hasError('required')">Please select at least one staff</ng-container>
+                    </ng-template>
+
+                </nz-form-control>
+                  
+
+                </nz-form-item>
+
+            </div>
+
+
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="24" [nzXXl]="24">
+
+          <nz-form-item>
+
+            <nz-form-label nzRequired>Students</nz-form-label>
+
+            <nz-form-control nzHasFeedback [nzErrorTip]="daysErrorTpl">
+
+              <nz-select 
+                  formControlName="stu_id"
+                  nzMode="multiple"
+                  nzShowSearch 
+                  nzAllowClear
+                  [nzAllowClear] = true
+                  nzPlaceHolder="select students">
+
+                  <nz-option *ngFor="let item of filterStudent" nzValue="{{ item.id }}" nzLabel="{{ item.firstName }}"></nz-option>
+
+              </nz-select>
+
+              
+
+              <ng-template #daysErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('required')">Please select at least one student</ng-container>
+              </ng-template>
+          
+          </nz-form-control>
+            
+
+          </nz-form-item>
+
+      </div>
+
+
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="12" [nzXl]="12" [nzXXl]="12">
+
+          <nz-form-item>
+
+            <nz-form-label nzRequired>Status</nz-form-label>
+
+            <nz-form-control>
+            
+              <nz-switch formControlName="status" nzCheckedChildren="Yes" nzUnCheckedChildren="No"></nz-switch>
+      
+          </nz-form-control>
+            
+
+          </nz-form-item>
+
+      </div>
+
+        <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="24" [nzXXl]="24">
+
+          <nz-form-item>
+
+            <nz-form-label nzRequired>Description</nz-form-label>
+
+            <nz-form-control nzHasFeedback [nzErrorTip]="descErrorTpl">
+            
+              <textarea formControlName="desc" nz-input rows="4" placeholder="description"></textarea>
+      
+             <ng-template #descErrorTpl let-control>
+                  <ng-container *ngIf="control.hasError('maxlength')">Description can't be longer than 250 characters</ng-container>
+                  <ng-container *ngIf="control.hasError('minlength')">Description can't be less than 4 characters</ng-container>
+                  <ng-container *ngIf="control.hasError('required')">Please input your room description</ng-container>
+              </ng-template>
+      
+          </nz-form-control>
+            
+
+          </nz-form-item>
+
+      </div>
+
+          </div>
+
+      </div>
+
+      <div mat-dialog-actions class="m-0 py-16 px-24 fm-border-top" fxLayout="row"
+          fxLayoutAlign="space-between center">
+
+          <span></span>
+
+          <span class="text-right">
+
+              <button class="text-uppercase mr-8" nz-button nzType="primary" [disabled]="!intakeForm.valid">
+                  <i class="plus icon mr-8"></i> Save
+              </button>
+
+              <button class="text-uppercase mr-8" type="button" nz-button nzType="default"
+                  (click)="resetForm($event)">
+                  Reset
+              </button>
+
+              <button class="text-uppercase mat-close-btn" type="button" nz-button nzType="danger"
+                  (click)="matDialogRef.close()">
+                  Close
+              </button>
+
+          </span>
+
+      </div>
+
+  </form>
+
+</div>

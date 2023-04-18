@@ -54,7 +54,6 @@ class DepartmentController extends Controller
 
     public function update(Request $request){
 
-        Log::info($request->all());
         DB::beginTransaction();
         try{
 
@@ -64,10 +63,9 @@ class DepartmentController extends Controller
 
             $rowObj->name = $request->input('name');
             $rowObj->code = $request->input('code');
-            $rowObj->save();
-            DB::commit();
+            $rowObj->update();
 
-            Log::info($rowObj);
+            DB::commit();
 
             return response()->json(
                 RequestHelper::sendResponse(

@@ -20,7 +20,6 @@ export class InvitationService implements Resolve<any>
     private invitations: Invitation[];
 
     onInvitationChanged: BehaviorSubject<any>;
-    onFilterBranchesChanged: BehaviorSubject<any>;
 
     onPaginationChanged: Subject<PaginationProp>;
     onSearchTextChanged: Subject<any>;
@@ -40,17 +39,8 @@ export class InvitationService implements Resolve<any>
     sortBy: any | null = null;
     searchText: string | null = null;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     * @param {NGXLogger} _logger
-     * @param {BranchService} _branchService
-     * @param {AuthService} _authService
-     */
     constructor(
         private _httpClient: HttpClient,
-        // private _branchService: BranchService,
         private _authService: AuthService
     )
     {
@@ -60,7 +50,6 @@ export class InvitationService implements Resolve<any>
         this.isFiltered = false;
 
         this.onInvitationChanged = new BehaviorSubject([]);
-        this.onFilterBranchesChanged = new BehaviorSubject([]);
         
         this.onSearchTextChanged = new Subject();
         this.onSortChanged = new Subject();
@@ -138,23 +127,6 @@ export class InvitationService implements Resolve<any>
                 shareReplay()
             );
     }
-
-    /**
-     * Create new invitation
-     * 
-     * @returns {Observable<any>}
-     */
-    // storeInvitation(data: object): Observable<any>
-    // {
-    //     console.log(data);
-        
-    //     return this._httpClient
-    //         .post<any>(`${AppConst.apiBaseUrl}/${AppConst.urlPrefix.APP}/create-invitation`, data)
-    //         .pipe(
-    //             map(response => response.message),
-    //             shareReplay()
-    //         );
-    // }
 
     storeInvitation(data: object): Observable<any>
     {

@@ -109,22 +109,7 @@ export class UserComponent implements OnInit, OnDestroy {
                   nzOkType: 'danger',
                   nzOnOk: () =>
                   {
-                      // return new Promise((resolve, reject) =>
-                      // {
-                      //     this._branchService
-                      //         .deleteBranch(item.id)
-                      //         .pipe(
-                      //             takeUntil(this._unsubscribeAll),
-                      //             finalize(() => resolve())
-                      //         )
-                      //         .subscribe(
-                      //             message => setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200),
-                      //             error =>
-                      //             {
-                      //                 throw error;
-                      //             }
-                      //         );
-                      // });
+
                   }
               }
           );

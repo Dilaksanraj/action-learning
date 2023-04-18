@@ -60,7 +60,6 @@ class IntakeController extends Controller
 
     public function update(Request $request){
 
-        Log::info($request->all());
         DB::beginTransaction();
         try{
 
@@ -72,10 +71,10 @@ class IntakeController extends Controller
             $rowObj->code = $request->input('code');
             $rowObj->graduation_year = $request->input('graduation_year');
 
-            $rowObj->save();
+            $rowObj->update();
+
             DB::commit();
 
-            Log::info($rowObj);
 
             return response()->json(
                 RequestHelper::sendResponse(
@@ -120,7 +119,6 @@ class IntakeController extends Controller
         {
             $id = Helpers::decodeHashedID($request->input('id'));
 
-            Log::info($id);
             $rowObj = $this->findById($id);
 
         if ($rowObj->deleted_at != null)

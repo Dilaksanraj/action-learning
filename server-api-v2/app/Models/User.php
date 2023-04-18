@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -49,6 +50,16 @@ class User extends Authenticatable
     public function getIndexAttribute()
     {
         return ($this->attributes['id'] != null) ? Helpers::hxCode($this->attributes['id']) : $this->attributes['id'];
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class)->withTrashed();
+    }
+
+    public function intake()
+    {
+        return $this->belongsTo(Intake::class)->withTrashed();
     }
 
 }

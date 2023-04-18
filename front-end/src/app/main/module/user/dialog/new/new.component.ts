@@ -12,7 +12,7 @@ import { Subject } from 'rxjs';
 export class UserAddDialogComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
-  branchForm: FormGroup;
+  userForm: FormGroup;
   editMode: boolean;
 
   constructor(
@@ -21,14 +21,14 @@ export class UserAddDialogComponent implements OnInit {
   {
     console.log('opened');
     
-    this.branchForm = this.createBranchForm();
+    this.userForm = this.createUserForm();
     this.editMode = false;
   }
 
   ngOnInit() {
   }
 
-  createBranchForm(): FormGroup
+  createUserForm(): FormGroup
   {
       return new FormGroup({
           name: new FormControl(this.editMode ? '' : '', [
@@ -41,50 +41,12 @@ export class UserAddDialogComponent implements OnInit {
   {
       e.preventDefault();
 
-      if (this.branchForm.invalid)
+      if (this.userForm.invalid)
       {
           return;
       }
 
-      // const sendObj = {
-      //     name: this.fc.name.value,
-      //     email: this.fc.email.value,
-      //     domain: this.fc.domain.value,
-      //     desc: this.fc.desc.value,
-      //     status: this.fc.status.value,
-      //     country: this.fc.country.value,
-      //     timezone: this.fc.timezone.value,
-      //     service: this.fc.service.value,
-      //     open_days: this.openHourMap,
-      //     pincode: this.fc.pincode.value
-      // };
-
-      // this._logger.debug('[branch object]', sendObj);
-
-      // this.buttonLoader = true;
-
-      // this._branchService
-      //     .storeBranch(sendObj)
-      //     .pipe(
-      //         takeUntil(this._unsubscribeAll),
-      //         finalize(() => setTimeout(() => this.buttonLoader = false, 200))
-      //     )
-      //     .subscribe(
-      //         res =>
-      //         {
-      //             this.resetForm(null);
-
-      //             setTimeout(() => this.matDialogRef.close(res), 250);
-      //         },
-      //         error =>
-      //         {
-      //             throw error;
-      //         },
-      //         () =>
-      //         {
-      //             this._logger.debug('😀 all good. 🍺');
-      //         }
-      //     );
+      
   }
 
 }

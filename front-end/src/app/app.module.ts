@@ -35,6 +35,7 @@ import { HttpErrorInterceptor } from './shared/interceptor/http-error.intercepto
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from './main/common/common.module';
 import { AuthUser } from './shared/model/authUser';
+import { ProjectComponent } from './main/module/project/project.component';
 // import { HttpErrorInterceptor } from './shared/interceptor/http-error.interceptor';
 // import { NgxWebstorageModule, StrategyIndex, StrategyCacheService } from 'ngx-webstorage';
 registerLocaleData(en);
@@ -90,7 +91,7 @@ export function appInitFactory(injector: Injector): any
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports     : [
         BrowserModule,

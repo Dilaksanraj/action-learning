@@ -59,9 +59,17 @@ export const APP_ROUTES: Routes = [
         path: 'intake',
         loadChildren: ()=>import('./main/module/intake/intake.module').then(m=> m.IntakeModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
     },
+    {
+        path: 'manage-room',
+        loadChildren: ()=>import('./main/module/room/room.module').then(m=> m.RoomModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
+    {
+        path: 'manage-project',
+        loadChildren: ()=>import('./main/module/project/project.module').then(m=> m.ProjectModule) //'./main/module/dashboard/dashboard.module#DashboardModule'
+    },
     
     {
         path      : '**',
-        redirectTo: 'apps/dashboards/analytics'
+        redirectTo: 'dashboard'
     }
 ];

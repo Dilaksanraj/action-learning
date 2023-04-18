@@ -57,7 +57,6 @@ export class DepartmentComponent implements OnInit {
 
     ngOnInit() {
 
-        // Subscribe to branch changes
         this._departmentservice
             .onDepartmentChanged
             .pipe(takeUntil(this._unsubscribeAll))
