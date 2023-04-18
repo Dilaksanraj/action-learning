@@ -197,20 +197,20 @@ delete(item: Intake, e: MouseEvent): void {
                 nzOnOk: () => {
 
                     this._notification.displaySnackBar("Method not found", NotifyType.WARNING)                     
-                    // return new Promise((resolve, reject) => {
-                    //     this._intakeService
-                    //         .deleteIntake(item.id)
-                    //         .pipe(
-                    //             takeUntil(this._unsubscribeAll),
-                    //             finalize(() => resolve())
-                    //         )
-                    //         .subscribe(
-                    //             message => setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200),
-                    //             error => {
-                    //                 throw error;
-                    //             }
-                    //         );
-                    // });
+                    return new Promise((resolve, reject) => {
+                        this._intakeService
+                            .deleteIntake(item.id)
+                            .pipe(
+                                takeUntil(this._unsubscribeAll),
+                                finalize(() => resolve())
+                            )
+                            .subscribe(
+                                message => setTimeout(() => this._notification.displaySnackBar(message, NotifyType.SUCCESS), 200),
+                                error => {
+                                    throw error;
+                                }
+                            );
+                    });
                 }
             }
         );
